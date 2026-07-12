@@ -23,8 +23,11 @@ import {
   FieldError,
   FieldGroup,
 } from "@/components/ui/field";
+import { useRegister } from "@/features/auth/hooks/use-register";
 
 const SignUpCard = () => {
+  const registerMutation = useRegister();
+
   const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -36,6 +39,14 @@ const SignUpCard = () => {
 
   const onSubmit = (data: RegisterInput) => {
     console.log("Submitting:", data);
+    registerMutation.mutate(data, {
+      onSuccess: (response) => {
+        console.log(response, "Response");
+      },
+      onError: (error) => {
+        console.log(error, "error");
+      },
+    });
   };
 
   return (
@@ -116,9 +127,9 @@ const SignUpCard = () => {
               type="submit"
               size="lg"
               className="w-full cursor-pointer"
-              disabled={form.formState.isSubmitting}
+              disabled={registerMutation.isPending}
             >
-              {form.formState.isSubmitting ? "Signing up..." : "Sign up"}
+              {registerMutation.isPending ? "Signing up..." : "Sign up"}
             </Button>
           </FieldGroup>
         </form>
@@ -131,7 +142,7 @@ const SignUpCard = () => {
           variant="outline"
           size="lg"
           className="w-full cursor-pointer"
-          disabled={form.formState.isSubmitting}
+          disabled={registerMutation.isPending}
         >
           <FcGoogle />
           Sign up with Google
@@ -140,7 +151,7 @@ const SignUpCard = () => {
           variant="outline"
           size="lg"
           className="w-full cursor-pointer"
-          disabled={form.formState.isSubmitting}
+          disabled={registerMutation.isPending}
         >
           <FaGithub />
           Sign up with GitHub
