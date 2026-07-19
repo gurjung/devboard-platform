@@ -23,8 +23,11 @@ import {
   FieldError,
   FieldGroup,
 } from "@/components/ui/field";
+import { useLogin } from "@/features/auth/hooks/use-login";
 
 const SignInCard = () => {
+  const loginMutation = useLogin();
+
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,6 +38,17 @@ const SignInCard = () => {
 
   const onSubmit = (data: LoginInput) => {
     console.log("Submitting:", data);
+    loginMutation.mutate(data, {
+      onSuccess: (response) => {
+        console.log(response, "Reponse");
+        // toast.success("Welcome back!");
+        // router.push("/dashboard");
+      },
+      onError: (error) => {
+        console.log(error, "error");
+        // toast.error(error.message);
+      },
+    });
   };
 
   return (
@@ -91,9 +105,9 @@ const SignInCard = () => {
               type="submit"
               size="lg"
               className="w-full cursor-pointer"
-              disabled={form.formState.isSubmitting}
+              disabled={loginMutation.isPending}
             >
-              {form.formState.isSubmitting ? "Logging in..." : "Login"}
+              {loginMutation.isPending ? "Logging in..." : "Login"}
             </Button>
           </FieldGroup>
         </form>
@@ -106,7 +120,7 @@ const SignInCard = () => {
           variant="outline"
           size="lg"
           className="w-full cursor-pointer"
-          disabled={form.formState.isSubmitting}
+          disabled={loginMutation.isPending}
         >
           <FcGoogle />
           Login with Google
@@ -115,7 +129,7 @@ const SignInCard = () => {
           variant="outline"
           size="lg"
           className="w-full cursor-pointer"
-          disabled={form.formState.isSubmitting}
+          disabled={loginMutation.isPending}
         >
           <FaGithub />
           Login with GitHub

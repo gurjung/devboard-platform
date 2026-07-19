@@ -1,6 +1,5 @@
 // import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Test from "@/features/test";
 
 export default function Home() {
   return (
@@ -64,7 +63,6 @@ export default function Home() {
       </main> */}
 
       <Button>Create Project</Button>
-      <Test />
     </div>
   );
 }
