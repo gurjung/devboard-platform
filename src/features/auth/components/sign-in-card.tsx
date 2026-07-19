@@ -24,9 +24,11 @@ import {
   FieldGroup,
 } from "@/components/ui/field";
 import { useLogin } from "@/features/auth/hooks/use-login";
+import { useRouter } from "next/navigation";
 
 const SignInCard = () => {
   const loginMutation = useLogin();
+  const router = useRouter();
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -37,16 +39,14 @@ const SignInCard = () => {
   });
 
   const onSubmit = (data: LoginInput) => {
-    console.log("Submitting:", data);
     loginMutation.mutate(data, {
-      onSuccess: (response) => {
-        console.log(response, "Reponse");
-        // toast.success("Welcome back!");
-        // router.push("/dashboard");
+      onSuccess: () => {
+        router.push("/dashboard");
+        router.refresh();
       },
       onError: (error) => {
-        console.log(error, "error");
-        // toast.error(error.message);
+        form.setError("root", { message: error.message });
+        // or: toast.error(error.message)
       },
     });
   };
