@@ -1,14 +1,13 @@
 import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
-import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
+import { AUTH_ROUTES } from "@/lib/constants";
 
 export default async function DashboardPage() {
   const session = await auth();
 
   if (!session?.user) {
-    redirect("/login");
+    redirect(AUTH_ROUTES.signIn);
   }
 
   return (
