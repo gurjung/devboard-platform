@@ -27,8 +27,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
       {/* Sidebar Panel */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-neutral-100 dark:bg-zinc-900 p-4 transition-transform duration-200 ease-in-out lg:static lg:z-auto lg:translate-x-0 border-r border-neutral-200 dark:border-zinc-800",
-          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex flex-col bg-neutral-100 dark:bg-zinc-900 transition-all duration-200 ease-in-out lg:static lg:z-auto border-r border-neutral-200 dark:border-zinc-800",
+          open
+            ? "w-64 p-4 translate-x-0"
+            : "-translate-x-full w-64 p-4 lg:translate-x-0 lg:w-0 lg:p-0 lg:overflow-hidden lg:border-r-0"
         )}
       >
         <div className="flex items-center justify-between">

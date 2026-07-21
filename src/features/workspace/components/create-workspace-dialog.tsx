@@ -222,9 +222,9 @@ export function CreateWorkspaceDialog({
             name="logo"
             render={({ fieldState }) => (
               <Field invalid={!!fieldState.error}>
-                <FieldLabel>
-                  Workspace Logo{" "}
-                  <span className="font-normal text-muted-foreground">
+                <FieldLabel className="text-xs font-semibold flex items-center justify-between w-full">
+                  <span>Workspace Logo</span>
+                  <span className="font-normal text-muted-foreground text-[11px]">
                     (Optional)
                   </span>
                 </FieldLabel>
