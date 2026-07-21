@@ -4,6 +4,7 @@ import Link from "next/link";
 import { HiXMark } from "react-icons/hi2";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
+import { WorkspaceSwitcher } from "@/features/workspace/components/workspace-switcher";
 import { Navigation } from "./navigation";
 
 interface SidebarProps {
@@ -48,6 +49,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
 
         <Separator className="my-4" />
+
+        <div className="mb-4">
+          <WorkspaceSwitcher />
+        </div>
 
         <Navigation onNavigate={onClose} />
       </aside>
