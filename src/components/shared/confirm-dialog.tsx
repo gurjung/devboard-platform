@@ -85,7 +85,7 @@ export function ConfirmDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100%-2.5rem)] sm:max-w-md p-6">
+      <DialogContent className="p-6">
         <DialogHeader className="flex flex-col items-center justify-center text-center space-y-2">
           <div
             className={cn(

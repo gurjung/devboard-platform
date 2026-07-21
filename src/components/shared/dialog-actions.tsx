@@ -27,18 +27,20 @@ export function DialogActions({
     : completeLabel;
 
   return (
-    <DialogFooter className="flex flex-row justify-between sm:justify-between w-full">
+    <DialogFooter className="flex flex-row items-center justify-between gap-3 w-full sm:justify-between pt-2">
       <Button
         type="button"
         variant="outline"
         onClick={onCancel}
         disabled={isCompleteLoading}
+        className="h-9 text-xs rounded-xl px-4 cursor-pointer"
       >
         {cancelLabel}
       </Button>
       <Button
         type="submit"
         disabled={isCompleteDisabled || isCompleteLoading}
+        className="h-9 text-xs rounded-xl px-4 cursor-pointer"
       >
         {showLoadingState && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {label}
