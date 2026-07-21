@@ -205,7 +205,7 @@ export function CreateWorkspaceDialog({
           </Label>
           <Input
             id="workspace-name"
-            placeholder="Acme Inc."
+            placeholder="Enter workspace name"
             {...register("name")}
             disabled={isSubmitting}
           />
