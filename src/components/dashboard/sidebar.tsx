@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { HiXMark } from "react-icons/hi2";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { CreateWorkspaceDialog } from "@/features/workspace/components/create-workspace-dialog";
 import { Navigation } from "./navigation";
 
 interface SidebarProps {
@@ -48,6 +51,15 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
 
         <Separator className="my-4" />
+
+        <div className="mb-4">
+          <CreateWorkspaceDialog>
+            <Button className="w-full justify-start" variant="outline" size="sm">
+              <Plus className="mr-2 h-4 w-4 text-muted-foreground" />
+              New Workspace
+            </Button>
+          </CreateWorkspaceDialog>
+        </div>
 
         <Navigation onNavigate={onClose} />
       </aside>
