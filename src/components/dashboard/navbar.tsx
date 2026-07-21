@@ -21,6 +21,7 @@ interface User {
 interface NavbarProps {
   user?: User;
   onOpenSidebar: () => void;
+  showSidebarTrigger?: boolean;
 }
 
 function getInitials(name?: string | null, email?: string | null): string {
@@ -37,22 +38,30 @@ function getInitials(name?: string | null, email?: string | null): string {
   return "U";
 }
 
-export function Navbar({ user, onOpenSidebar }: NavbarProps) {
+export function Navbar({
+  user,
+  onOpenSidebar,
+  showSidebarTrigger = true,
+}: NavbarProps) {
   const initials = getInitials(user?.name, user?.email);
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
       <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onOpenSidebar}
-          className="lg:hidden"
-          aria-label="Open sidebar"
-        >
-          <HiBars3 className="size-6" />
-        </Button>
-        <span className="font-semibold text-lg lg:hidden">DevBoard</span>
+        {showSidebarTrigger && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onOpenSidebar}
+            className="lg:hidden"
+            aria-label="Open sidebar"
+          >
+            <HiBars3 className="size-6" />
+          </Button>
+        )}
+        <span className={showSidebarTrigger ? "font-semibold text-lg lg:hidden" : "font-semibold text-lg"}>
+          DevBoard
+        </span>
       </div>
 
       <div className="ml-auto flex items-center gap-4">

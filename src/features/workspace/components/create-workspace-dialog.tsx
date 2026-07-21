@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { toast } from "sonner";
@@ -12,10 +12,15 @@ import { Loader2, Upload, X, ImageIcon } from "lucide-react";
 import { FormDialog } from "@/components/shared/form-dialog";
 import { DialogActions } from "@/components/shared/dialog-actions";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { createWorkspaceSchema, CreateWorkspaceInput } from "../schema";
+import {
+  Field,
+  FieldLabel,
+  FieldError,
+  FieldGroup,
+} from "@/components/ui/field";
+import { createWorkspaceSchema, type CreateWorkspaceInput } from "../schema";
 import { useCreateWorkspace } from "../hooks/use-create-workspace";
 
 interface CreateWorkspaceDialogProps {
@@ -48,12 +53,7 @@ export function CreateWorkspaceDialog({
   const [isCompressing, setIsCompressing] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<CreateWorkspaceInput>({
+  const form = useForm<CreateWorkspaceInput>({
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: {
       name: "",
@@ -66,7 +66,7 @@ export function CreateWorkspaceDialog({
     isCompressing || isUploading || createWorkspaceMutation.isPending;
 
   const handleReset = () => {
-    reset();
+    form.reset();
     setIsCompressing(false);
     setIsUploading(false);
     setLogoFile(null);
@@ -126,6 +126,7 @@ export function CreateWorkspaceDialog({
       setPreviewUrl(null);
     }
     setLogoFile(null);
+    form.setValue("logo", "");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -178,7 +179,7 @@ export function CreateWorkspaceDialog({
           toast.error(error.message || "Failed to create workspace");
           setIsUploading(false);
         },
-      },
+      }
     );
   };
 
@@ -195,118 +196,119 @@ export function CreateWorkspaceDialog({
         }
       }}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-        <div className="flex flex-col gap-2">
-          <Label
-            htmlFor="workspace-name"
-            className="text-xs font-semibold text-foreground"
-          >
-            Workspace Name
-          </Label>
-          <Input
-            id="workspace-name"
-            placeholder="Enter workspace name"
-            {...register("name")}
-            disabled={isSubmitting}
-          />
-          {errors.name && (
-            <p className="text-xs text-destructive">{errors.name.message}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-2.5">
-          <Label className="text-xs font-semibold text-foreground">
-            Workspace Logo{" "}
-            <span className="font-normal text-muted-foreground">
-              (Optional)
-            </span>
-          </Label>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/png,image/jpeg"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-
-          <div className="flex items-center gap-3.5 p-3 rounded-xl border border-dashed border-border/80 bg-muted/20">
-            <Avatar className="h-14 w-14 rounded-xl shrink-0">
-              {previewUrl ? (
-                <AvatarImage
-                  src={previewUrl}
-                  alt="Logo preview"
-                  className="object-cover"
-                />
-              ) : null}
-              <AvatarFallback className="bg-muted/60">
-                {isCompressing || isUploading ? (
-                  <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-                ) : (
-                  <ImageIcon className="h-5 w-5 text-muted-foreground/70" />
-                )}
-              </AvatarFallback>
-            </Avatar>
-
-            <div className="flex flex-col gap-1.5 min-w-0">
-              <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    fileInputRef.current?.click();
-                  }}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FieldGroup>
+          <Controller
+            control={form.control}
+            name="name"
+            render={({ field, fieldState }) => (
+              <Field invalid={!!fieldState.error}>
+                <FieldLabel>Workspace Name</FieldLabel>
+                <Input
+                  type="text"
+                  placeholder="Enter workspace name"
+                  className="w-full"
+                  aria-invalid={!!fieldState.error}
                   disabled={isSubmitting}
-                  className="h-8 text-xs px-3 rounded-lg"
-                >
-                  {isCompressing ? (
-                    <>
-                      <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                      Compressing...
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="mr-1.5 h-3.5 w-3.5" />
-                      {previewUrl ? "Change image" : "Select image"}
-                    </>
-                  )}
-                </Button>
-                {previewUrl && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleRemoveLogo();
-                    }}
-                    disabled={isSubmitting}
-                    className="h-8 text-xs px-2.5 rounded-lg text-muted-foreground hover:text-foreground"
-                  >
-                    <X className="mr-1 h-3.5 w-3.5" />
-                    Remove
-                  </Button>
-                )}
-              </div>
-              <p className="text-[11px] text-muted-foreground">
-                PNG, JPEG (Max 1MB compressed)
-              </p>
-            </div>
-          </div>
-          {errors.logo && (
-            <p className="text-xs text-destructive">{errors.logo.message}</p>
-          )}
-        </div>
+                  {...field}
+                />
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
 
-        <DialogActions
-          completeLabel="Create workspace"
-          completeLoadingLabel={
-            isUploading ? "Uploading logo..." : "Creating workspace..."
-          }
-          onCancel={handleClose}
-          isCompleteLoading={isSubmitting}
-        />
+          <Controller
+            control={form.control}
+            name="logo"
+            render={({ fieldState }) => (
+              <Field invalid={!!fieldState.error}>
+                <FieldLabel>
+                  Workspace Logo{" "}
+                  <span className="font-normal text-muted-foreground">
+                    (Optional)
+                  </span>
+                </FieldLabel>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/png,image/jpeg"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+
+                <div className="flex items-center gap-3.5 p-3 rounded-xl border border-dashed border-border/80 bg-muted/20">
+                  <Avatar className="h-12 w-12 rounded-xl shrink-0 ring-1 ring-border/50">
+                    {previewUrl ? (
+                      <AvatarImage
+                        src={previewUrl}
+                        alt="Logo preview"
+                        className="object-cover"
+                      />
+                    ) : null}
+                    <AvatarFallback className="bg-muted/80 text-muted-foreground font-bold rounded-xl">
+                      {isCompressing || isUploading ? (
+                        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                      ) : (
+                        <ImageIcon className="h-4 w-4 text-muted-foreground/70" />
+                      )}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <div className="flex flex-col gap-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isSubmitting}
+                        className="h-8 text-xs px-3 rounded-lg cursor-pointer"
+                      >
+                        {isCompressing ? (
+                          <>
+                            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                            Compressing...
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="mr-1.5 h-3.5 w-3.5" />
+                            {previewUrl ? "Change logo" : "Select image"}
+                          </>
+                        )}
+                      </Button>
+                      {previewUrl && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleRemoveLogo}
+                          disabled={isSubmitting}
+                          className="h-8 text-xs px-2.5 rounded-lg text-muted-foreground hover:text-foreground cursor-pointer"
+                        >
+                          <X className="mr-1 h-3.5 w-3.5" />
+                          Remove
+                        </Button>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">
+                      PNG, JPEG (Max 1MB compressed)
+                    </p>
+                  </div>
+                </div>
+                <FieldError>{fieldState.error?.message}</FieldError>
+              </Field>
+            )}
+          />
+
+          <DialogActions
+            completeLabel="Create Workspace"
+            completeLoadingLabel={
+              isUploading ? "Uploading logo..." : "Creating workspace..."
+            }
+            onCancel={handleClose}
+            isCompleteLoading={isSubmitting}
+          />
+        </FieldGroup>
       </form>
     </FormDialog>
   );
