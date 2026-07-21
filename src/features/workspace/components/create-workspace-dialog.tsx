@@ -62,7 +62,8 @@ export function CreateWorkspaceDialog({
   });
 
   const createWorkspaceMutation = useCreateWorkspace();
-  const isSubmitting = isCompressing || isUploading || createWorkspaceMutation.isPending;
+  const isSubmitting =
+    isCompressing || isUploading || createWorkspaceMutation.isPending;
 
   const handleReset = () => {
     reset();
@@ -156,7 +157,9 @@ export function CreateWorkspaceDialog({
         console.error("Error uploading logo:", err);
         const errorMessage =
           err?.message ||
-          (typeof err === "string" ? err : "Failed to upload logo. Please try again.");
+          (typeof err === "string"
+            ? err
+            : "Failed to upload logo. Please try again.");
         toast.error(`Upload error: ${errorMessage}`);
         setIsUploading(false);
         return;
@@ -175,7 +178,7 @@ export function CreateWorkspaceDialog({
           toast.error(error.message || "Failed to create workspace");
           setIsUploading(false);
         },
-      }
+      },
     );
   };
 
@@ -192,9 +195,14 @@ export function CreateWorkspaceDialog({
         }
       }}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
-        <div className="space-y-2">
-          <Label htmlFor="workspace-name">Workspace Name</Label>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <Label
+            htmlFor="workspace-name"
+            className="text-xs font-semibold text-foreground"
+          >
+            Workspace Name
+          </Label>
           <Input
             id="workspace-name"
             placeholder="Acme Inc."
@@ -206,48 +214,60 @@ export function CreateWorkspaceDialog({
           )}
         </div>
 
-        <div className="space-y-2">
-          <Label>Workspace Logo (Optional)</Label>
+        <div className="flex flex-col gap-2.5">
+          <Label className="text-xs font-semibold text-foreground">
+            Workspace Logo{" "}
+            <span className="font-normal text-muted-foreground">
+              (Optional)
+            </span>
+          </Label>
           <input
             ref={fileInputRef}
             type="file"
             accept="image/png,image/jpeg"
             className="hidden"
             onChange={handleFileChange}
-            disabled={isSubmitting}
           />
 
-          <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16 border">
+          <div className="flex items-center gap-3.5 p-3 rounded-xl border border-dashed border-border/80 bg-muted/20">
+            <Avatar className="h-14 w-14 rounded-xl shrink-0">
               {previewUrl ? (
-                <AvatarImage src={previewUrl} alt="Logo preview" />
+                <AvatarImage
+                  src={previewUrl}
+                  alt="Logo preview"
+                  className="object-cover"
+                />
               ) : null}
-              <AvatarFallback className="bg-muted">
+              <AvatarFallback className="bg-muted/60">
                 {isCompressing || isUploading ? (
-                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                  <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
                 ) : (
-                  <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                  <ImageIcon className="h-5 w-5 text-muted-foreground/70" />
                 )}
               </AvatarFallback>
             </Avatar>
 
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
+            <div className="flex flex-col gap-1.5 min-w-0">
+              <div className="flex items-center gap-2">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    fileInputRef.current?.click();
+                  }}
                   disabled={isSubmitting}
+                  className="h-8 text-xs px-3 rounded-lg"
                 >
                   {isCompressing ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
                       Compressing...
                     </>
                   ) : (
                     <>
-                      <Upload className="mr-2 h-4 w-4" />
+                      <Upload className="mr-1.5 h-3.5 w-3.5" />
                       {previewUrl ? "Change image" : "Select image"}
                     </>
                   )}
@@ -257,15 +277,19 @@ export function CreateWorkspaceDialog({
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={handleRemoveLogo}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveLogo();
+                    }}
                     disabled={isSubmitting}
+                    className="h-8 text-xs px-2.5 rounded-lg text-muted-foreground hover:text-foreground"
                   >
-                    <X className="mr-1 h-4 w-4" />
+                    <X className="mr-1 h-3.5 w-3.5" />
                     Remove
                   </Button>
                 )}
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[11px] text-muted-foreground">
                 PNG, JPEG (Max 1MB compressed)
               </p>
             </div>
@@ -275,16 +299,14 @@ export function CreateWorkspaceDialog({
           )}
         </div>
 
-        <div className="pt-4">
-          <DialogActions
-            completeLabel="Create workspace"
-            completeLoadingLabel={
-              isUploading ? "Uploading logo..." : "Creating workspace..."
-            }
-            onCancel={handleClose}
-            isCompleteLoading={isSubmitting}
-          />
-        </div>
+        <DialogActions
+          completeLabel="Create workspace"
+          completeLoadingLabel={
+            isUploading ? "Uploading logo..." : "Creating workspace..."
+          }
+          onCancel={handleClose}
+          isCompleteLoading={isSubmitting}
+        />
       </form>
     </FormDialog>
   );
