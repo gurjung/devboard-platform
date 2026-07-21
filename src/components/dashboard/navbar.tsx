@@ -53,13 +53,13 @@ export function Navbar({
             variant="ghost"
             size="icon"
             onClick={onOpenSidebar}
-            className="lg:hidden"
-            aria-label="Open sidebar"
+            className="cursor-pointer"
+            aria-label="Toggle sidebar"
           >
             <HiBars3 className="size-6" />
           </Button>
         )}
-        <span className={showSidebarTrigger ? "font-semibold text-lg lg:hidden" : "font-semibold text-lg"}>
+        <span className="font-semibold text-lg">
           DevBoard
         </span>
       </div>

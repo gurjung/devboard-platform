@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { createWorkspaceSchema } from "@/features/workspace/schema";
+import { WorkspaceRole } from "@/features/workspace/constants";
 import { NextResponse } from "next/server";
 
 function slugify(name: string): string {
@@ -89,7 +90,7 @@ export async function POST(req: Request) {
         members: {
           create: {
             userId: session.user.id,
-            role: "OWNER",
+            role: WorkspaceRole.OWNER,
           },
         },
       },
