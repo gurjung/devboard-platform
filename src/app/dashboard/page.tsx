@@ -1,9 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { CreateWorkspaceDialog } from "@/features/workspace/components/create-workspace-dialog";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { WorkspaceForm } from "@/features/workspace/components/workspace-form";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -26,17 +24,8 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col items-start gap-4 p-6 border rounded-xl bg-card max-w-xl mx-auto mt-12 shadow-sm">
-      <h1 className="text-2xl font-bold tracking-tight">Welcome to DevBoard</h1>
-      <p className="text-muted-foreground">
-        You are not a member of any workspace yet. Create a new workspace to get started.
-      </p>
-      <CreateWorkspaceDialog>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Create Workspace
-        </Button>
-      </CreateWorkspaceDialog>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-10rem)] py-6 px-4">
+      <WorkspaceForm mode="create" />
     </div>
   );
 }
