@@ -14,8 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { registerSchema, type RegisterInput } from "@/features/auth/schema";
 import {
   Field,
@@ -27,6 +25,7 @@ import { useRegister } from "@/features/auth/hooks/use-register";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
+import { SocialAuthButtons } from "./social-auth-buttons";
 
 const SignUpCard = () => {
   const registerMutation = useRegister();
@@ -170,24 +169,7 @@ const SignUpCard = () => {
         <Separator />
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full cursor-pointer"
-          disabled={registerMutation.isPending}
-        >
-          <FcGoogle />
-          Sign up with Google
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full cursor-pointer"
-          disabled={registerMutation.isPending}
-        >
-          <FaGithub />
-          Sign up with GitHub
-        </Button>
+        <SocialAuthButtons disabled={registerMutation.isPending} action="signup" />
       </CardContent>
       <div className="px-7">
         <Separator />
