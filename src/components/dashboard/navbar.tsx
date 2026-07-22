@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut } from "next-auth/react";
+import { en } from "@/locales/en";
 import { HiBars3, HiArrowRightOnRectangle } from "react-icons/hi2";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -54,13 +55,13 @@ export function Navbar({
             size="icon"
             onClick={onOpenSidebar}
             className="cursor-pointer"
-            aria-label="Toggle sidebar"
+            aria-label={en.dashboard.navbar.toggleSidebar}
           >
             <HiBars3 className="size-6" />
           </Button>
         )}
         <span className="font-semibold text-lg">
-          DevBoard
+          {en.dashboard.navbar.brandName}
         </span>
       </div>
 
@@ -92,7 +93,7 @@ export function Navbar({
               className="cursor-pointer justify-center text-center w-full"
             >
               <HiArrowRightOnRectangle className="size-4 mr-2" />
-              <span>Log out</span>
+              <span>{en.dashboard.navbar.logOut}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { en } from "@/locales/en";
 import { usePathname, useParams } from "next/navigation";
 import {
   GoHome,
@@ -23,25 +24,25 @@ export const Navigation = ({ onNavigate }: NavigationProps) => {
 
   const routes = [
     {
-      label: "Home",
+      label: en.dashboard.navigation.home,
       href: workspaceSlug ? `/dashboard/${workspaceSlug}` : "/dashboard",
       icon: GoHome,
       activeIcon: GoHomeFill,
     },
     {
-      label: "My Tasks",
+      label: en.dashboard.navigation.myTasks,
       href: workspaceSlug ? `/dashboard/${workspaceSlug}/tasks` : "/dashboard/tasks",
       icon: GoCheckCircle,
       activeIcon: GoCheckCircleFill,
     },
     {
-      label: "Settings",
+      label: en.dashboard.navigation.settings,
       href: workspaceSlug ? `/dashboard/${workspaceSlug}/settings` : "/dashboard/settings",
       icon: GoGear,
       activeIcon: GoGear,
     },
     {
-      label: "Members",
+      label: en.dashboard.navigation.members,
       href: workspaceSlug ? `/dashboard/${workspaceSlug}/members` : "/dashboard/members",
       icon: GoPeople,
       activeIcon: GoPeople,

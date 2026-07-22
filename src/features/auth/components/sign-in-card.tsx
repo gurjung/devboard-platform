@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { en } from "@/locales/en";
 import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,13 +48,13 @@ const SignInCard = () => {
   const onSubmit = (data: LoginInput) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
-        toast.success("Logged in successfully!");
+        toast.success(en.auth.signIn.toastSuccess);
         router.push(callbackUrl);
         router.refresh();
       },
       onError: (error) => {
         form.setError("root", { message: error.message });
-        toast.error(error.message || "Invalid credentials");
+        toast.error(error.message || en.auth.signIn.toastErrorFallback);
       },
     });
   };
@@ -62,10 +63,10 @@ const SignInCard = () => {
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex flex-col items-center justify-center text-center p-7">
         <CardTitle className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">
-          Welcome back!
+          {en.auth.signIn.title}
         </CardTitle>
         <CardDescription className="text-neutral-500 mt-1.5">
-          Login to access your projects and dashboard.
+          {en.auth.signIn.description}
         </CardDescription>
       </CardHeader>
       <div className="px-7">
@@ -84,10 +85,10 @@ const SignInCard = () => {
               name="email"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel>Email address</FieldLabel>
+                  <FieldLabel>{en.auth.signIn.emailLabel}</FieldLabel>
                   <Input
                     type="email"
-                    placeholder="Email address"
+                    placeholder={en.auth.signIn.emailPlaceholder}
                     className="w-full"
                     aria-invalid={!!fieldState.error}
                     {...field}
@@ -101,10 +102,10 @@ const SignInCard = () => {
               name="password"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel>Password</FieldLabel>
+                  <FieldLabel>{en.auth.signIn.passwordLabel}</FieldLabel>
                   <Input
                     type="password"
-                    placeholder="Password"
+                    placeholder={en.auth.signIn.passwordPlaceholder}
                     className="w-full"
                     aria-invalid={!!fieldState.error}
                     {...field}
@@ -119,7 +120,7 @@ const SignInCard = () => {
               className="w-full cursor-pointer"
               disabled={loginMutation.isPending}
             >
-              {loginMutation.isPending ? "Logging in..." : "Login"}
+              {loginMutation.isPending ? en.auth.signIn.submitButtonLoading : en.auth.signIn.submitButton}
             </Button>
           </FieldGroup>
         </form>
@@ -135,12 +136,12 @@ const SignInCard = () => {
       </div>
       <CardContent className="p-7 flex justify-center text-center">
         <p className="text-sm text-muted-foreground">
-          Don&apos;t have an account?{" "}
+          {en.auth.signIn.footer}{" "}
           <Link
             href={signUpUrl}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
-            Sign Up
+            {en.auth.signIn.footerLink}
           </Link>
         </p>
       </CardContent>

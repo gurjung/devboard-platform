@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { en } from "@/locales/en";
 
 import {
   Card,
@@ -118,7 +119,7 @@ export function WorkspaceForm({
         const json = await response.json();
 
         if (!response.ok || !json.success) {
-          throw new Error(json.message || "Failed to upload logo.");
+          throw new Error(json.message || en.workspace.form.toastUploadError);
         }
 
         uploadedUrl = json.url;
@@ -128,7 +129,7 @@ export function WorkspaceForm({
           err?.message ||
           (typeof err === "string"
             ? err
-            : "Failed to upload logo. Please try again.");
+            : en.workspace.form.toastUploadErrorRetry);
         toast.error(`Upload error: ${errorMessage}`);
         setIsUploading(false);
         return;
@@ -140,7 +141,7 @@ export function WorkspaceForm({
         { name: data.name, logo: uploadedUrl },
         {
           onSuccess: (newWorkspace) => {
-            toast.success("Workspace created successfully!");
+            toast.success(en.workspace.form.toastCreateSuccess);
             handleReset();
             if (onSuccess) {
               onSuccess(newWorkspace);
@@ -149,7 +150,7 @@ export function WorkspaceForm({
             }
           },
           onError: (error) => {
-            toast.error(error.message || "Failed to create workspace");
+            toast.error(error.message || en.workspace.form.toastCreateError);
             setIsUploading(false);
           },
         },
@@ -159,14 +160,14 @@ export function WorkspaceForm({
         { id: initialValues.id, data: { name: data.name, logo: uploadedUrl } },
         {
           onSuccess: (updated) => {
-            toast.success("Workspace updated successfully!");
+            toast.success(en.workspace.form.toastUpdateSuccess);
             if (onSuccess) {
               onSuccess(updated);
             }
             setIsUploading(false);
           },
           onError: (error) => {
-            toast.error(error.message || "Failed to update workspace");
+            toast.error(error.message || en.workspace.form.toastUpdateError);
             setIsUploading(false);
           },
         },
@@ -186,11 +187,11 @@ export function WorkspaceForm({
         { id: initialValues.id },
         {
           onSuccess: () => {
-            toast.success("Workspace deleted successfully!");
+            toast.success(en.workspace.form.toastDeleteSuccess);
             router.push("/dashboard");
           },
           onError: (error) => {
-            toast.error(error.message || "Failed to delete workspace");
+            toast.error(error.message || en.workspace.form.toastDeleteError);
           },
         },
       );
@@ -205,11 +206,10 @@ export function WorkspaceForm({
           <>
             <CardHeader className="flex flex-col items-center justify-center text-center p-6 pb-4">
               <CardTitle className="text-xl font-bold text-foreground">
-                Create a new workspace
+                {en.workspace.form.createTitle}
               </CardTitle>
               <CardDescription className="text-xs text-muted-foreground mt-1 text-center">
-                Workspaces are shared environments where team members can
-                collaborate on projects.
+                {en.workspace.form.createDescription}
               </CardDescription>
             </CardHeader>
             <div className="px-6">
@@ -228,11 +228,11 @@ export function WorkspaceForm({
                 render={({ field, fieldState }) => (
                   <Field invalid={!!fieldState.error}>
                     <FieldLabel className="text-xs font-semibold">
-                      Workspace Name
+                      {en.workspace.form.nameLabel}
                     </FieldLabel>
                     <Input
                       type="text"
-                      placeholder="Enter workspace name"
+                      placeholder={en.workspace.form.namePlaceholder}
                       className="w-full h-10 text-sm rounded-xl"
                       aria-invalid={!!fieldState.error}
                       disabled={isSubmitting}
@@ -272,7 +272,7 @@ export function WorkspaceForm({
                     disabled={isSubmitting}
                     className="cursor-pointer h-9 px-4 rounded-xl text-xs"
                   >
-                    Cancel
+                    {en.workspace.form.cancelButton}
                   </Button>
                 ) : mode === "edit" ? (
                   <Button
@@ -283,7 +283,7 @@ export function WorkspaceForm({
                     disabled={!hasChanges || isSubmitting}
                     className="cursor-pointer h-9 px-4 rounded-xl text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Cancel
+                    {en.workspace.form.cancelButton}
                   </Button>
                 ) : mode === "create" ? (
                   <Button
@@ -294,7 +294,7 @@ export function WorkspaceForm({
                     disabled={isSubmitting}
                     className="text-muted-foreground hover:text-foreground cursor-pointer text-xs h-9"
                   >
-                    Sign out
+                    {en.workspace.form.signOutButton}
                   </Button>
                 ) : (
                   <div />
@@ -306,19 +306,19 @@ export function WorkspaceForm({
                   className="cursor-pointer h-9 px-4 rounded-xl text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSubmitting || (mode === "edit" && !hasChanges)}
                 >
-                  {isSubmitting ? (
+                    {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       {isUploading
-                        ? "Uploading logo..."
+                        ? en.workspace.form.uploadingButton
                         : mode === "create"
-                          ? "Creating..."
-                          : "Saving..."}
+                          ? en.workspace.form.creatingButton
+                          : en.workspace.form.savingButton}
                     </>
                   ) : mode === "create" ? (
-                    "Create Workspace"
+                    en.workspace.form.createButton
                   ) : (
-                    "Save Changes"
+                    en.workspace.form.saveButton
                   )}
                 </Button>
               </div>
@@ -332,10 +332,10 @@ export function WorkspaceForm({
         <Card className="w-full rounded-2xl border border-border/80 shadow-md bg-card">
           <CardHeader className="p-6 pb-3">
             <CardTitle className="text-xs font-bold text-foreground uppercase tracking-wider text-center">
-              Members & Collaboration
+              {en.workspace.collaboration.title}
             </CardTitle>
             <CardDescription className="text-xs text-muted-foreground mt-1 text-center">
-              Invite new members to collaborate on projects and manage team access.
+              {en.workspace.collaboration.description}
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6 pt-0 flex justify-center">
@@ -346,7 +346,7 @@ export function WorkspaceForm({
                 size="sm"
                 className="w-full max-w-xs cursor-pointer h-9 rounded-xl text-xs font-medium border-border/80 hover:bg-muted"
               >
-                Invite Member
+                {en.workspace.collaboration.inviteButton}
               </Button>
             </InviteMemberDialog>
           </CardContent>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { Suspense } from "react";
 import { Loader2 } from "lucide-react";
+import { en } from "@/locales/en";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -37,7 +38,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           <Image src="/logo.svg" alt="logo" width={152} height={56} />
           <Button variant="secondary">
             <Link href={toggleUrl}>
-              {isSignIn ? "Sign Up" : "Login"}
+              {isSignIn ? en.auth.layout.signUpToggle : en.auth.layout.loginToggle}
             </Link>
           </Button>
         </nav>

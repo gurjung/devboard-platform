@@ -1,6 +1,7 @@
 import { getWorkspaceMembership } from "@/lib/workspace-auth";
 import { redirect } from "next/navigation";
 import { MembersList } from "@/features/workspace/components/members/members-list";
+import { en } from "@/locales/en";
 
 interface WorkspaceMembersPageProps {
   params: Promise<{
@@ -24,10 +25,10 @@ export default async function WorkspaceMembersPage({
     <div className="flex flex-col gap-6 max-w-4xl mx-auto py-4">
       <div className="text-center">
         <h1 className="text-2xl font-bold tracking-tight text-center">
-          Workspace Members
+          {en.workspace.members.pageTitle}
         </h1>
         <p className="text-sm text-muted-foreground mt-1 text-center">
-          Manage roles, update collaboration permissions, or remove team members.
+          {en.workspace.members.pageDescription}
         </p>
       </div>
 

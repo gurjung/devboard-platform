@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { en } from "@/locales/en";
 import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -49,7 +50,7 @@ const SignUpCard = () => {
   const onSubmit = (data: RegisterInput) => {
     registerMutation.mutate(data, {
       onSuccess: async () => {
-        toast.success("Account created successfully! Logging you in...");
+        toast.success(en.auth.signUp.toastSuccess);
 
         // Automatically sign in the user
         const result = await signIn("credentials", {
@@ -60,7 +61,7 @@ const SignUpCard = () => {
 
         if (result?.error) {
           form.setError("root", {
-            message: "Account created, but login failed. Please sign in manually.",
+            message: en.auth.signUp.autoLoginError,
           });
         } else {
           router.push(callbackUrl);
@@ -68,7 +69,7 @@ const SignUpCard = () => {
         }
       },
       onError: (error: any) => {
-        const errMsg = error.message || "Registration failed";
+        const errMsg = error.message || en.auth.signUp.toastErrorFallback;
         form.setError("root", { message: errMsg });
         toast.error(errMsg);
       },
@@ -79,16 +80,16 @@ const SignUpCard = () => {
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex flex-col items-center justify-center text-center p-7">
         <CardTitle className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">
-          Sign up
+          {en.auth.signUp.title}
         </CardTitle>
         <CardDescription className="text-neutral-500 mt-1.5 text-center">
-          By signing up, you agree to our{" "}
+          {en.auth.signUp.description}{" "}
           <Link href="/privacy">
-            <span className="text-blue-600 dark:text-blue-400 hover:underline">Privacy Policy</span>
+            <span className="text-blue-600 dark:text-blue-400 hover:underline">{en.auth.signUp.privacyPolicyLink}</span>
           </Link>{" "}
-          and{" "}
+          {en.common.and}{" "}
           <Link href="/terms">
-            <span className="text-blue-600 dark:text-blue-400 hover:underline">Terms of Service</span>
+            <span className="text-blue-600 dark:text-blue-400 hover:underline">{en.auth.signUp.termsLink}</span>
           </Link>
         </CardDescription>
       </CardHeader>
@@ -108,10 +109,10 @@ const SignUpCard = () => {
               name="name"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel>Name</FieldLabel>
+                  <FieldLabel>{en.auth.signUp.nameLabel}</FieldLabel>
                   <Input
                     type="text"
-                    placeholder="Enter your name"
+                    placeholder={en.auth.signUp.namePlaceholder}
                     className="w-full"
                     aria-invalid={!!fieldState.error}
                     {...field}
@@ -125,10 +126,10 @@ const SignUpCard = () => {
               name="email"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel>Email address</FieldLabel>
+                  <FieldLabel>{en.auth.signUp.emailLabel}</FieldLabel>
                   <Input
                     type="email"
-                    placeholder="Email address"
+                    placeholder={en.auth.signUp.emailPlaceholder}
                     className="w-full"
                     aria-invalid={!!fieldState.error}
                     {...field}
@@ -142,10 +143,10 @@ const SignUpCard = () => {
               name="password"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel>Password</FieldLabel>
+                  <FieldLabel>{en.auth.signUp.passwordLabel}</FieldLabel>
                   <Input
                     type="password"
-                    placeholder="Password"
+                    placeholder={en.auth.signUp.passwordPlaceholder}
                     className="w-full"
                     aria-invalid={!!fieldState.error}
                     {...field}
@@ -160,7 +161,7 @@ const SignUpCard = () => {
               className="w-full cursor-pointer"
               disabled={registerMutation.isPending}
             >
-              {registerMutation.isPending ? "Signing up..." : "Sign up"}
+              {registerMutation.isPending ? en.auth.signUp.submitButtonLoading : en.auth.signUp.submitButton}
             </Button>
           </FieldGroup>
         </form>
@@ -176,12 +177,12 @@ const SignUpCard = () => {
       </div>
       <CardContent className="p-7 flex justify-center text-center">
         <p className="text-sm text-muted-foreground">
-          Already have an account?{" "}
+          {en.auth.signUp.footer}{" "}
           <Link
             href={signInUrl}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
-            Sign In
+            {en.auth.signUp.footerLink}
           </Link>
         </p>
       </CardContent>

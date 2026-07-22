@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { en } from "@/locales/en";
 
 export type ConfirmVariant = "danger" | "warning" | "info";
 
@@ -66,8 +67,8 @@ export function ConfirmDialog({
   onOpenChange,
   title,
   description,
-  cancelLabel = "Cancel",
-  confirmLabel = "Confirm",
+  cancelLabel = en.common.cancel,
+  confirmLabel = en.common.confirm,
   confirmLoadingLabel,
   onConfirm,
   onCancel,
@@ -131,7 +132,7 @@ export function ConfirmDialog({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {confirmLoadingLabel || (variant === "danger" ? "Deleting..." : "Confirming...")}
+                {confirmLoadingLabel || (variant === "danger" ? en.common.deletingFallback : en.common.confirmingFallback)}
               </>
             ) : (
               confirmLabel
