@@ -11,6 +11,7 @@ import { DialogActions } from "@/components/shared/dialog-actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GeneratedInviteView } from "./generated-invite-view";
+import { en } from "@/locales/en";
 import {
   Field,
   FieldLabel,
@@ -82,18 +83,18 @@ export function InviteMemberDialog({
         onSuccess: (res) => {
           if (res.success && res.data?.inviteLink) {
             setInviteLink(res.data.inviteLink);
-            toast.success("Invitation generated successfully!");
+            toast.success(en.workspace.invite.dialog.toastSuccess);
           } else {
-            toast.error("Failed to generate invitation link");
+            toast.error(en.workspace.invite.dialog.toastError);
           }
         },
         onError: (error: any) => {
-          let errMsg = error.message || "Failed to invite member. Please try again.";
+          let errMsg = error.message || en.workspace.invite.dialog.toastErrorDefault;
           if (error.status === 409) {
-            errMsg = error.message || "This user is already a member.";
+            errMsg = error.message || en.workspace.invite.dialog.toastErrorMember;
             form.setError("email", { message: errMsg });
           } else if (error.status === 403) {
-            errMsg = "You do not have permission to invite members.";
+            errMsg = en.workspace.invite.dialog.toastErrorPermission;
             form.setError("root", { message: errMsg });
           } else {
             form.setError("root", { message: errMsg });
@@ -107,7 +108,7 @@ export function InviteMemberDialog({
   return (
     <FormDialog
       trigger={children}
-      title="Invite Team Member"
+      title={en.workspace.invite.dialog.title}
       open={open}
       onOpenChange={(newOpen) => {
         if (!newOpen) {
@@ -134,11 +135,11 @@ export function InviteMemberDialog({
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
                   <FieldLabel className="text-xs font-semibold">
-                    Email Address
+                    {en.workspace.invite.dialog.emailLabel}
                   </FieldLabel>
                   <Input
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder={en.workspace.invite.dialog.emailPlaceholder}
                     className="w-full h-10 text-sm rounded-xl"
                     aria-invalid={!!fieldState.error}
                     disabled={isSubmitting}
@@ -154,19 +155,19 @@ export function InviteMemberDialog({
               name="role"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel className="text-xs font-semibold">Role</FieldLabel>
+                  <FieldLabel className="text-xs font-semibold">{en.workspace.invite.dialog.roleLabel}</FieldLabel>
                   <Select
                     value={field.value}
                     onValueChange={field.onChange}
                     disabled={isSubmitting}
                   >
                     <SelectTrigger className="w-full h-10 px-3 bg-input/20 border-border/80 rounded-xl focus:ring-2 focus:ring-primary/20 hover:border-border">
-                      <SelectValue placeholder="Select role" />
+                      <SelectValue placeholder={en.workspace.invite.dialog.rolePlaceholder} />
                     </SelectTrigger>
                     <SelectContent className="w-(--anchor-width) min-w-44 p-1 rounded-xl shadow-md border border-border/80">
                       <SelectGroup>
-                        <SelectItem value="MEMBER">Member</SelectItem>
-                        <SelectItem value="ADMIN">Admin</SelectItem>
+                        <SelectItem value="MEMBER">{en.workspace.invite.dialog.roleMember}</SelectItem>
+                        <SelectItem value="ADMIN">{en.workspace.invite.dialog.roleAdmin}</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -176,8 +177,8 @@ export function InviteMemberDialog({
             />
 
             <DialogActions
-              completeLabel="Generate Invite"
-              completeLoadingLabel="Generating..."
+              completeLabel={en.workspace.invite.dialog.generateButton}
+              completeLoadingLabel={en.workspace.invite.dialog.generatingButton}
               onCancel={handleClose}
               isCompleteLoading={isSubmitting}
             />

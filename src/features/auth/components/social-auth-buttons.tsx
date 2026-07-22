@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { en } from "@/locales/en";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -14,8 +15,8 @@ export function SocialAuthButtons({
   disabled = false,
   action = "login",
 }: SocialAuthButtonsProps) {
-  const googleText = action === "login" ? "Login with Google" : "Sign up with Google";
-  const githubText = action === "login" ? "Login with GitHub" : "Sign up with GitHub";
+  const googleText = action === "login" ? en.auth.socialAuth.loginGoogle : en.auth.socialAuth.signupGoogle;
+  const githubText = action === "login" ? en.auth.socialAuth.loginGithub : en.auth.socialAuth.signupGithub;
 
   return (
     <>

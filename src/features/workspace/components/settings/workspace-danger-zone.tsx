@@ -5,6 +5,7 @@ import { Trash2, Loader2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { en } from "@/locales/en";
 
 interface WorkspaceDangerZoneProps {
   onDelete: () => void;
@@ -24,11 +25,10 @@ export function WorkspaceDangerZone({
       <Card className="w-full rounded-2xl border border-red-500/20 dark:border-red-900/30 bg-red-500/[0.04] dark:bg-red-950/20 shadow-md">
         <CardHeader className="p-6 pb-3">
           <CardTitle className="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider text-center">
-            Danger Zone
+            {en.workspace.dangerZone.title}
           </CardTitle>
           <CardDescription className="text-xs text-muted-foreground mt-1">
-            Permanently delete this workspace and all associated projects and
-            data. This action cannot be undone.
+            {en.workspace.dangerZone.description}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 pt-0 flex justify-center">
@@ -43,12 +43,12 @@ export function WorkspaceDangerZone({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Deleting...
+                {en.workspace.dangerZone.deletingButton}
               </>
             ) : (
               <>
                 <Trash2 className="mr-2 h-4 w-4" />
-                Delete Workspace
+                {en.workspace.dangerZone.deleteButton}
               </>
             )}
           </Button>
@@ -58,9 +58,9 @@ export function WorkspaceDangerZone({
       <ConfirmDialog
         open={confirmDeleteOpen}
         onOpenChange={setConfirmDeleteOpen}
-        title="Delete Workspace"
-        description="Are you sure you want to proceed?"
-        confirmLabel="Delete Workspace"
+        title={en.workspace.dangerZone.confirmTitle}
+        description={en.workspace.dangerZone.confirmDescription}
+        confirmLabel={en.workspace.dangerZone.confirmButton}
         onConfirm={onDelete}
         isLoading={isLoading}
         variant="danger"

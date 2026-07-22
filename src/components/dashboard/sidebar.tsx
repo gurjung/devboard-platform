@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { HiXMark } from "react-icons/hi2";
 import { cn } from "@/lib/utils";
+import { en } from "@/locales/en";
 import { Separator } from "@/components/ui/separator";
 import { WorkspaceSwitcher } from "@/features/workspace/components/settings/workspace-switcher";
 import { Navigation } from "./navigation";
@@ -38,13 +39,13 @@ export function Sidebar({ open, onClose }: SidebarProps) {
             href="/dashboard"
             className="flex items-center gap-2 font-bold text-xl tracking-tight text-neutral-900 dark:text-neutral-50"
           >
-            <span>DevBoard</span>
+            <span>{en.dashboard.sidebar.brandName}</span>
           </Link>
           <button
             type="button"
             onClick={onClose}
             className="rounded-md p-1 text-neutral-500 hover:bg-neutral-200 dark:hover:bg-zinc-800 lg:hidden"
-            aria-label="Close sidebar"
+            aria-label={en.dashboard.sidebar.closeSidebar}
           >
             <HiXMark className="size-6" />
           </button>

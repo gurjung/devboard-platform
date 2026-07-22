@@ -5,6 +5,7 @@ import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { en } from "@/locales/en";
 
 interface GeneratedInviteViewProps {
   inviteLink: string;
@@ -18,7 +19,7 @@ export function GeneratedInviteView({ inviteLink, onClose }: GeneratedInviteView
     if (inviteLink) {
       navigator.clipboard.writeText(inviteLink);
       setCopied(true);
-      toast.success("Invite link copied to clipboard!");
+      toast.success(en.workspace.invite.generatedView.toastCopied);
       setTimeout(() => setCopied(false), 2000);
     }
   };
@@ -32,10 +33,10 @@ export function GeneratedInviteView({ inviteLink, onClose }: GeneratedInviteView
 
       <div className="space-y-1.5 text-center">
         <h3 className="text-sm font-semibold text-foreground">
-          Invite Link Generated
+          {en.workspace.invite.generatedView.title}
         </h3>
         <p className="text-xs text-muted-foreground leading-normal max-w-xs mx-auto">
-          Copy and share this unique link with the user to invite them to this workspace. It expires in 7 days.
+          {en.workspace.invite.generatedView.description}
         </p>
       </div>
 
@@ -56,12 +57,12 @@ export function GeneratedInviteView({ inviteLink, onClose }: GeneratedInviteView
           {copied ? (
             <>
               <Check className="size-3.5 text-emerald-500" />
-              Copied
+              {en.workspace.invite.generatedView.copiedButton}
             </>
           ) : (
             <>
               <Copy className="size-3.5 text-muted-foreground" />
-              Copy Link
+              {en.workspace.invite.generatedView.copyButton}
             </>
           )}
         </Button>
@@ -74,7 +75,7 @@ export function GeneratedInviteView({ inviteLink, onClose }: GeneratedInviteView
           onClick={onClose}
           className="w-full sm:w-28 h-9 text-xs font-semibold rounded-xl cursor-pointer"
         >
-          Done
+          {en.workspace.invite.generatedView.doneButton}
         </Button>
       </div>
     </div>

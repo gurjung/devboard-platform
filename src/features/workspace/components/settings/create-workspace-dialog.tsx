@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import imageCompression from "browser-image-compression";
 import { toast } from "sonner";
 import { Loader2, Upload, X, ImageIcon } from "lucide-react";
+import { en } from "@/locales/en";
 
 import { FormDialog } from "@/components/shared/form-dialog";
 import { DialogActions } from "@/components/shared/dialog-actions";
@@ -90,7 +91,7 @@ export function CreateWorkspaceDialog({
 
     const validTypes = ["image/png", "image/jpeg"];
     if (!validTypes.includes(file.type)) {
-      toast.error("Please select a PNG or JPEG image.");
+      toast.error(en.workspace.createDialog.toastImageError);
       return;
     }
 
@@ -114,7 +115,7 @@ export function CreateWorkspaceDialog({
       setPreviewUrl(objectUrl);
     } catch (err) {
       console.error("Error compressing image:", err);
-      toast.error("Failed to process image. Please try again.");
+      toast.error(en.workspace.createDialog.toastProcessError);
     } finally {
       setIsCompressing(false);
     }
@@ -150,7 +151,7 @@ export function CreateWorkspaceDialog({
         const json = await response.json();
 
         if (!response.ok || !json.success) {
-          throw new Error(json.message || "Failed to upload logo.");
+          throw new Error(json.message || en.workspace.createDialog.toastError);
         }
 
         uploadedUrl = json.url;
@@ -160,7 +161,7 @@ export function CreateWorkspaceDialog({
           err?.message ||
           (typeof err === "string"
             ? err
-            : "Failed to upload logo. Please try again.");
+            : en.workspace.form.toastUploadErrorRetry);
         toast.error(`Upload error: ${errorMessage}`);
         setIsUploading(false);
         return;
@@ -171,12 +172,12 @@ export function CreateWorkspaceDialog({
       { name: data.name, logo: uploadedUrl },
       {
         onSuccess: (newWorkspace) => {
-          toast.success("Workspace created!");
+          toast.success(en.workspace.createDialog.toastSuccess);
           handleClose();
           router.push(`/dashboard/${newWorkspace.slug}`);
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to create workspace");
+          toast.error(error.message || en.workspace.createDialog.toastError);
           setIsUploading(false);
         },
       }
@@ -186,7 +187,7 @@ export function CreateWorkspaceDialog({
   return (
     <FormDialog
       trigger={children}
-      title="Create Workspace"
+      title={en.workspace.createDialog.title}
       open={open}
       onOpenChange={(newOpen) => {
         if (!newOpen) {
@@ -203,10 +204,10 @@ export function CreateWorkspaceDialog({
             name="name"
             render={({ field, fieldState }) => (
               <Field invalid={!!fieldState.error}>
-                <FieldLabel>Workspace Name</FieldLabel>
+                <FieldLabel>{en.workspace.createDialog.nameLabel}</FieldLabel>
                 <Input
                   type="text"
-                  placeholder="Enter workspace name"
+                  placeholder={en.workspace.createDialog.namePlaceholder}
                   className="w-full"
                   aria-invalid={!!fieldState.error}
                   disabled={isSubmitting}
@@ -223,9 +224,9 @@ export function CreateWorkspaceDialog({
             render={({ fieldState }) => (
               <Field invalid={!!fieldState.error}>
                 <FieldLabel className="text-xs font-semibold flex items-center justify-between w-full">
-                  <span>Workspace Logo</span>
+                  <span>{en.workspace.createDialog.logoLabel}</span>
                   <span className="font-normal text-muted-foreground text-[11px]">
-                    (Optional)
+                    {en.workspace.createDialog.logoOptional}
                   </span>
                 </FieldLabel>
                 <input
@@ -267,12 +268,12 @@ export function CreateWorkspaceDialog({
                         {isCompressing ? (
                           <>
                             <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                            Compressing...
+                            {en.workspace.logoUploader.compressing}
                           </>
                         ) : (
                           <>
                             <Upload className="mr-1.5 h-3.5 w-3.5" />
-                            {previewUrl ? "Change logo" : "Select image"}
+                            {previewUrl ? en.workspace.logoUploader.changeLogo : en.workspace.logoUploader.selectImage}
                           </>
                         )}
                       </Button>
@@ -286,12 +287,12 @@ export function CreateWorkspaceDialog({
                           className="h-8 text-xs px-2.5 rounded-lg text-muted-foreground hover:text-foreground cursor-pointer"
                         >
                           <X className="mr-1 h-3.5 w-3.5" />
-                          Remove
+                          {en.workspace.logoUploader.remove}
                         </Button>
                       )}
                     </div>
                     <p className="text-[11px] text-muted-foreground">
-                      PNG, JPEG (Max 1MB compressed)
+                      {en.workspace.createDialog.logoHint}
                     </p>
                   </div>
                 </div>
@@ -301,9 +302,9 @@ export function CreateWorkspaceDialog({
           />
 
           <DialogActions
-            completeLabel="Create Workspace"
+            completeLabel={en.workspace.createDialog.createButton}
             completeLoadingLabel={
-              isUploading ? "Uploading logo..." : "Creating workspace..."
+              isUploading ? en.workspace.createDialog.uploadingButton : en.workspace.createDialog.creatingButton
             }
             onCancel={handleClose}
             isCompleteLoading={isSubmitting}

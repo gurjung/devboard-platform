@@ -4,6 +4,7 @@ import * as React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { RiAddCircleFill } from "react-icons/ri";
 import { Building2 } from "lucide-react";
+import { en } from "@/locales/en";
 
 import {
   Select,
@@ -39,14 +40,14 @@ export function WorkspaceSwitcher() {
     <div className="flex flex-col gap-y-2 w-full">
       <div className="flex items-center justify-between px-0.5">
         <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Workspaces
+          {en.workspace.switcher.sectionTitle}
         </p>
         <CreateWorkspaceDialog>
           <button
             type="button"
             className="text-muted-foreground hover:text-foreground hover:opacity-75 transition cursor-pointer outline-none"
-            title="Create Workspace"
-            aria-label="Create Workspace"
+            title={en.workspace.switcher.createTooltip}
+            aria-label={en.workspace.switcher.createTooltip}
           >
             <RiAddCircleFill className="size-5" />
           </button>
@@ -59,7 +60,7 @@ export function WorkspaceSwitcher() {
         disabled={isLoading || !workspaces || workspaces.length === 0}
       >
         <SelectTrigger className="h-11 w-full px-2.5 py-2 bg-background hover:bg-accent/60 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border border-border/80 shadow-2xs transition-all duration-200 rounded-xl focus:ring-2 focus:ring-primary/20 hover:border-border">
-          <SelectValue placeholder={isLoading ? "Loading..." : "Select workspace"}>
+          <SelectValue placeholder={isLoading ? en.workspace.switcher.loadingPlaceholder : en.workspace.switcher.selectPlaceholder}>
             {currentWorkspace ? (
               <div className="flex items-center gap-2.5 min-w-0 flex-1 text-left">
                 <Avatar className="h-6 w-6 rounded-md ring-1 ring-border/50 shrink-0">
@@ -75,14 +76,14 @@ export function WorkspaceSwitcher() {
                     {currentWorkspace.name}
                   </span>
                   <span className="text-[10px] text-muted-foreground/80 capitalize font-medium">
-                    {currentWorkspace.role?.toLowerCase() || "member"}
+                    {currentWorkspace.role?.toLowerCase() || en.workspace.switcher.defaultRole}
                   </span>
                 </div>
               </div>
             ) : (
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Building2 className="h-4 w-4" />
-                <span>No workspaces</span>
+                <span>{en.workspace.switcher.noWorkspaces}</span>
               </div>
             )}
           </SelectValue>
@@ -114,7 +115,7 @@ export function WorkspaceSwitcher() {
                       {workspace.name}
                     </span>
                     <span className="text-[10px] text-muted-foreground/80 capitalize font-normal">
-                      {workspace.role?.toLowerCase() || "member"}
+                      {workspace.role?.toLowerCase() || en.workspace.switcher.defaultRole}
                     </span>
                   </div>
                 </div>

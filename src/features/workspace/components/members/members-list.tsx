@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { en } from "@/locales/en";
 import { WORKSPACE_ROLES, type WorkspaceRole } from "@/features/workspace/constants";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { MembersListSkeleton } from "./members-list-skeleton";
@@ -64,11 +65,11 @@ export function MembersList({
       { memberId, role },
       {
         onSuccess: () => {
-          toast.success("Member role updated successfully!");
+          toast.success(en.workspace.members.toastRoleSuccess);
           setRoleChangeRequest(null);
         },
         onError: (err: any) => {
-          toast.error(err.message || "Failed to update role");
+          toast.error(err.message || en.workspace.members.toastRoleError);
         },
       }
     );
@@ -87,11 +88,11 @@ export function MembersList({
     if (!memberToRemove) return;
     removeMemberMutation.mutate(memberToRemove.id, {
       onSuccess: () => {
-        toast.success(`${memberToRemove.user.name || "Member"} removed from workspace.`);
+        toast.success(`${memberToRemove.user.name || en.workspace.members.toastRemoveSuccessFallback} ${en.workspace.members.toastRemoveSuccess}`);
         setMemberToRemove(null);
       },
       onError: (err: any) => {
-        toast.error(err.message || "Failed to remove member");
+        toast.error(err.message || en.workspace.members.toastRemoveError);
       },
     });
   };
@@ -116,12 +117,12 @@ export function MembersList({
       <ConfirmDialog
         open={!!memberToRemove}
         onOpenChange={(open) => !open && setMemberToRemove(null)}
-        title="Remove Member"
+        title={en.workspace.members.removeConfirm.title}
         description={`Are you sure you want to remove ${
           memberToRemove?.user.name || memberToRemove?.user.email || "this member"
         } from the workspace? All their project access will be revoked.`}
-        confirmLabel="Remove Member"
-        confirmLoadingLabel="Removing..."
+        confirmLabel={en.workspace.members.removeConfirm.confirmButton}
+        confirmLoadingLabel={en.workspace.members.removeConfirm.confirmLoadingButton}
         onConfirm={handleConfirmRemove}
         isLoading={removeMemberMutation.isPending}
         variant="danger"
@@ -131,12 +132,12 @@ export function MembersList({
       <ConfirmDialog
         open={!!roleChangeRequest}
         onOpenChange={(open) => !open && setRoleChangeRequest(null)}
-        title="Transfer Workspace Ownership"
+        title={en.workspace.members.transferConfirm.title}
         description={`Are you sure you want to transfer ownership of the workspace to ${
           roleChangeRequest?.member.user.name || roleChangeRequest?.member.user.email || "this member"
         }? You will be demoted to Admin and will no longer have full owner-level access.`}
-        confirmLabel="Transfer Ownership"
-        confirmLoadingLabel="Transferring..."
+        confirmLabel={en.workspace.members.transferConfirm.confirmButton}
+        confirmLoadingLabel={en.workspace.members.transferConfirm.confirmLoadingButton}
         onConfirm={handleConfirmRoleChange}
         isLoading={updateRoleMutation.isPending}
         variant="danger"

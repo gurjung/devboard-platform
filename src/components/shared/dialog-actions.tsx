@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
+import { en } from "@/locales/en";
 
 export interface DialogActionsProps {
   cancelLabel?: string;
@@ -14,7 +15,7 @@ export interface DialogActionsProps {
 }
 
 export function DialogActions({
-  cancelLabel = "Cancel",
+  cancelLabel = en.common.cancel,
   completeLabel,
   onCancel,
   isCompleteDisabled = false,

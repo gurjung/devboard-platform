@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { WORKSPACE_ROLES, type WorkspaceRole } from "@/features/workspace/constants";
 import type { WorkspaceMemberData } from "../../hooks/members/use-workspace-members";
+import { en } from "@/locales/en";
 
 interface MemberCardProps {
   member: WorkspaceMemberData;
@@ -72,15 +73,15 @@ export function MemberCard({
                       .join("")
                       .toUpperCase()
                       .slice(0, 2)
-                  : "MB"}
+                   : en.workspace.members.avatarFallback}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col min-w-0">
               <span className="text-xs font-semibold text-foreground truncate flex items-center gap-1.5">
-                {member.user.name || "Anonymous User"}
+                {member.user.name || en.workspace.members.anonymousUser}
                 {isCurrentUser && (
                   <span className="bg-neutral-200 dark:bg-zinc-800 text-neutral-800 dark:text-zinc-200 px-1.5 py-0.5 rounded-md text-[9px] font-bold">
-                    You
+                    {en.workspace.members.youBadge}
                   </span>
                 )}
               </span>
@@ -98,7 +99,7 @@ export function MemberCard({
               onClick={() => onRemove(member)}
               disabled={disabled}
               className="shrink-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10 cursor-pointer rounded-lg"
-              title="Remove member"
+              title={en.workspace.members.removeTooltip}
             >
               <Trash2 className="size-4" />
             </Button>
@@ -108,7 +109,7 @@ export function MemberCard({
         {/* Bottom row: Role Selector or Static Badge */}
         <div className="flex items-center justify-between border-t border-border/50 pt-3 gap-4">
           <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
-            Role
+            {en.workspace.members.roleLabel}
           </span>
 
           {canChangeRole ? (
@@ -126,10 +127,10 @@ export function MemberCard({
                 {selectOptions.map((opt) => (
                   <SelectItem key={opt} value={opt} className="text-xs">
                     {opt === WORKSPACE_ROLES.OWNER
-                      ? "Owner (Transfer)"
+                      ? en.workspace.members.roles.ownerTransfer
                       : opt === WORKSPACE_ROLES.ADMIN
-                      ? "Admin"
-                      : "Member"}
+                      ? en.workspace.members.roles.admin
+                      : en.workspace.members.roles.member}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -139,17 +140,17 @@ export function MemberCard({
               {isOwner ? (
                 <>
                   <Shield className="size-3.5 text-amber-500 fill-amber-500/20" />
-                  Owner
+                  {en.workspace.members.roles.owner}
                 </>
               ) : isAdmin ? (
                 <>
                   <Shield className="size-3.5 text-blue-500 fill-blue-500/20" />
-                  Admin
+                  {en.workspace.members.roles.admin}
                 </>
               ) : (
                 <>
                   <User className="size-3.5 text-neutral-400" />
-                  Member
+                  {en.workspace.members.roles.member}
                 </>
               )}
             </span>

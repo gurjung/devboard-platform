@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
+import { en } from "@/locales/en";
 
 interface WorkspaceLogoUploaderProps {
   previewUrl: string | null;
@@ -37,7 +38,7 @@ export function WorkspaceLogoUploader({
   const processFile = async (file: File) => {
     const validTypes = ["image/png", "image/jpeg"];
     if (!validTypes.includes(file.type)) {
-      toast.error("Please select a PNG or JPEG image.");
+      toast.error(en.workspace.logoUploader.toastInvalidType);
       return;
     }
 
@@ -61,7 +62,7 @@ export function WorkspaceLogoUploader({
       setPreviewUrl(objectUrl);
     } catch (err) {
       console.error("Error compressing image:", err);
-      toast.error("Failed to process image. Please try again.");
+      toast.error(en.workspace.logoUploader.toastProcessError);
     } finally {
       setIsCompressing(false);
     }
@@ -109,8 +110,8 @@ export function WorkspaceLogoUploader({
   return (
     <Field invalid={!!error}>
       <FieldLabel className="text-xs font-semibold">
-        Workspace Logo{" "}
-        <span className="font-normal text-muted-foreground">(Optional)</span>
+        {en.workspace.logoUploader.label}{" "}
+        <span className="font-normal text-muted-foreground">{en.workspace.logoUploader.optional}</span>
       </FieldLabel>
       <input
         ref={fileInputRef}
@@ -136,7 +137,7 @@ export function WorkspaceLogoUploader({
           {previewUrl ? (
             <AvatarImage
               src={previewUrl}
-              alt="Logo preview"
+              alt={en.workspace.logoUploader.previewAlt}
               className="object-cover"
             />
           ) : null}
@@ -162,12 +163,12 @@ export function WorkspaceLogoUploader({
               {isCompressing ? (
                 <>
                   <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                  Compressing...
+                  {en.workspace.logoUploader.compressing}
                 </>
               ) : (
                 <>
                   <Upload className="mr-1.5 h-3.5 w-3.5" />
-                  {previewUrl ? "Change logo" : "Select image"}
+                  {previewUrl ? en.workspace.logoUploader.changeLogo : en.workspace.logoUploader.selectImage}
                 </>
               )}
             </Button>
@@ -181,12 +182,12 @@ export function WorkspaceLogoUploader({
                 className="h-8 text-xs px-2.5 rounded-lg text-muted-foreground hover:text-foreground cursor-pointer"
               >
                 <X className="mr-1 h-3.5 w-3.5" />
-                Remove
+                {en.workspace.logoUploader.remove}
               </Button>
             )}
           </div>
           <p className="text-[11px] text-muted-foreground">
-            PNG, JPEG (Drag and drop or select up to 1MB compressed)
+            {en.workspace.logoUploader.hint}
           </p>
         </div>
       </div>
