@@ -7,6 +7,7 @@ import { Loader2, Upload, X, ImageIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { cn } from "@/lib/utils";
 
 interface WorkspaceLogoUploaderProps {
   previewUrl: string | null;
@@ -31,11 +32,9 @@ export function WorkspaceLogoUploader({
 }: WorkspaceLogoUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isCompressing, setIsCompressing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const processFile = async (file: File) => {
     const validTypes = ["image/png", "image/jpeg"];
     if (!validTypes.includes(file.type)) {
       toast.error("Please select a PNG or JPEG image.");
@@ -68,6 +67,33 @@ export function WorkspaceLogoUploader({
     }
   };
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    await processFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (disabled || isCompressing) return;
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (disabled || isCompressing) return;
+
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
+    await processFile(file);
+  };
+
   const handleRemoveLogo = () => {
     if (previewUrl && previewUrl !== initialLogoUrl) {
       URL.revokeObjectURL(previewUrl);
@@ -95,7 +121,17 @@ export function WorkspaceLogoUploader({
         disabled={disabled || isCompressing}
       />
 
-      <div className="flex items-center gap-3.5 p-3 rounded-xl border border-dashed border-border/80 bg-muted/20">
+      <div
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={cn(
+          "flex items-center gap-3.5 p-3 rounded-xl border border-dashed transition-colors duration-200",
+          isDragging
+            ? "border-primary bg-primary/5 dark:bg-primary/10"
+            : "border-border/80 bg-muted/20"
+        )}
+      >
         <Avatar className="h-12 w-12 rounded-xl shrink-0 ring-1 ring-border/50">
           {previewUrl ? (
             <AvatarImage
@@ -150,7 +186,7 @@ export function WorkspaceLogoUploader({
             )}
           </div>
           <p className="text-[11px] text-muted-foreground">
-            PNG, JPEG (Max 1MB compressed)
+            PNG, JPEG (Drag and drop or select up to 1MB compressed)
           </p>
         </div>
       </div>
