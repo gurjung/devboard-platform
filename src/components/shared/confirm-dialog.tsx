@@ -22,6 +22,7 @@ export interface ConfirmDialogProps {
   description: React.ReactNode;
   cancelLabel?: string;
   confirmLabel?: string;
+  confirmLoadingLabel?: string;
   onConfirm: () => void;
   onCancel?: () => void;
   isLoading?: boolean;
@@ -67,6 +68,7 @@ export function ConfirmDialog({
   description,
   cancelLabel = "Cancel",
   confirmLabel = "Confirm",
+  confirmLoadingLabel,
   onConfirm,
   onCancel,
   isLoading = false,
@@ -129,7 +131,7 @@ export function ConfirmDialog({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Deleting...
+                {confirmLoadingLabel || (variant === "danger" ? "Deleting..." : "Confirming...")}
               </>
             ) : (
               confirmLabel
