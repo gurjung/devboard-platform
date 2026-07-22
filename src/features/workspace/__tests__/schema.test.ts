@@ -66,4 +66,48 @@ describe("Workspace schemas", () => {
       }
     });
   });
+
+  describe("inviteMemberSchema", () => {
+    const { inviteMemberSchema } = require("../schema");
+
+    it("should validate successfully with valid email and role", () => {
+      const result = inviteMemberSchema.safeParse({
+        email: "user@example.com",
+        role: "MEMBER",
+      });
+      expect(result.success).toBe(true);
+    });
+
+    it("should reject empty email", () => {
+      const result = inviteMemberSchema.safeParse({
+        email: "",
+        role: "MEMBER",
+      });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe("Email is required");
+      }
+    });
+
+    it("should reject invalid email format", () => {
+      const result = inviteMemberSchema.safeParse({
+        email: "invalid-email",
+        role: "MEMBER",
+      });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe(
+          "Please enter a valid email address",
+        );
+      }
+    });
+
+    it("should reject invalid role", () => {
+      const result = inviteMemberSchema.safeParse({
+        email: "user@example.com",
+        role: "OWNER",
+      });
+      expect(result.success).toBe(false);
+    });
+  });
 });
