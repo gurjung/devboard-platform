@@ -55,3 +55,4 @@ export default async function WorkspaceSettingsPage({
     </div>
   );
 }
+

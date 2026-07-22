@@ -24,9 +24,19 @@ import {
   FieldGroup,
 } from "@/components/ui/field";
 import { useRegister } from "@/features/auth/hooks/use-register";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 const SignUpCard = () => {
   const registerMutation = useRegister();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const rawCallbackUrl = searchParams.get("callbackUrl");
+  const signInUrl = rawCallbackUrl
+    ? `/sign-in?callbackUrl=${encodeURIComponent(rawCallbackUrl)}`
+    : "/sign-in";
 
   const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
@@ -38,13 +48,30 @@ const SignUpCard = () => {
   });
 
   const onSubmit = (data: RegisterInput) => {
-    console.log("Submitting:", data);
     registerMutation.mutate(data, {
-      onSuccess: (response) => {
-        console.log(response, "Response");
+      onSuccess: async () => {
+        toast.success("Account created successfully! Logging you in...");
+
+        // Automatically sign in the user
+        const result = await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          form.setError("root", {
+            message: "Account created, but login failed. Please sign in manually.",
+          });
+        } else {
+          router.push(callbackUrl);
+          router.refresh();
+        }
       },
-      onError: (error) => {
-        console.log(error, "error");
+      onError: (error: any) => {
+        const errMsg = error.message || "Registration failed";
+        form.setError("root", { message: errMsg });
+        toast.error(errMsg);
       },
     });
   };
@@ -71,6 +98,11 @@ const SignUpCard = () => {
       </div>
       <CardContent className="p-7">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          {form.formState.errors.root && (
+            <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs font-medium">
+              {form.formState.errors.root.message}
+            </div>
+          )}
           <FieldGroup>
             <Controller
               control={form.control}
@@ -164,7 +196,7 @@ const SignUpCard = () => {
         <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
-            href="/sign-in"
+            href={signInUrl}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             Sign In

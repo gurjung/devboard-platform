@@ -24,11 +24,18 @@ import {
   FieldGroup,
 } from "@/components/ui/field";
 import { useLogin } from "@/features/auth/hooks/use-login";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 const SignInCard = () => {
   const loginMutation = useLogin();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const rawCallbackUrl = searchParams.get("callbackUrl");
+  const signUpUrl = rawCallbackUrl
+    ? `/sign-up?callbackUrl=${encodeURIComponent(rawCallbackUrl)}`
+    : "/sign-up";
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -41,12 +48,13 @@ const SignInCard = () => {
   const onSubmit = (data: LoginInput) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
-        router.push("/dashboard");
+        toast.success("Logged in successfully!");
+        router.push(callbackUrl);
         router.refresh();
       },
       onError: (error) => {
         form.setError("root", { message: error.message });
-        // or: toast.error(error.message)
+        toast.error(error.message || "Invalid credentials");
       },
     });
   };
@@ -66,6 +74,11 @@ const SignInCard = () => {
       </div>
       <CardContent className="p-7">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          {form.formState.errors.root && (
+            <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs font-medium">
+              {form.formState.errors.root.message}
+            </div>
+          )}
           <FieldGroup>
             <Controller
               control={form.control}
@@ -142,7 +155,7 @@ const SignInCard = () => {
         <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
-            href="/sign-up"
+            href={signUpUrl}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             Sign Up

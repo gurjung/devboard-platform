@@ -31,6 +31,7 @@ import { useCreateWorkspace } from "../hooks/use-create-workspace";
 import { useUpdateWorkspace } from "../hooks/use-update-workspace";
 import { useDeleteWorkspace } from "../hooks/use-delete-workspace";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { InviteMemberDialog } from "./invite-member-dialog";
 
 interface WorkspaceFormProps {
   initialValues?: {
@@ -450,6 +451,32 @@ export function WorkspaceForm({
           </form>
         </CardContent>
       </Card>
+
+      {/* Members & Collaboration Card */}
+      {mode === "edit" && initialValues?.id && (
+        <Card className="w-full rounded-2xl border border-border/80 shadow-md bg-card">
+          <CardHeader className="p-6 pb-3">
+            <CardTitle className="text-xs font-bold text-foreground uppercase tracking-wider text-center">
+              Members & Collaboration
+            </CardTitle>
+            <CardDescription className="text-xs text-muted-foreground mt-1 text-center">
+              Invite new members to collaborate on projects and manage team access.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6 pt-0 flex justify-center">
+            <InviteMemberDialog workspaceId={initialValues.id}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full max-w-xs cursor-pointer h-9 rounded-xl text-xs font-medium border-border/80 hover:bg-muted"
+              >
+                Invite Member
+              </Button>
+            </InviteMemberDialog>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Delete Danger Zone (Separate Card below Edit Workspace) */}
       {mode === "edit" && (onDelete || initialValues?.id) && (
