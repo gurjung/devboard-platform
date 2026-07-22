@@ -1,6 +1,6 @@
 import { getWorkspaceMembership } from "@/lib/workspace-auth";
 import { redirect } from "next/navigation";
-import { WorkspaceForm } from "@/features/workspace/components/workspace-form";
+import { WorkspaceForm } from "@/features/workspace/components/settings/workspace-form";
 import { WorkspaceRole } from "@/features/workspace/constants";
 
 interface WorkspaceSettingsPageProps {
@@ -55,3 +55,4 @@ export default async function WorkspaceSettingsPage({
     </div>
   );
 }
+

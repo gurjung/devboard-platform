@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import imageCompression from "browser-image-compression";
 import { toast } from "sonner";
-import { Loader2, Upload, X, ImageIcon, Trash2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 
 import {
@@ -19,18 +18,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Field,
   FieldLabel,
   FieldError,
   FieldGroup,
 } from "@/components/ui/field";
-import { createWorkspaceSchema, type CreateWorkspaceInput } from "../schema";
-import { useCreateWorkspace } from "../hooks/use-create-workspace";
-import { useUpdateWorkspace } from "../hooks/use-update-workspace";
-import { useDeleteWorkspace } from "../hooks/use-delete-workspace";
-import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { createWorkspaceSchema, type CreateWorkspaceInput } from "../../schema";
+import { useCreateWorkspace } from "../../hooks/settings/use-create-workspace";
+import { useUpdateWorkspace } from "../../hooks/settings/use-update-workspace";
+import { useDeleteWorkspace } from "../../hooks/settings/use-delete-workspace";
+import { InviteMemberDialog } from "../invite/invite-member-dialog";
+import { WorkspaceLogoUploader } from "./workspace-logo-uploader";
+import { WorkspaceDangerZone } from "./workspace-danger-zone";
 
 interface WorkspaceFormProps {
   initialValues?: {
@@ -54,15 +54,12 @@ export function WorkspaceForm({
   isDeleting = false,
 }: WorkspaceFormProps) {
   const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     initialValues?.logo || null,
   );
-  const [isCompressing, setIsCompressing] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const form = useForm<CreateWorkspaceInput>({
     resolver: zodResolver(createWorkspaceSchema),
@@ -79,7 +76,6 @@ export function WorkspaceForm({
   const isDeletingState = isDeleting || deleteWorkspaceMutation.isPending;
 
   const isSubmitting =
-    isCompressing ||
     isUploading ||
     createWorkspaceMutation.isPending ||
     updateWorkspaceMutation.isPending;
@@ -96,64 +92,12 @@ export function WorkspaceForm({
       name: initialValues?.name || "",
       logo: initialValues?.logo || "",
     });
-    setIsCompressing(false);
     setIsUploading(false);
     setLogoFile(null);
     if (previewUrl && previewUrl !== initialValues?.logo) {
       URL.revokeObjectURL(previewUrl);
     }
     setPreviewUrl(initialValues?.logo || null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const validTypes = ["image/png", "image/jpeg"];
-    if (!validTypes.includes(file.type)) {
-      toast.error("Please select a PNG or JPEG image.");
-      return;
-    }
-
-    try {
-      setIsCompressing(true);
-
-      const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 512,
-        useWebWorker: true,
-      };
-
-      const compressedFile = await imageCompression(file, options);
-
-      if (previewUrl && previewUrl !== initialValues?.logo) {
-        URL.revokeObjectURL(previewUrl);
-      }
-
-      const objectUrl = URL.createObjectURL(compressedFile);
-      setLogoFile(compressedFile);
-      setPreviewUrl(objectUrl);
-    } catch (err) {
-      console.error("Error compressing image:", err);
-      toast.error("Failed to process image. Please try again.");
-    } finally {
-      setIsCompressing(false);
-    }
-  };
-
-  const handleRemoveLogo = () => {
-    if (previewUrl && previewUrl !== initialValues?.logo) {
-      URL.revokeObjectURL(previewUrl);
-    }
-    setPreviewUrl(null);
-    setLogoFile(null);
-    form.setValue("logo", "");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   };
 
   const onSubmit = async (data: CreateWorkspaceInput) => {
@@ -237,14 +181,12 @@ export function WorkspaceForm({
   const handleConfirmDelete = async () => {
     if (onDelete) {
       await onDelete();
-      setConfirmDeleteOpen(false);
     } else if (initialValues?.id) {
       deleteWorkspaceMutation.mutate(
         { id: initialValues.id },
         {
           onSuccess: () => {
             toast.success("Workspace deleted successfully!");
-            setConfirmDeleteOpen(false);
             router.push("/dashboard");
           },
           onError: (error) => {
@@ -306,82 +248,16 @@ export function WorkspaceForm({
                 control={form.control}
                 name="logo"
                 render={({ fieldState }) => (
-                  <Field invalid={!!fieldState.error}>
-                    <FieldLabel className="text-xs font-semibold">
-                      Workspace Logo{" "}
-                      <span className="font-normal text-muted-foreground">
-                        (Optional)
-                      </span>
-                    </FieldLabel>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/png,image/jpeg"
-                      className="hidden"
-                      onChange={handleFileChange}
-                    />
-
-                    <div className="flex items-center gap-3.5 p-3 rounded-xl border border-dashed border-border/80 bg-muted/20">
-                      <Avatar className="h-12 w-12 rounded-xl shrink-0 ring-1 ring-border/50">
-                        {previewUrl ? (
-                          <AvatarImage
-                            src={previewUrl}
-                            alt="Logo preview"
-                            className="object-cover"
-                          />
-                        ) : null}
-                        <AvatarFallback className="bg-muted/80 text-muted-foreground font-bold rounded-xl">
-                          {isCompressing || isUploading ? (
-                            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                          ) : (
-                            <ImageIcon className="h-4 w-4 text-muted-foreground/70" />
-                          )}
-                        </AvatarFallback>
-                      </Avatar>
-
-                      <div className="flex flex-col gap-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => fileInputRef.current?.click()}
-                            disabled={isSubmitting}
-                            className="h-8 text-xs px-3 rounded-lg cursor-pointer"
-                          >
-                            {isCompressing ? (
-                              <>
-                                <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                                Compressing...
-                              </>
-                            ) : (
-                              <>
-                                <Upload className="mr-1.5 h-3.5 w-3.5" />
-                                {previewUrl ? "Change logo" : "Select image"}
-                              </>
-                            )}
-                          </Button>
-                          {previewUrl && (
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={handleRemoveLogo}
-                              disabled={isSubmitting}
-                              className="h-8 text-xs px-2.5 rounded-lg text-muted-foreground hover:text-foreground cursor-pointer"
-                            >
-                              <X className="mr-1 h-3.5 w-3.5" />
-                              Remove
-                            </Button>
-                          )}
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">
-                          PNG, JPEG (Max 1MB compressed)
-                        </p>
-                      </div>
-                    </div>
-                    <FieldError>{fieldState.error?.message}</FieldError>
-                  </Field>
+                  <WorkspaceLogoUploader
+                    previewUrl={previewUrl}
+                    setPreviewUrl={setPreviewUrl}
+                    logoFile={logoFile}
+                    setLogoFile={setLogoFile}
+                    initialLogoUrl={initialValues?.logo}
+                    disabled={isSubmitting}
+                    setFormValue={(val) => form.setValue("logo", val)}
+                    error={fieldState.error?.message}
+                  />
                 )}
               />
 
@@ -451,54 +327,40 @@ export function WorkspaceForm({
         </CardContent>
       </Card>
 
-      {/* Delete Danger Zone (Separate Card below Edit Workspace) */}
-      {mode === "edit" && (onDelete || initialValues?.id) && (
-        <Card className="w-full rounded-2xl border border-red-500/20 dark:border-red-900/30 bg-red-500/[0.04] dark:bg-red-950/20 shadow-md">
+      {/* Members & Collaboration Card */}
+      {mode === "edit" && initialValues?.id && (
+        <Card className="w-full rounded-2xl border border-border/80 shadow-md bg-card">
           <CardHeader className="p-6 pb-3">
-            <CardTitle className="text-xs font-bold text-red-600 dark:text-red-400 uppercase tracking-wider text-center">
-              Danger Zone
+            <CardTitle className="text-xs font-bold text-foreground uppercase tracking-wider text-center">
+              Members & Collaboration
             </CardTitle>
-            <CardDescription className="text-xs text-muted-foreground mt-1">
-              Permanently delete this workspace and all associated projects and
-              data. This action cannot be undone.
+            <CardDescription className="text-xs text-muted-foreground mt-1 text-center">
+              Invite new members to collaborate on projects and manage team access.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6 pt-0 flex justify-center">
-            <Button
-              type="button"
-              variant="destructive"
-              size="sm"
-              onClick={() => setConfirmDeleteOpen(true)}
-              disabled={isDeletingState || isSubmitting}
-              className="w-full max-w-xs cursor-pointer h-9 rounded-xl text-xs font-medium bg-red-600 hover:bg-red-700 active:bg-red-800 text-white dark:bg-red-600 dark:hover:bg-red-700 shadow-xs transition-colors"
-            >
-              {isDeletingState ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Deleting...
-                </>
-              ) : (
-                <>
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Workspace
-                </>
-              )}
-            </Button>
+            <InviteMemberDialog workspaceId={initialValues.id}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full max-w-xs cursor-pointer h-9 rounded-xl text-xs font-medium border-border/80 hover:bg-muted"
+              >
+                Invite Member
+              </Button>
+            </InviteMemberDialog>
           </CardContent>
         </Card>
       )}
 
-      {/* Danger Zone Confirm Dialog */}
-      <ConfirmDialog
-        open={confirmDeleteOpen}
-        onOpenChange={setConfirmDeleteOpen}
-        title="Delete Workspace"
-        description="Are you sure you want to proceed?"
-        confirmLabel="Delete Workspace"
-        onConfirm={handleConfirmDelete}
-        isLoading={isDeletingState}
-        variant="danger"
-      />
+      {/* Delete Danger Zone (Separate Card below Edit Workspace) */}
+      {mode === "edit" && (onDelete || initialValues?.id) && (
+        <WorkspaceDangerZone
+          onDelete={handleConfirmDelete}
+          isLoading={isDeletingState}
+          disabled={isSubmitting}
+        />
+      )}
     </div>
   );
 }

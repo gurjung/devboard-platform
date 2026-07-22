@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreateWorkspaceInput } from "../schema";
+import { CreateWorkspaceInput } from "../../schema";
 
 interface UpdateWorkspaceRequest {
   id: string;

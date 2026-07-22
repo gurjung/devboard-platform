@@ -14,8 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { loginSchema, type LoginInput } from "@/features/auth/schema";
 import {
   Field,
@@ -24,11 +22,19 @@ import {
   FieldGroup,
 } from "@/components/ui/field";
 import { useLogin } from "@/features/auth/hooks/use-login";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { SocialAuthButtons } from "./social-auth-buttons";
 
 const SignInCard = () => {
   const loginMutation = useLogin();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const rawCallbackUrl = searchParams.get("callbackUrl");
+  const signUpUrl = rawCallbackUrl
+    ? `/sign-up?callbackUrl=${encodeURIComponent(rawCallbackUrl)}`
+    : "/sign-up";
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -41,12 +47,13 @@ const SignInCard = () => {
   const onSubmit = (data: LoginInput) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
-        router.push("/dashboard");
+        toast.success("Logged in successfully!");
+        router.push(callbackUrl);
         router.refresh();
       },
       onError: (error) => {
         form.setError("root", { message: error.message });
-        // or: toast.error(error.message)
+        toast.error(error.message || "Invalid credentials");
       },
     });
   };
@@ -66,6 +73,11 @@ const SignInCard = () => {
       </div>
       <CardContent className="p-7">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          {form.formState.errors.root && (
+            <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs font-medium">
+              {form.formState.errors.root.message}
+            </div>
+          )}
           <FieldGroup>
             <Controller
               control={form.control}
@@ -116,24 +128,7 @@ const SignInCard = () => {
         <Separator />
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full cursor-pointer"
-          disabled={loginMutation.isPending}
-        >
-          <FcGoogle />
-          Login with Google
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          className="w-full cursor-pointer"
-          disabled={loginMutation.isPending}
-        >
-          <FaGithub />
-          Login with GitHub
-        </Button>
+        <SocialAuthButtons disabled={loginMutation.isPending} action="login" />
       </CardContent>
       <div className="px-7">
         <Separator />
@@ -142,7 +137,7 @@ const SignInCard = () => {
         <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
-            href="/sign-up"
+            href={signUpUrl}
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             Sign Up

@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useWorkspaces } from "../hooks/use-workspaces";
+import { useWorkspaces } from "../../hooks/settings/use-workspaces";
 import { CreateWorkspaceDialog } from "./create-workspace-dialog";
 
 export function WorkspaceSwitcher() {
