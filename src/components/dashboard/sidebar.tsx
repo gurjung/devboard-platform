@@ -4,7 +4,7 @@ import Link from "next/link";
 import { HiXMark } from "react-icons/hi2";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
-import { WorkspaceSwitcher } from "@/features/workspace/components/workspace-switcher";
+import { WorkspaceSwitcher } from "@/features/workspace/components/settings/workspace-switcher";
 import { Navigation } from "./navigation";
 
 interface SidebarProps {

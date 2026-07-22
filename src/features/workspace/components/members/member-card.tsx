@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { WORKSPACE_ROLES, type WorkspaceRole } from "@/features/workspace/constants";
-import type { WorkspaceMemberData } from "../hooks/use-workspace-members";
+import type { WorkspaceMemberData } from "../../hooks/members/use-workspace-members";
 
 interface MemberCardProps {
   member: WorkspaceMemberData;

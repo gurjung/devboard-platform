@@ -9,7 +9,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { useInvite, useAcceptInvite } from "@/features/workspace/hooks/use-invite";
+import { useInvite, useAcceptInvite } from "@/features/workspace/hooks/invite/use-invite";
 import { INVITE_REASONS, type InviteReason } from "@/features/workspace/constants";
 
 interface InviteResponse {

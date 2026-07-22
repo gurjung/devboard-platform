@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { WorkspaceForm } from "@/features/workspace/components/workspace-form";
+import { WorkspaceForm } from "@/features/workspace/components/settings/workspace-form";
 
 export default async function DashboardPage() {
   const session = await auth();

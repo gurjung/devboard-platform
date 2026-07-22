@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { InviteMemberInput } from "../schema";
+import { InviteMemberInput } from "../../schema";
 
 interface InviteMemberRequest {
   workspaceId: string;

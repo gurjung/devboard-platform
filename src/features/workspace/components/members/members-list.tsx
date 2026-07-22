@@ -7,9 +7,9 @@ import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { MembersListSkeleton } from "./members-list-skeleton";
 import { MembersListError } from "./members-list-error";
 import { MemberCard } from "./member-card";
-import { useWorkspaceMembers, type WorkspaceMemberData } from "../hooks/use-workspace-members";
-import { useUpdateMemberRole } from "../hooks/use-update-member-role";
-import { useRemoveMember } from "../hooks/use-remove-member";
+import { useWorkspaceMembers, type WorkspaceMemberData } from "../../hooks/members/use-workspace-members";
+import { useUpdateMemberRole } from "../../hooks/members/use-update-member-role";
+import { useRemoveMember } from "../../hooks/members/use-remove-member";
 
 interface MembersListProps {
   workspaceId: string;

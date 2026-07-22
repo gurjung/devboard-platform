@@ -24,11 +24,11 @@ import {
   FieldError,
   FieldGroup,
 } from "@/components/ui/field";
-import { createWorkspaceSchema, type CreateWorkspaceInput } from "../schema";
-import { useCreateWorkspace } from "../hooks/use-create-workspace";
-import { useUpdateWorkspace } from "../hooks/use-update-workspace";
-import { useDeleteWorkspace } from "../hooks/use-delete-workspace";
-import { InviteMemberDialog } from "./invite-member-dialog";
+import { createWorkspaceSchema, type CreateWorkspaceInput } from "../../schema";
+import { useCreateWorkspace } from "../../hooks/settings/use-create-workspace";
+import { useUpdateWorkspace } from "../../hooks/settings/use-update-workspace";
+import { useDeleteWorkspace } from "../../hooks/settings/use-delete-workspace";
+import { InviteMemberDialog } from "../invite/invite-member-dialog";
 import { WorkspaceLogoUploader } from "./workspace-logo-uploader";
 import { WorkspaceDangerZone } from "./workspace-danger-zone";
 

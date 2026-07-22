@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Sidebar } from "./sidebar";
 import { Navbar } from "./navbar";
-import { useWorkspaces } from "@/features/workspace/hooks/use-workspaces";
+import { useWorkspaces } from "@/features/workspace/hooks/settings/use-workspaces";
 
 interface User {
   name?: string | null;

@@ -1,6 +1,6 @@
 import { getWorkspaceMembership } from "@/lib/workspace-auth";
 import { redirect } from "next/navigation";
-import { MembersList } from "@/features/workspace/components/members-list";
+import { MembersList } from "@/features/workspace/components/members/members-list";
 
 interface WorkspaceMembersPageProps {
   params: Promise<{

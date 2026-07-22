@@ -20,8 +20,8 @@ import {
   FieldError,
   FieldGroup,
 } from "@/components/ui/field";
-import { createWorkspaceSchema, type CreateWorkspaceInput } from "../schema";
-import { useCreateWorkspace } from "../hooks/use-create-workspace";
+import { createWorkspaceSchema, type CreateWorkspaceInput } from "../../schema";
+import { useCreateWorkspace } from "../../hooks/settings/use-create-workspace";
 
 interface CreateWorkspaceDialogProps {
   children?: React.ReactNode;

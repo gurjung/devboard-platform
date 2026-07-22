@@ -25,8 +25,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { inviteMemberSchema, type InviteMemberInput } from "../schema";
-import { useInviteMember } from "../hooks/use-invite-member";
+import { inviteMemberSchema, type InviteMemberInput } from "../../schema";
+import { useInviteMember } from "../../hooks/invite/use-invite-member";
 
 interface InviteMemberDialogProps {
   children?: React.ReactNode;
