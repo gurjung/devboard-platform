@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { TaskTable } from "../task-table";
+import { TaskTable } from "../task-table/task-table";
 import { TaskWithAssignee } from "../../hooks/use-tasks";
 import { useInView } from "react-intersection-observer";
 
