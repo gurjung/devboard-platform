@@ -223,10 +223,8 @@ export const en = {
         toastSuccess: "Invitation generated successfully!",
         toastError: "Failed to generate invitation link",
         toastErrorMember: "This user is already a member.",
-        toastErrorPermission:
-          "You do not have permission to invite members.",
-        toastErrorDefault:
-          "Failed to invite member. Please try again.",
+        toastErrorPermission: "You do not have permission to invite members.",
+        toastErrorDefault: "Failed to invite member. Please try again.",
       },
       generatedView: {
         title: "Invite Link Generated",
@@ -252,8 +250,7 @@ export const en = {
       unauthenticated: {
         signInButton: "Sign In",
         createAccountButton: "Create Account",
-        footer:
-          "Please log in or sign up with the invited email to accept.",
+        footer: "Please log in or sign up with the invited email to accept.",
       },
       mismatch: {
         title: "Account Mismatch",
@@ -263,8 +260,7 @@ export const en = {
       errors: {
         default: {
           title: "Invalid Invitation",
-          description:
-            "This invitation link is invalid or has expired.",
+          description: "This invitation link is invalid or has expired.",
         },
         NOT_FOUND: {
           title: "Invite link invalid",
@@ -287,6 +283,71 @@ export const en = {
         goToDashboard: "Go to Dashboard",
         returnToDashboard: "Return to Dashboard",
       },
+    },
+  },
+
+  project: {
+    switcher: {
+      sectionTitle: "Projects",
+      createTooltip: "Create Project",
+      loadingPlaceholder: "Loading...",
+      selectPlaceholder: "Select project",
+      noProjects: "No projects",
+    },
+    createDialog: {
+      title: "Create Project",
+      nameLabel: "Project Name",
+      namePlaceholder: "Enter project name",
+      logoLabel: "Project Logo",
+      logoOptional: "(Optional)",
+      logoHint: "PNG, JPEG (Max 1MB compressed)",
+      createButton: "Create Project",
+      uploadingButton: "Uploading logo...",
+      creatingButton: "Creating project...",
+      toastSuccess: "Project created!",
+      toastError: "Failed to create project",
+      toastImageError: "Please select a PNG or JPEG image.",
+      toastProcessError: "Failed to process image. Please try again.",
+    },
+    logoUploader: {
+      label: "Project Logo",
+      optional: "(Optional)",
+      selectImage: "Select image",
+      changeLogo: "Change logo",
+      compressing: "Compressing...",
+      remove: "Remove",
+      hint: "PNG, JPEG (Drag and drop or select up to 1MB compressed)",
+    },
+    dangerZone: {
+      title: "Danger Zone",
+      description:
+        "Permanently delete this project and all associated data. This action cannot be undone.",
+      deleteButton: "Delete Project",
+      deletingButton: "Deleting...",
+      confirmTitle: "Delete Project",
+      confirmDescription: "Are you sure you want to proceed?",
+      confirmButton: "Delete Project",
+    },
+    settingsPage: {
+      title: "Project Settings",
+      description: "Update project settings or delete project.",
+      accessDeniedTitle: "Access Denied",
+      accessDeniedDescription:
+        "You do not have permission to manage settings for this project.",
+    },
+    form: {
+      nameLabel: "Project Name",
+      namePlaceholder: "Enter project name",
+      saveButton: "Save Changes",
+      savingButton: "Saving...",
+      uploadingButton: "Uploading logo...",
+      cancelButton: "Cancel",
+      toastUpdateSuccess: "Project updated successfully!",
+      toastUpdateError: "Failed to update project",
+      toastDeleteSuccess: "Project deleted successfully!",
+      toastDeleteError: "Failed to delete project",
+      toastUploadError: "Failed to upload logo.",
+      toastUploadErrorRetry: "Failed to upload logo. Please try again.",
     },
   },
 
