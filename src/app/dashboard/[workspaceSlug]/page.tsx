@@ -23,13 +23,16 @@ export default async function WorkspaceDashboardPage({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">{en.workspace.overviewPage.title}</h1>
+        <h1 className="text-2xl font-bold tracking-tight">
+          {en.workspace.overviewPage.title}
+        </h1>
         <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground uppercase tracking-wider">
           {role}
         </span>
       </div>
       <p className="text-muted-foreground">
-        {en.workspace.overviewPage.welcomePrefix} {workspace.name} {en.workspace.overviewPage.welcomeSuffix}
+        {en.workspace.overviewPage.welcomePrefix} {workspace.name}{" "}
+        {en.workspace.overviewPage.welcomeSuffix}
       </p>
     </div>
   );

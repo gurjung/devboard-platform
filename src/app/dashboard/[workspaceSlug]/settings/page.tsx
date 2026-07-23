@@ -26,7 +26,9 @@ export default async function WorkspaceSettingsPage({
   if (role !== WorkspaceRole.OWNER && role !== WorkspaceRole.ADMIN) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-4">
-        <h2 className="text-xl font-bold text-foreground">{en.workspace.settingsPage.accessDeniedTitle}</h2>
+        <h2 className="text-xl font-bold text-foreground">
+          {en.workspace.settingsPage.accessDeniedTitle}
+        </h2>
         <p className="text-xs text-muted-foreground mt-1">
           {en.workspace.settingsPage.accessDeniedDescription}
         </p>
@@ -56,4 +58,3 @@ export default async function WorkspaceSettingsPage({
     </div>
   );
 }
-

@@ -46,7 +46,7 @@ describe("useRemoveMember hook", () => {
       "/api/workspaces/workspace-123/members/member-456",
       expect.objectContaining({
         method: "DELETE",
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse);

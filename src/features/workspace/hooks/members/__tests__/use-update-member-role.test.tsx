@@ -48,7 +48,7 @@ describe("useUpdateMemberRole hook", () => {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: "ADMIN" }),
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse.data);

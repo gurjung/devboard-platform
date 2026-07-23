@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     if (!result.success) {
       return NextResponse.json(
         { success: false, errors: result.error.flatten().fieldErrors },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     if (existingUser) {
       return NextResponse.json(
         { success: false, message: "Email already in use" },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       { success: false, message: "Something went wrong" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

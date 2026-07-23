@@ -3,7 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { Mail, Users } from "lucide-react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { en } from "@/locales/en";
@@ -17,9 +24,15 @@ interface InviteUnauthenticatedCardProps {
   };
 }
 
-export function InviteUnauthenticatedCard({ token, data }: InviteUnauthenticatedCardProps) {
+export function InviteUnauthenticatedCard({
+  token,
+  data,
+}: InviteUnauthenticatedCardProps) {
   // Construct callbackUrl back to this invite page
-  const currentUrl = typeof window !== "undefined" ? window.location.pathname : `/invite/${token}`;
+  const currentUrl =
+    typeof window !== "undefined"
+      ? window.location.pathname
+      : `/invite/${token}`;
   const authQuery = `?callbackUrl=${encodeURIComponent(currentUrl)}`;
 
   return (
@@ -31,15 +44,27 @@ export function InviteUnauthenticatedCard({ token, data }: InviteUnauthenticated
             Join {data.workspaceName}
           </CardTitle>
           <CardDescription className="text-xs text-muted-foreground leading-normal mt-1 max-w-xs">
-            You have been invited to join <span className="font-semibold text-foreground">{data.workspaceName}</span> as a <span className="font-semibold text-foreground capitalize">{data.role?.toLowerCase()}</span>.
+            You have been invited to join{" "}
+            <span className="font-semibold text-foreground">
+              {data.workspaceName}
+            </span>{" "}
+            as a{" "}
+            <span className="font-semibold text-foreground capitalize">
+              {data.role?.toLowerCase()}
+            </span>
+            .
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 pt-2">
           <div className="p-3 bg-muted/40 border border-border/50 rounded-xl flex items-center gap-2.5">
             <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
             <div className="flex flex-col min-w-0">
-              <span className="text-[10px] text-muted-foreground leading-none">{en.workspace.invite.accept.invitedEmailLabel}</span>
-              <span className="text-xs font-medium truncate text-foreground mt-0.5">{data.email}</span>
+              <span className="text-[10px] text-muted-foreground leading-none">
+                {en.workspace.invite.accept.invitedEmailLabel}
+              </span>
+              <span className="text-xs font-medium truncate text-foreground mt-0.5">
+                {data.email}
+              </span>
             </div>
           </div>
 

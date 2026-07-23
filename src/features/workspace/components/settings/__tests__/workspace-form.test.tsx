@@ -63,11 +63,11 @@ describe("WorkspaceForm component", () => {
 
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.workspace.form.namePlaceholder, "i"),
-      ),
+        new RegExp(en.workspace.form.namePlaceholder, "i")
+      )
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: en.workspace.form.createButton }),
+      screen.getByRole("button", { name: en.workspace.form.createButton })
     ).toBeInTheDocument();
   });
 
@@ -80,15 +80,15 @@ describe("WorkspaceForm component", () => {
           name: "Old Workspace",
           logo: "http://example.com/logo.png",
         }}
-      />,
+      />
     );
 
     const nameInput = screen.getByPlaceholderText(
-      new RegExp(en.workspace.form.namePlaceholder, "i"),
+      new RegExp(en.workspace.form.namePlaceholder, "i")
     );
     expect(nameInput).toHaveValue("Old Workspace");
     expect(
-      screen.getByRole("button", { name: en.workspace.form.saveButton }),
+      screen.getByRole("button", { name: en.workspace.form.saveButton })
     ).toBeInTheDocument();
   });
 
@@ -102,7 +102,7 @@ describe("WorkspaceForm component", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/workspace name must be at least 2 characters/i),
+        screen.getByText(/workspace name must be at least 2 characters/i)
       ).toBeInTheDocument();
     });
 

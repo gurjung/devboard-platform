@@ -61,7 +61,7 @@ describe("useInvite hook", () => {
       "/api/invites/token-123",
       expect.objectContaining({
         method: "POST",
-      }),
+      })
     );
     expect(result.current.data).toEqual(mockAcceptResponse);
   });

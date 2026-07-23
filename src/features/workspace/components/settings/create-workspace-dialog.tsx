@@ -273,7 +273,9 @@ export function CreateWorkspaceDialog({
                         ) : (
                           <>
                             <Upload className="mr-1.5 h-3.5 w-3.5" />
-                            {previewUrl ? en.workspace.logoUploader.changeLogo : en.workspace.logoUploader.selectImage}
+                            {previewUrl
+                              ? en.workspace.logoUploader.changeLogo
+                              : en.workspace.logoUploader.selectImage}
                           </>
                         )}
                       </Button>
@@ -304,7 +306,9 @@ export function CreateWorkspaceDialog({
           <DialogActions
             completeLabel={en.workspace.createDialog.createButton}
             completeLoadingLabel={
-              isUploading ? en.workspace.createDialog.uploadingButton : en.workspace.createDialog.creatingButton
+              isUploading
+                ? en.workspace.createDialog.uploadingButton
+                : en.workspace.createDialog.creatingButton
             }
             onCancel={handleClose}
             isCompleteLoading={isSubmitting}

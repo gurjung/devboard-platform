@@ -3,10 +3,19 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, ShieldAlert, CheckCircle2 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { INVITE_REASONS, type InviteReason } from "@/features/workspace/constants";
+import {
+  INVITE_REASONS,
+  type InviteReason,
+} from "@/features/workspace/constants";
 import { en } from "@/locales/en";
 
 interface InviteErrorCardProps {
@@ -44,7 +53,8 @@ export function InviteErrorCard({ reason, data }: InviteErrorCardProps) {
           "w-full cursor-pointer h-10 rounded-xl text-xs font-semibold flex items-center justify-center"
         )}
       >
-        {en.workspace.invite.errors.goToDashboard} <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+        {en.workspace.invite.errors.goToDashboard}{" "}
+        <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
       </Link>
     );
   }
@@ -54,7 +64,9 @@ export function InviteErrorCard({ reason, data }: InviteErrorCardProps) {
       <Card className="w-full max-w-md border-border/80 shadow-md rounded-2xl">
         <CardHeader className="flex flex-col items-center justify-center text-center p-6">
           {icon}
-          <CardTitle className="text-xl font-bold tracking-tight mt-2">{title}</CardTitle>
+          <CardTitle className="text-xl font-bold tracking-tight mt-2">
+            {title}
+          </CardTitle>
           <CardDescription className="text-xs mt-1 text-muted-foreground leading-normal max-w-xs">
             {description}
           </CardDescription>

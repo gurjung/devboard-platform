@@ -49,7 +49,7 @@ describe("useUpdateWorkspace hook", () => {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: "Updated Workspace" }),
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse);

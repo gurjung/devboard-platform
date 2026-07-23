@@ -38,7 +38,7 @@ describe("Workspace schemas", () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "Workspace name must be at least 2 characters",
+          "Workspace name must be at least 2 characters"
         );
       }
     });
@@ -50,7 +50,7 @@ describe("Workspace schemas", () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "Workspace name must be 50 characters or less",
+          "Workspace name must be 50 characters or less"
         );
       }
     });
@@ -97,7 +97,7 @@ describe("Workspace schemas", () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "Please enter a valid email address",
+          "Please enter a valid email address"
         );
       }
     });

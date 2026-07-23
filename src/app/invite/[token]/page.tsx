@@ -4,7 +4,10 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useInvite, useAcceptInvite } from "@/features/workspace/hooks/invite/use-invite";
+import {
+  useInvite,
+  useAcceptInvite,
+} from "@/features/workspace/hooks/invite/use-invite";
 import { en } from "@/locales/en";
 import { InviteLoadingCard } from "@/features/workspace/components/invite/invite-loading-card";
 import { InviteErrorCard } from "@/features/workspace/components/invite/invite-error-card";
@@ -39,7 +42,9 @@ export default function AcceptInvitePage() {
       },
       onError: (err: any) => {
         console.error("Error accepting invite:", err);
-        toast.error(err.message || en.workspace.invite.accept.toastErrorGeneric);
+        toast.error(
+          err.message || en.workspace.invite.accept.toastErrorGeneric
+        );
       },
     });
   };
@@ -51,14 +56,17 @@ export default function AcceptInvitePage() {
 
   // 2. Error Cases / Non-pending invite statuses
   if (inviteData && !inviteData.success) {
-    return <InviteErrorCard reason={inviteData.reason} data={inviteData.data} />;
+    return (
+      <InviteErrorCard reason={inviteData.reason} data={inviteData.data} />
+    );
   }
 
   // 3. Valid Pending Invite View
   if (inviteData?.success && inviteData.data) {
     const data = inviteData.data;
     const isUserAuthenticated = authStatus === "authenticated";
-    const isEmailMatching = isUserAuthenticated && session?.user?.email === data.email;
+    const isEmailMatching =
+      isUserAuthenticated && session?.user?.email === data.email;
 
     // A. User not logged in
     if (!isUserAuthenticated) {

@@ -23,12 +23,12 @@ describe("WorkspaceDangerZone component", () => {
     render(<WorkspaceDangerZone onDelete={onDelete} />);
 
     expect(
-      screen.getByText(new RegExp(en.workspace.dangerZone.title, "i")),
+      screen.getByText(new RegExp(en.workspace.dangerZone.title, "i"))
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", {
         name: new RegExp(en.workspace.dangerZone.deleteButton, "i"),
-      }),
+      })
     ).toBeInTheDocument();
   });
 

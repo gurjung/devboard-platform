@@ -53,13 +53,13 @@ describe("MemberCard component", () => {
         currentUserRole={WORKSPACE_ROLES.MEMBER}
         onRoleChange={jest.fn()}
         onRemove={jest.fn()}
-      />,
+      />
     );
 
     expect(screen.getByText("Alice Smith")).toBeInTheDocument();
     expect(screen.getByText("alice@example.com")).toBeInTheDocument();
     expect(
-      screen.getByText(en.workspace.members.roles.member),
+      screen.getByText(en.workspace.members.roles.member)
     ).toBeInTheDocument();
   });
 
@@ -72,7 +72,7 @@ describe("MemberCard component", () => {
         currentUserRole={WORKSPACE_ROLES.OWNER}
         onRoleChange={onRoleChange}
         onRemove={jest.fn()}
-      />,
+      />
     );
 
     const select = screen.getByTestId("role-select");
@@ -91,7 +91,7 @@ describe("MemberCard component", () => {
         currentUserRole={WORKSPACE_ROLES.OWNER}
         onRoleChange={jest.fn()}
         onRemove={onRemove}
-      />,
+      />
     );
 
     const kickBtn = screen.getByRole("button", {

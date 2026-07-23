@@ -12,7 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { WORKSPACE_ROLES, type WorkspaceRole } from "@/features/workspace/constants";
+import {
+  WORKSPACE_ROLES,
+  type WorkspaceRole,
+} from "@/features/workspace/constants";
 import type { WorkspaceMemberData } from "../../hooks/members/use-workspace-members";
 import { en } from "@/locales/en";
 
@@ -44,7 +47,11 @@ export function MemberCard({
   if (!isCurrentUser) {
     if (currentUserRole === WORKSPACE_ROLES.OWNER) {
       canChangeRole = true;
-      selectOptions = [WORKSPACE_ROLES.MEMBER, WORKSPACE_ROLES.ADMIN, WORKSPACE_ROLES.OWNER];
+      selectOptions = [
+        WORKSPACE_ROLES.MEMBER,
+        WORKSPACE_ROLES.ADMIN,
+        WORKSPACE_ROLES.OWNER,
+      ];
     } else if (currentUserRole === WORKSPACE_ROLES.ADMIN && !isOwner) {
       canChangeRole = true;
       selectOptions = [WORKSPACE_ROLES.MEMBER, WORKSPACE_ROLES.ADMIN];
@@ -73,7 +80,7 @@ export function MemberCard({
                       .join("")
                       .toUpperCase()
                       .slice(0, 2)
-                   : en.workspace.members.avatarFallback}
+                  : en.workspace.members.avatarFallback}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col min-w-0">
@@ -129,8 +136,8 @@ export function MemberCard({
                     {opt === WORKSPACE_ROLES.OWNER
                       ? en.workspace.members.roles.ownerTransfer
                       : opt === WORKSPACE_ROLES.ADMIN
-                      ? en.workspace.members.roles.admin
-                      : en.workspace.members.roles.member}
+                        ? en.workspace.members.roles.admin
+                        : en.workspace.members.roles.member}
                   </SelectItem>
                 ))}
               </SelectContent>

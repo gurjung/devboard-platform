@@ -85,11 +85,15 @@ const SignUpCard = () => {
         <CardDescription className="text-neutral-500 mt-1.5 text-center">
           {en.auth.signUp.description}{" "}
           <Link href="/privacy">
-            <span className="text-blue-600 dark:text-blue-400 hover:underline">{en.auth.signUp.privacyPolicyLink}</span>
+            <span className="text-blue-600 dark:text-blue-400 hover:underline">
+              {en.auth.signUp.privacyPolicyLink}
+            </span>
           </Link>{" "}
           {en.common.and}{" "}
           <Link href="/terms">
-            <span className="text-blue-600 dark:text-blue-400 hover:underline">{en.auth.signUp.termsLink}</span>
+            <span className="text-blue-600 dark:text-blue-400 hover:underline">
+              {en.auth.signUp.termsLink}
+            </span>
           </Link>
         </CardDescription>
       </CardHeader>
@@ -161,7 +165,9 @@ const SignUpCard = () => {
               className="w-full cursor-pointer"
               disabled={registerMutation.isPending}
             >
-              {registerMutation.isPending ? en.auth.signUp.submitButtonLoading : en.auth.signUp.submitButton}
+              {registerMutation.isPending
+                ? en.auth.signUp.submitButtonLoading
+                : en.auth.signUp.submitButton}
             </Button>
           </FieldGroup>
         </form>
@@ -170,7 +176,10 @@ const SignUpCard = () => {
         <Separator />
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
-        <SocialAuthButtons disabled={registerMutation.isPending} action="signup" />
+        <SocialAuthButtons
+          disabled={registerMutation.isPending}
+          action="signup"
+        />
       </CardContent>
       <div className="px-7">
         <Separator />

@@ -23,7 +23,9 @@ export function useRemoveMember(workspaceId: string) {
       return result;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workspace-members", workspaceId] });
+      queryClient.invalidateQueries({
+        queryKey: ["workspace-members", workspaceId],
+      });
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", workspaceId] });
     },

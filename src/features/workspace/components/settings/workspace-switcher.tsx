@@ -60,12 +60,22 @@ export function WorkspaceSwitcher() {
         disabled={isLoading || !workspaces || workspaces.length === 0}
       >
         <SelectTrigger className="h-11 w-full px-2.5 py-2 bg-background hover:bg-accent/60 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border border-border/80 shadow-2xs transition-all duration-200 rounded-xl focus:ring-2 focus:ring-primary/20 hover:border-border">
-          <SelectValue placeholder={isLoading ? en.workspace.switcher.loadingPlaceholder : en.workspace.switcher.selectPlaceholder}>
+          <SelectValue
+            placeholder={
+              isLoading
+                ? en.workspace.switcher.loadingPlaceholder
+                : en.workspace.switcher.selectPlaceholder
+            }
+          >
             {currentWorkspace ? (
               <div className="flex items-center gap-2.5 min-w-0 flex-1 text-left">
                 <Avatar className="h-6 w-6 rounded-md ring-1 ring-border/50 shrink-0">
                   {currentWorkspace.logo ? (
-                    <AvatarImage src={currentWorkspace.logo} alt={currentWorkspace.name} className="object-cover" />
+                    <AvatarImage
+                      src={currentWorkspace.logo}
+                      alt={currentWorkspace.name}
+                      className="object-cover"
+                    />
                   ) : null}
                   <AvatarFallback className="text-[10px] font-bold rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white">
                     {currentWorkspace.name.substring(0, 2).toUpperCase()}
@@ -76,7 +86,8 @@ export function WorkspaceSwitcher() {
                     {currentWorkspace.name}
                   </span>
                   <span className="text-[10px] text-muted-foreground/80 capitalize font-medium">
-                    {currentWorkspace.role?.toLowerCase() || en.workspace.switcher.defaultRole}
+                    {currentWorkspace.role?.toLowerCase() ||
+                      en.workspace.switcher.defaultRole}
                   </span>
                 </div>
               </div>
@@ -104,7 +115,11 @@ export function WorkspaceSwitcher() {
                 <div className="flex items-center gap-2.5 w-full min-w-0">
                   <Avatar className="h-6 w-6 rounded-md ring-1 ring-border/40 shrink-0">
                     {workspace.logo ? (
-                      <AvatarImage src={workspace.logo} alt={workspace.name} className="object-cover" />
+                      <AvatarImage
+                        src={workspace.logo}
+                        alt={workspace.name}
+                        className="object-cover"
+                      />
                     ) : null}
                     <AvatarFallback className="text-[10px] font-bold rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white">
                       {workspace.name.substring(0, 2).toUpperCase()}
@@ -115,7 +130,8 @@ export function WorkspaceSwitcher() {
                       {workspace.name}
                     </span>
                     <span className="text-[10px] text-muted-foreground/80 capitalize font-normal">
-                      {workspace.role?.toLowerCase() || en.workspace.switcher.defaultRole}
+                      {workspace.role?.toLowerCase() ||
+                        en.workspace.switcher.defaultRole}
                     </span>
                   </div>
                 </div>

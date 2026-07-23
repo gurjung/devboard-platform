@@ -76,7 +76,7 @@ describe("Auth validation schemas", () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
-          "Minimum of 8 characters required",
+          "Minimum of 8 characters required"
         );
       }
     });

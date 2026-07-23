@@ -31,19 +31,25 @@ export const Navigation = ({ onNavigate }: NavigationProps) => {
     },
     {
       label: en.dashboard.navigation.myTasks,
-      href: workspaceSlug ? `/dashboard/${workspaceSlug}/tasks` : "/dashboard/tasks",
+      href: workspaceSlug
+        ? `/dashboard/${workspaceSlug}/tasks`
+        : "/dashboard/tasks",
       icon: GoCheckCircle,
       activeIcon: GoCheckCircleFill,
     },
     {
       label: en.dashboard.navigation.settings,
-      href: workspaceSlug ? `/dashboard/${workspaceSlug}/settings` : "/dashboard/settings",
+      href: workspaceSlug
+        ? `/dashboard/${workspaceSlug}/settings`
+        : "/dashboard/settings",
       icon: GoGear,
       activeIcon: GoGear,
     },
     {
       label: en.dashboard.navigation.members,
-      href: workspaceSlug ? `/dashboard/${workspaceSlug}/members` : "/dashboard/members",
+      href: workspaceSlug
+        ? `/dashboard/${workspaceSlug}/members`
+        : "/dashboard/members",
       icon: GoPeople,
       activeIcon: GoPeople,
     },
@@ -73,7 +79,8 @@ export const Navigation = ({ onNavigate }: NavigationProps) => {
               <div
                 className={cn(
                   "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",
-                  isActive && "bg-white shadow-sm hover:opacity-100 text-primary dark:bg-zinc-800 dark:text-zinc-50"
+                  isActive &&
+                    "bg-white shadow-sm hover:opacity-100 text-primary dark:bg-zinc-800 dark:text-zinc-50"
                 )}
               >
                 <Icon className="size-5 text-neutral-500" />

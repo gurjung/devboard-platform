@@ -39,10 +39,10 @@ describe("WorkspaceSwitcher component", () => {
     render(<WorkspaceSwitcher />);
 
     expect(
-      screen.getByText(en.workspace.switcher.sectionTitle),
+      screen.getByText(en.workspace.switcher.sectionTitle)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(new RegExp(en.workspace.switcher.noWorkspaces, "i")),
+      screen.getByText(new RegExp(en.workspace.switcher.noWorkspaces, "i"))
     ).toBeInTheDocument();
   });
 
@@ -71,7 +71,7 @@ describe("WorkspaceSwitcher component", () => {
     render(<WorkspaceSwitcher />);
 
     expect(
-      screen.getByText(new RegExp(en.workspace.switcher.noWorkspaces, "i")),
+      screen.getByText(new RegExp(en.workspace.switcher.noWorkspaces, "i"))
     ).toBeInTheDocument();
   });
 });

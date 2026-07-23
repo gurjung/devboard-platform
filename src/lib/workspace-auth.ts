@@ -21,9 +21,9 @@ export interface WorkspaceMembershipResult {
 }
 
 /**
-  * Retrieves the workspace membership details for the currently authenticated user
-  * by workspace slug. Returns null if unauthorized or not a member.
-  */
+ * Retrieves the workspace membership details for the currently authenticated user
+ * by workspace slug. Returns null if unauthorized or not a member.
+ */
 export async function getWorkspaceMembership(workspaceSlug: string) {
   const session = await auth();
 
@@ -47,9 +47,9 @@ export async function getWorkspaceMembership(workspaceSlug: string) {
 }
 
 /**
-  * Checks if the currently authenticated user has one of the allowed roles
-  * within the specified workspace.
-  */
+ * Checks if the currently authenticated user has one of the allowed roles
+ * within the specified workspace.
+ */
 export async function hasWorkspaceRole(
   workspaceSlug: string,
   allowedRoles: WorkspaceRole[]

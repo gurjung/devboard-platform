@@ -3,7 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { Loader2, Mail, Users } from "lucide-react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { en } from "@/locales/en";
@@ -18,7 +25,11 @@ interface InviteAcceptCardProps {
   };
 }
 
-export function InviteAcceptCard({ accepting, onAcceptInvite, data }: InviteAcceptCardProps) {
+export function InviteAcceptCard({
+  accepting,
+  onAcceptInvite,
+  data,
+}: InviteAcceptCardProps) {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 p-4">
       <Card className="w-full max-w-md border-border/80 shadow-md rounded-2xl p-4">
@@ -28,15 +39,27 @@ export function InviteAcceptCard({ accepting, onAcceptInvite, data }: InviteAcce
             {en.workspace.invite.accept.title}
           </CardTitle>
           <CardDescription className="text-xs text-muted-foreground leading-normal mt-1">
-            You are invited to join <span className="font-semibold text-foreground">{data.workspaceName}</span> as a <span className="font-semibold text-foreground capitalize">{data.role?.toLowerCase()}</span>.
+            You are invited to join{" "}
+            <span className="font-semibold text-foreground">
+              {data.workspaceName}
+            </span>{" "}
+            as a{" "}
+            <span className="font-semibold text-foreground capitalize">
+              {data.role?.toLowerCase()}
+            </span>
+            .
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 pt-2">
           <div className="p-3 bg-muted/40 border border-border/50 rounded-xl flex items-center gap-2.5">
             <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
             <div className="flex flex-col min-w-0">
-              <span className="text-[10px] text-muted-foreground leading-none">{en.workspace.invite.accept.invitedEmailLabel}</span>
-              <span className="text-xs font-medium truncate text-foreground mt-0.5">{data.email}</span>
+              <span className="text-[10px] text-muted-foreground leading-none">
+                {en.workspace.invite.accept.invitedEmailLabel}
+              </span>
+              <span className="text-xs font-medium truncate text-foreground mt-0.5">
+                {data.email}
+              </span>
             </div>
           </div>
 
@@ -61,9 +84,7 @@ export function InviteAcceptCard({ accepting, onAcceptInvite, data }: InviteAcce
                   {en.workspace.invite.accept.acceptingButton}
                 </>
               ) : (
-                <>
-                  {en.workspace.invite.accept.acceptButton}
-                </>
+                <>{en.workspace.invite.accept.acceptButton}</>
               )}
             </Button>
           </div>
@@ -71,7 +92,7 @@ export function InviteAcceptCard({ accepting, onAcceptInvite, data }: InviteAcce
         <CardFooter className="justify-center pt-2">
           <p className="text-[10px] text-muted-foreground text-center">
             {en.workspace.invite.accept.footer}
-            </p>
+          </p>
         </CardFooter>
       </Card>
     </div>

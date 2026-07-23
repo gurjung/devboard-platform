@@ -47,14 +47,16 @@ const variantStyles: Record<
       "bg-red-600 hover:bg-red-700 text-white dark:bg-red-600 dark:hover:bg-red-700 shadow-xs transition-colors",
   },
   warning: {
-    badge: "bg-amber-500/10 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
+    badge:
+      "bg-amber-500/10 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
     icon: AlertCircle,
     title: "text-amber-600 dark:text-amber-400",
     confirmButton:
       "bg-amber-600 hover:bg-amber-700 text-white dark:bg-amber-600 dark:hover:bg-amber-700 shadow-xs transition-colors",
   },
   info: {
-    badge: "bg-blue-500/10 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400",
+    badge:
+      "bg-blue-500/10 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400",
     icon: Info,
     title: "text-blue-600 dark:text-blue-400",
     confirmButton:
@@ -99,7 +101,10 @@ export function ConfirmDialog({
             <IconComponent className="h-5 w-5" />
           </div>
           <DialogTitle
-            className={cn("font-bold text-base text-center", currentVariant.title)}
+            className={cn(
+              "font-bold text-base text-center",
+              currentVariant.title
+            )}
           >
             {title}
           </DialogTitle>
@@ -132,7 +137,10 @@ export function ConfirmDialog({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {confirmLoadingLabel || (variant === "danger" ? en.common.deletingFallback : en.common.confirmingFallback)}
+                {confirmLoadingLabel ||
+                  (variant === "danger"
+                    ? en.common.deletingFallback
+                    : en.common.confirmingFallback)}
               </>
             ) : (
               confirmLabel

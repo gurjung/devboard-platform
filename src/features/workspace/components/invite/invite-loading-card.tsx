@@ -1,7 +1,12 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function InviteLoadingCard() {
@@ -11,17 +16,17 @@ export function InviteLoadingCard() {
         <CardHeader className="flex flex-col items-center justify-center text-center pb-4 space-y-3">
           {/* Icon Skeleton */}
           <Skeleton className="h-10 w-10 rounded-full" />
-          
+
           {/* Title Skeleton */}
           <Skeleton className="h-6 w-32 rounded-lg" />
-          
+
           {/* Description Skeletons */}
           <div className="space-y-1.5 flex flex-col items-center w-full">
             <Skeleton className="h-3 w-5/6 rounded" />
             <Skeleton className="h-3 w-2/3 rounded" />
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-4 pt-2">
           {/* Invited Email Block Skeleton */}
           <Skeleton className="h-14 w-full rounded-xl" />
@@ -32,7 +37,7 @@ export function InviteLoadingCard() {
             <Skeleton className="flex-1 h-10 rounded-xl" />
           </div>
         </CardContent>
-        
+
         <CardFooter className="justify-center pt-2">
           {/* Footer Text Skeleton */}
           <Skeleton className="h-3 w-3/4 rounded" />

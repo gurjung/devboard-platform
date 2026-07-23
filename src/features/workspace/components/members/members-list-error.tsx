@@ -4,9 +4,7 @@ interface MembersListErrorProps {
   message?: string;
 }
 
-export function MembersListError({
-  message,
-}: MembersListErrorProps) {
+export function MembersListError({ message }: MembersListErrorProps) {
   const displayMessage = message || en.workspace.members.errorDefault;
   return (
     <div className="text-center py-12 bg-card border border-border/80 rounded-2xl p-6 shadow-xs max-w-sm mx-auto">

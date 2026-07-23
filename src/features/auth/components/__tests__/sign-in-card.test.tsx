@@ -41,16 +41,16 @@ describe("SignInCard component", () => {
 
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.auth.signIn.emailPlaceholder, "i"),
-      ),
+        new RegExp(en.auth.signIn.emailPlaceholder, "i")
+      )
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.auth.signIn.passwordPlaceholder, "i"),
-      ),
+        new RegExp(en.auth.signIn.passwordPlaceholder, "i")
+      )
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: en.auth.signIn.submitButton }),
+      screen.getByRole("button", { name: en.auth.signIn.submitButton })
     ).toBeInTheDocument();
   });
 
@@ -74,10 +74,10 @@ describe("SignInCard component", () => {
     render(<SignInCard />);
 
     const emailInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signIn.emailPlaceholder, "i"),
+      new RegExp(en.auth.signIn.emailPlaceholder, "i")
     );
     const passwordInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signIn.passwordPlaceholder, "i"),
+      new RegExp(en.auth.signIn.passwordPlaceholder, "i")
     );
     const submitBtn = screen.getByRole("button", {
       name: en.auth.signIn.submitButton,
@@ -90,7 +90,7 @@ describe("SignInCard component", () => {
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith(
         { email: "test@example.com", password: "password123" },
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });
@@ -103,10 +103,10 @@ describe("SignInCard component", () => {
     render(<SignInCard />);
 
     const emailInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signIn.emailPlaceholder, "i"),
+      new RegExp(en.auth.signIn.emailPlaceholder, "i")
     );
     const passwordInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signIn.passwordPlaceholder, "i"),
+      new RegExp(en.auth.signIn.passwordPlaceholder, "i")
     );
     const submitBtn = screen.getByRole("button", {
       name: en.auth.signIn.submitButton,
@@ -118,7 +118,7 @@ describe("SignInCard component", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Login failed custom message"),
+        screen.getByText("Login failed custom message")
       ).toBeInTheDocument();
       expect(toast.error).toHaveBeenCalledWith("Login failed custom message");
     });

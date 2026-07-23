@@ -15,5 +15,4 @@ export const INVITE_REASONS = {
   EXPIRED: "EXPIRED",
 } as const;
 
-export type InviteReason = typeof INVITE_REASONS[keyof typeof INVITE_REASONS];
-
+export type InviteReason = (typeof INVITE_REASONS)[keyof typeof INVITE_REASONS];

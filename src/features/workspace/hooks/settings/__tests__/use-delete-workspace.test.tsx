@@ -44,7 +44,7 @@ describe("useDeleteWorkspace hook", () => {
       "/api/workspaces/123",
       expect.objectContaining({
         method: "DELETE",
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse);

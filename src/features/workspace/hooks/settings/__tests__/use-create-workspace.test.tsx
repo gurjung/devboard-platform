@@ -46,7 +46,7 @@ describe("useCreateWorkspace hook", () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: "New Workspace" }),
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse);

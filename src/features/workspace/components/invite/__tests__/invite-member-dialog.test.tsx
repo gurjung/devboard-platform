@@ -47,16 +47,16 @@ describe("InviteMemberDialog component", () => {
     render(
       <InviteMemberDialog workspaceId="workspace-123">
         <button>Open Invite</button>
-      </InviteMemberDialog>,
+      </InviteMemberDialog>
     );
 
     expect(
-      screen.getByRole("button", { name: /open invite/i }),
+      screen.getByRole("button", { name: /open invite/i })
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.workspace.invite.dialog.emailPlaceholder, "i"),
-      ),
+        new RegExp(en.workspace.invite.dialog.emailPlaceholder, "i")
+      )
     ).toBeInTheDocument();
   });
 
@@ -64,7 +64,7 @@ describe("InviteMemberDialog component", () => {
     render(
       <InviteMemberDialog workspaceId="workspace-123">
         <button>Open Invite</button>
-      </InviteMemberDialog>,
+      </InviteMemberDialog>
     );
 
     const submitBtn = screen.getByRole("button", {
