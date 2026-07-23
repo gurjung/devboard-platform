@@ -15,8 +15,14 @@ export function SocialAuthButtons({
   disabled = false,
   action = "login",
 }: SocialAuthButtonsProps) {
-  const googleText = action === "login" ? en.auth.socialAuth.loginGoogle : en.auth.socialAuth.signupGoogle;
-  const githubText = action === "login" ? en.auth.socialAuth.loginGithub : en.auth.socialAuth.signupGithub;
+  const googleText =
+    action === "login"
+      ? en.auth.socialAuth.loginGoogle
+      : en.auth.socialAuth.signupGoogle;
+  const githubText =
+    action === "login"
+      ? en.auth.socialAuth.loginGithub
+      : en.auth.socialAuth.signupGithub;
 
   return (
     <>

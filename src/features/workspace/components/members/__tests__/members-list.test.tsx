@@ -56,7 +56,7 @@ describe("MembersList component", () => {
         workspaceId="ws-1"
         currentUserId="user-1"
         currentUserRole={WORKSPACE_ROLES.OWNER}
-      />,
+      />
     );
 
     expect(screen.getByTestId("skeleton")).toBeInTheDocument();
@@ -75,11 +75,11 @@ describe("MembersList component", () => {
         workspaceId="ws-1"
         currentUserId="user-1"
         currentUserRole={WORKSPACE_ROLES.OWNER}
-      />,
+      />
     );
 
     expect(screen.getByTestId("error-state")).toHaveTextContent(
-      "Failed to load members",
+      "Failed to load members"
     );
   });
 
@@ -99,7 +99,7 @@ describe("MembersList component", () => {
         workspaceId="ws-1"
         currentUserId="user-1"
         currentUserRole={WORKSPACE_ROLES.OWNER}
-      />,
+      />
     );
 
     const cards = screen.getAllByTestId("member-card");

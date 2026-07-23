@@ -14,7 +14,7 @@ export async function POST(request: Request) {
           success: false,
           errors: result.error.flatten().fieldErrors,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         success: false,
         message: "Something went wrong",
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

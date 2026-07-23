@@ -15,7 +15,9 @@ interface AuthLayoutProps {
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   const pathname = usePathname();
   const isSignIn = pathname === "/sign-in";
-  const [toggleUrl, setToggleUrl] = React.useState(isSignIn ? "/sign-up" : "/sign-in");
+  const [toggleUrl, setToggleUrl] = React.useState(
+    isSignIn ? "/sign-up" : "/sign-in"
+  );
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -23,7 +25,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       const callback = params.get("callbackUrl");
       const baseTarget = isSignIn ? "/sign-up" : "/sign-in";
       if (callback) {
-        setToggleUrl(`${baseTarget}?callbackUrl=${encodeURIComponent(callback)}`);
+        setToggleUrl(
+          `${baseTarget}?callbackUrl=${encodeURIComponent(callback)}`
+        );
       } else {
         setToggleUrl(baseTarget);
       }
@@ -38,7 +42,9 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           <Image src="/logo.svg" alt="logo" width={152} height={56} />
           <Button variant="secondary">
             <Link href={toggleUrl}>
-              {isSignIn ? en.auth.layout.signUpToggle : en.auth.layout.loginToggle}
+              {isSignIn
+                ? en.auth.layout.signUpToggle
+                : en.auth.layout.loginToggle}
             </Link>
           </Button>
         </nav>

@@ -31,9 +31,16 @@ export async function POST(req: Request, { params }: RouteParams) {
       },
     });
 
-    if (!member || (member.role !== WorkspaceRole.OWNER && member.role !== WorkspaceRole.ADMIN)) {
+    if (
+      !member ||
+      (member.role !== WorkspaceRole.OWNER &&
+        member.role !== WorkspaceRole.ADMIN)
+    ) {
       return NextResponse.json(
-        { error: "Forbidden: Only workspace owners and admins can invite members" },
+        {
+          error:
+            "Forbidden: Only workspace owners and admins can invite members",
+        },
         { status: 403 }
       );
     }
@@ -68,7 +75,10 @@ export async function POST(req: Request, { params }: RouteParams) {
 
       if (existingMember) {
         return NextResponse.json(
-          { error: "already a member", message: "User is already a member of this workspace" },
+          {
+            error: "already a member",
+            message: "User is already a member of this workspace",
+          },
           { status: 409 }
         );
       }
@@ -141,9 +151,16 @@ export async function DELETE(req: Request, { params }: RouteParams) {
       },
     });
 
-    if (!member || (member.role !== WorkspaceRole.OWNER && member.role !== WorkspaceRole.ADMIN)) {
+    if (
+      !member ||
+      (member.role !== WorkspaceRole.OWNER &&
+        member.role !== WorkspaceRole.ADMIN)
+    ) {
       return NextResponse.json(
-        { error: "Forbidden: Only workspace owners and admins can revoke invites" },
+        {
+          error:
+            "Forbidden: Only workspace owners and admins can revoke invites",
+        },
         { status: 403 }
       );
     }

@@ -21,7 +21,9 @@ export function useInviteMember() {
 
       if (!response.ok) {
         // Construct an error object that preserves status code & messages
-        const error = new Error(result.message || result.error || "Failed to invite member");
+        const error = new Error(
+          result.message || result.error || "Failed to invite member"
+        );
         (error as any).status = response.status;
         (error as any).error = result.error;
         throw error;

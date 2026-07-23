@@ -88,7 +88,10 @@ export async function PATCH(req: Request, { params }: RouteParams) {
       // Owner cannot demote themselves directly
       if (targetMember.id === requester.id && role !== WorkspaceRole.OWNER) {
         return NextResponse.json(
-          { error: "Bad Request: You cannot demote yourself. Transfer ownership instead." },
+          {
+            error:
+              "Bad Request: You cannot demote yourself. Transfer ownership instead.",
+          },
           { status: 400 }
         );
       }
@@ -197,7 +200,10 @@ export async function DELETE(req: Request, { params }: RouteParams) {
     // 3. Verify that owner is not deleting themselves
     if (targetMember.id === requester.id) {
       return NextResponse.json(
-        { error: "Bad Request: Owners cannot remove themselves. Transfer ownership or delete workspace first." },
+        {
+          error:
+            "Bad Request: Owners cannot remove themselves. Transfer ownership or delete workspace first.",
+        },
         { status: 400 }
       );
     }

@@ -24,7 +24,7 @@ export function DialogActions({
 }: DialogActionsProps) {
   const showLoadingState = isCompleteLoading;
   const label = showLoadingState
-    ? completeLoadingLabel ?? completeLabel
+    ? (completeLoadingLabel ?? completeLabel)
     : completeLabel;
 
   return (

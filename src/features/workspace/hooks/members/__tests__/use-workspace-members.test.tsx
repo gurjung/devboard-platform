@@ -49,7 +49,7 @@ describe("useWorkspaceMembers hook", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(global.fetch).toHaveBeenCalledWith(
-      "/api/workspaces/workspace-123/members",
+      "/api/workspaces/workspace-123/members"
     );
     expect(result.current.data).toEqual(mockMembersList);
   });

@@ -71,11 +71,13 @@ src/
 ### Setup
 
 1. Clone the repo and install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Copy `.env.example` to `.env` (or create `.env`) and fill in:
+
    ```env
    DATABASE_URL=              # Supabase pooled connection (port 6543)
    DIRECT_URL=                # Supabase direct connection (port 5432)
@@ -87,11 +89,13 @@ src/
    ```
 
 3. Run database migrations:
+
    ```bash
    npx prisma migrate dev
    ```
 
 4. Start the dev server:
+
    ```bash
    npm run dev
    ```
@@ -101,6 +105,7 @@ src/
 ### Supabase Storage setup
 
 Create a public bucket named `workspace-logos` with:
+
 - Allowed MIME types: `image/jpeg`, `image/png`
 - A reasonable max file size (e.g. 2MB)
 
@@ -108,14 +113,14 @@ Logo uploads are routed through a server-side API route using the Supabase servi
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Build for production |
-| `npm run start` | Run the production build |
-| `npm run lint` | Run ESLint |
-| `npx prisma migrate dev` | Run database migrations |
-| `npx prisma studio` | Open Prisma's DB browser |
+| Command                  | Description                  |
+| ------------------------ | ---------------------------- |
+| `npm run dev`            | Start the development server |
+| `npm run build`          | Build for production         |
+| `npm run start`          | Run the production build     |
+| `npm run lint`           | Run ESLint                   |
+| `npx prisma migrate dev` | Run database migrations      |
+| `npx prisma studio`      | Open Prisma's DB browser     |
 
 ## Roadmap
 

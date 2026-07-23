@@ -35,7 +35,10 @@ export async function PATCH(req: Request, { params }: RouteParams) {
         member.role !== WorkspaceRole.ADMIN)
     ) {
       return NextResponse.json(
-        { error: "Forbidden: You do not have permission to update this workspace" },
+        {
+          error:
+            "Forbidden: You do not have permission to update this workspace",
+        },
         { status: 403 }
       );
     }

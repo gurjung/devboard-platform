@@ -3,12 +3,18 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { en } from "@/locales/en";
-import { WORKSPACE_ROLES, type WorkspaceRole } from "@/features/workspace/constants";
+import {
+  WORKSPACE_ROLES,
+  type WorkspaceRole,
+} from "@/features/workspace/constants";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { MembersListSkeleton } from "./members-list-skeleton";
 import { MembersListError } from "./members-list-error";
 import { MemberCard } from "./member-card";
-import { useWorkspaceMembers, type WorkspaceMemberData } from "../../hooks/members/use-workspace-members";
+import {
+  useWorkspaceMembers,
+  type WorkspaceMemberData,
+} from "../../hooks/members/use-workspace-members";
 import { useUpdateMemberRole } from "../../hooks/members/use-update-member-role";
 import { useRemoveMember } from "../../hooks/members/use-remove-member";
 
@@ -23,12 +29,18 @@ export function MembersList({
   currentUserId,
   currentUserRole,
 }: MembersListProps) {
-  const { data: members, isLoading, isError, error } = useWorkspaceMembers(workspaceId);
+  const {
+    data: members,
+    isLoading,
+    isError,
+    error,
+  } = useWorkspaceMembers(workspaceId);
   const updateRoleMutation = useUpdateMemberRole(workspaceId);
   const removeMemberMutation = useRemoveMember(workspaceId);
 
   // States for confirmation dialogs
-  const [memberToRemove, setMemberToRemove] = useState<WorkspaceMemberData | null>(null);
+  const [memberToRemove, setMemberToRemove] =
+    useState<WorkspaceMemberData | null>(null);
   const [roleChangeRequest, setRoleChangeRequest] = useState<{
     member: WorkspaceMemberData;
     newRole: WorkspaceRole;
@@ -88,7 +100,9 @@ export function MembersList({
     if (!memberToRemove) return;
     removeMemberMutation.mutate(memberToRemove.id, {
       onSuccess: () => {
-        toast.success(`${memberToRemove.user.name || en.workspace.members.toastRemoveSuccessFallback} ${en.workspace.members.toastRemoveSuccess}`);
+        toast.success(
+          `${memberToRemove.user.name || en.workspace.members.toastRemoveSuccessFallback} ${en.workspace.members.toastRemoveSuccess}`
+        );
         setMemberToRemove(null);
       },
       onError: (err: any) => {
@@ -108,7 +122,9 @@ export function MembersList({
             currentUserRole={currentUserRole}
             onRoleChange={handleRoleChange}
             onRemove={handleRemoveMember}
-            disabled={updateRoleMutation.isPending || removeMemberMutation.isPending}
+            disabled={
+              updateRoleMutation.isPending || removeMemberMutation.isPending
+            }
           />
         ))}
       </div>
@@ -119,10 +135,14 @@ export function MembersList({
         onOpenChange={(open) => !open && setMemberToRemove(null)}
         title={en.workspace.members.removeConfirm.title}
         description={`Are you sure you want to remove ${
-          memberToRemove?.user.name || memberToRemove?.user.email || "this member"
+          memberToRemove?.user.name ||
+          memberToRemove?.user.email ||
+          "this member"
         } from the workspace? All their project access will be revoked.`}
         confirmLabel={en.workspace.members.removeConfirm.confirmButton}
-        confirmLoadingLabel={en.workspace.members.removeConfirm.confirmLoadingButton}
+        confirmLoadingLabel={
+          en.workspace.members.removeConfirm.confirmLoadingButton
+        }
         onConfirm={handleConfirmRemove}
         isLoading={removeMemberMutation.isPending}
         variant="danger"
@@ -134,10 +154,14 @@ export function MembersList({
         onOpenChange={(open) => !open && setRoleChangeRequest(null)}
         title={en.workspace.members.transferConfirm.title}
         description={`Are you sure you want to transfer ownership of the workspace to ${
-          roleChangeRequest?.member.user.name || roleChangeRequest?.member.user.email || "this member"
+          roleChangeRequest?.member.user.name ||
+          roleChangeRequest?.member.user.email ||
+          "this member"
         }? You will be demoted to Admin and will no longer have full owner-level access.`}
         confirmLabel={en.workspace.members.transferConfirm.confirmButton}
-        confirmLoadingLabel={en.workspace.members.transferConfirm.confirmLoadingButton}
+        confirmLoadingLabel={
+          en.workspace.members.transferConfirm.confirmLoadingButton
+        }
         onConfirm={handleConfirmRoleChange}
         isLoading={updateRoleMutation.isPending}
         variant="danger"

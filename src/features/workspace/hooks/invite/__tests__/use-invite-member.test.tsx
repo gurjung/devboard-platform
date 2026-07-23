@@ -47,7 +47,7 @@ describe("useInviteMember hook", () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: "user@example.com", role: "MEMBER" }),
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse);
@@ -57,12 +57,10 @@ describe("useInviteMember hook", () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: false,
       status: 400,
-      json: jest
-        .fn()
-        .mockResolvedValue({
-          message: "User already invited",
-          error: "UserError",
-        }),
+      json: jest.fn().mockResolvedValue({
+        message: "User already invited",
+        error: "UserError",
+      }),
     });
 
     const { wrapper } = createWrapper();

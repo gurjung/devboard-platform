@@ -4,7 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { ShieldAlert } from "lucide-react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { en } from "@/locales/en";
@@ -15,7 +22,11 @@ interface InviteMismatchCardProps {
   currentUserEmail?: string | null;
 }
 
-export function InviteMismatchCard({ token, invitedEmail, currentUserEmail }: InviteMismatchCardProps) {
+export function InviteMismatchCard({
+  token,
+  invitedEmail,
+  currentUserEmail,
+}: InviteMismatchCardProps) {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 p-4">
       <Card className="w-full max-w-md border-border/80 shadow-md rounded-2xl p-4">
@@ -25,7 +36,15 @@ export function InviteMismatchCard({ token, invitedEmail, currentUserEmail }: In
             {en.workspace.invite.mismatch.title}
           </CardTitle>
           <CardDescription className="text-xs text-muted-foreground leading-normal mt-1">
-            This invitation was sent to <span className="font-semibold text-foreground">{invitedEmail}</span>, but you are signed in as <span className="font-semibold text-foreground">{currentUserEmail}</span>.
+            This invitation was sent to{" "}
+            <span className="font-semibold text-foreground">
+              {invitedEmail}
+            </span>
+            , but you are signed in as{" "}
+            <span className="font-semibold text-foreground">
+              {currentUserEmail}
+            </span>
+            .
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-2">

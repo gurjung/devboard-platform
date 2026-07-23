@@ -50,7 +50,7 @@ describe("useRegister hook", () => {
           email: "john@example.com",
           password: "securePassword123",
         }),
-      }),
+      })
     );
 
     expect(result.current.data).toEqual(mockResponse);

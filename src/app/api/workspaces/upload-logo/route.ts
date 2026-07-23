@@ -26,7 +26,10 @@ export async function POST(request: Request) {
     const validTypes = ["image/jpeg", "image/png"];
     if (!validTypes.includes(file.type)) {
       return NextResponse.json(
-        { success: false, message: "Invalid file type. Only JPEG and PNG images are allowed." },
+        {
+          success: false,
+          message: "Invalid file type. Only JPEG and PNG images are allowed.",
+        },
         { status: 400 }
       );
     }
@@ -46,7 +49,10 @@ export async function POST(request: Request) {
     if (uploadError) {
       console.error("Supabase Admin upload error:", uploadError);
       return NextResponse.json(
-        { success: false, message: uploadError.message || "Failed to upload file to storage" },
+        {
+          success: false,
+          message: uploadError.message || "Failed to upload file to storage",
+        },
         { status: 500 }
       );
     }

@@ -50,14 +50,14 @@ describe("CreateWorkspaceDialog component", () => {
     render(
       <CreateWorkspaceDialog>
         <button>Open</button>
-      </CreateWorkspaceDialog>,
+      </CreateWorkspaceDialog>
     );
 
     expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.workspace.createDialog.namePlaceholder, "i"),
-      ),
+        new RegExp(en.workspace.createDialog.namePlaceholder, "i")
+      )
     ).toBeInTheDocument();
   });
 
@@ -65,7 +65,7 @@ describe("CreateWorkspaceDialog component", () => {
     render(
       <CreateWorkspaceDialog>
         <button>Open</button>
-      </CreateWorkspaceDialog>,
+      </CreateWorkspaceDialog>
     );
 
     const submitBtn = screen.getByRole("button", {
@@ -75,7 +75,7 @@ describe("CreateWorkspaceDialog component", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/workspace name must be at least 2 characters/i),
+        screen.getByText(/workspace name must be at least 2 characters/i)
       ).toBeInTheDocument();
     });
 

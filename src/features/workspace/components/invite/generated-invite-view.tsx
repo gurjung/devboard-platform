@@ -12,7 +12,10 @@ interface GeneratedInviteViewProps {
   onClose: () => void;
 }
 
-export function GeneratedInviteView({ inviteLink, onClose }: GeneratedInviteViewProps) {
+export function GeneratedInviteView({
+  inviteLink,
+  onClose,
+}: GeneratedInviteViewProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {

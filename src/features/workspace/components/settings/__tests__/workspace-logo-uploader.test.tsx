@@ -41,16 +41,16 @@ describe("WorkspaceLogoUploader component", () => {
         logoFile={null}
         setLogoFile={setLogoFile}
         setFormValue={setFormValue}
-      />,
+      />
     );
 
     expect(
-      screen.getByText(new RegExp(en.workspace.logoUploader.selectImage, "i")),
+      screen.getByText(new RegExp(en.workspace.logoUploader.selectImage, "i"))
     ).toBeInTheDocument();
     expect(
       screen.queryByRole("button", {
         name: new RegExp(en.workspace.logoUploader.remove, "i"),
-      }),
+      })
     ).not.toBeInTheDocument();
   });
 
@@ -62,18 +62,18 @@ describe("WorkspaceLogoUploader component", () => {
         logoFile={null}
         setLogoFile={setLogoFile}
         setFormValue={setFormValue}
-      />,
+      />
     );
 
     expect(
       screen.getByRole("img", {
         name: new RegExp(en.workspace.logoUploader.previewAlt, "i"),
-      }),
+      })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", {
         name: new RegExp(en.workspace.logoUploader.remove, "i"),
-      }),
+      })
     ).toBeInTheDocument();
   });
 
@@ -85,7 +85,7 @@ describe("WorkspaceLogoUploader component", () => {
         logoFile={null}
         setLogoFile={setLogoFile}
         setFormValue={setFormValue}
-      />,
+      />
     );
 
     const selectBtn = screen.getByRole("button", {
@@ -102,11 +102,11 @@ describe("WorkspaceLogoUploader component", () => {
         logoFile={null}
         setLogoFile={setLogoFile}
         setFormValue={setFormValue}
-      />,
+      />
     );
 
     const input = container.querySelector(
-      'input[type="file"]',
+      'input[type="file"]'
     ) as HTMLInputElement;
     const invalidFile = new File(["dummy content"], "doc.pdf", {
       type: "application/pdf",
@@ -116,7 +116,7 @@ describe("WorkspaceLogoUploader component", () => {
 
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(
-        en.workspace.logoUploader.toastInvalidType,
+        en.workspace.logoUploader.toastInvalidType
       );
     });
   });

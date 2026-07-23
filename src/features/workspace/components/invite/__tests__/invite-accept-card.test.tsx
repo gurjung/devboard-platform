@@ -16,11 +16,11 @@ describe("InviteAcceptCard component", () => {
         accepting={false}
         onAcceptInvite={jest.fn()}
         data={mockData}
-      />,
+      />
     );
 
     expect(
-      screen.getByText(en.workspace.invite.accept.title),
+      screen.getByText(en.workspace.invite.accept.title)
     ).toBeInTheDocument();
     expect(screen.getByText("Team Workspace")).toBeInTheDocument();
     expect(screen.getByText("test@example.com")).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("InviteAcceptCard component", () => {
         accepting={false}
         onAcceptInvite={onAcceptInvite}
         data={mockData}
-      />,
+      />
     );
 
     const acceptBtn = screen.getByRole("button", {
@@ -50,7 +50,7 @@ describe("InviteAcceptCard component", () => {
         accepting={true}
         onAcceptInvite={jest.fn()}
         data={mockData}
-      />,
+      />
     );
 
     const acceptBtn = screen.getByRole("button", {

@@ -120,7 +120,9 @@ const SignInCard = () => {
               className="w-full cursor-pointer"
               disabled={loginMutation.isPending}
             >
-              {loginMutation.isPending ? en.auth.signIn.submitButtonLoading : en.auth.signIn.submitButton}
+              {loginMutation.isPending
+                ? en.auth.signIn.submitButtonLoading
+                : en.auth.signIn.submitButton}
             </Button>
           </FieldGroup>
         </form>

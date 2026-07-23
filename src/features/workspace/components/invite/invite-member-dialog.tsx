@@ -89,9 +89,11 @@ export function InviteMemberDialog({
           }
         },
         onError: (error: any) => {
-          let errMsg = error.message || en.workspace.invite.dialog.toastErrorDefault;
+          let errMsg =
+            error.message || en.workspace.invite.dialog.toastErrorDefault;
           if (error.status === 409) {
-            errMsg = error.message || en.workspace.invite.dialog.toastErrorMember;
+            errMsg =
+              error.message || en.workspace.invite.dialog.toastErrorMember;
             form.setError("email", { message: errMsg });
           } else if (error.status === 403) {
             errMsg = en.workspace.invite.dialog.toastErrorPermission;
@@ -155,19 +157,27 @@ export function InviteMemberDialog({
               name="role"
               render={({ field, fieldState }) => (
                 <Field invalid={!!fieldState.error}>
-                  <FieldLabel className="text-xs font-semibold">{en.workspace.invite.dialog.roleLabel}</FieldLabel>
+                  <FieldLabel className="text-xs font-semibold">
+                    {en.workspace.invite.dialog.roleLabel}
+                  </FieldLabel>
                   <Select
                     value={field.value}
                     onValueChange={field.onChange}
                     disabled={isSubmitting}
                   >
                     <SelectTrigger className="w-full h-10 px-3 bg-input/20 border-border/80 rounded-xl focus:ring-2 focus:ring-primary/20 hover:border-border">
-                      <SelectValue placeholder={en.workspace.invite.dialog.rolePlaceholder} />
+                      <SelectValue
+                        placeholder={en.workspace.invite.dialog.rolePlaceholder}
+                      />
                     </SelectTrigger>
                     <SelectContent className="w-(--anchor-width) min-w-44 p-1 rounded-xl shadow-md border border-border/80">
                       <SelectGroup>
-                        <SelectItem value="MEMBER">{en.workspace.invite.dialog.roleMember}</SelectItem>
-                        <SelectItem value="ADMIN">{en.workspace.invite.dialog.roleAdmin}</SelectItem>
+                        <SelectItem value="MEMBER">
+                          {en.workspace.invite.dialog.roleMember}
+                        </SelectItem>
+                        <SelectItem value="ADMIN">
+                          {en.workspace.invite.dialog.roleAdmin}
+                        </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>

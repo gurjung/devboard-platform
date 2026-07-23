@@ -111,7 +111,9 @@ export function WorkspaceLogoUploader({
     <Field invalid={!!error}>
       <FieldLabel className="text-xs font-semibold">
         {en.workspace.logoUploader.label}{" "}
-        <span className="font-normal text-muted-foreground">{en.workspace.logoUploader.optional}</span>
+        <span className="font-normal text-muted-foreground">
+          {en.workspace.logoUploader.optional}
+        </span>
       </FieldLabel>
       <input
         ref={fileInputRef}
@@ -168,7 +170,9 @@ export function WorkspaceLogoUploader({
               ) : (
                 <>
                   <Upload className="mr-1.5 h-3.5 w-3.5" />
-                  {previewUrl ? en.workspace.logoUploader.changeLogo : en.workspace.logoUploader.selectImage}
+                  {previewUrl
+                    ? en.workspace.logoUploader.changeLogo
+                    : en.workspace.logoUploader.selectImage}
                 </>
               )}
             </Button>

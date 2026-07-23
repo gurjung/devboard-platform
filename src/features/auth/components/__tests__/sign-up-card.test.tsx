@@ -45,21 +45,21 @@ describe("SignUpCard component", () => {
 
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.auth.signUp.namePlaceholder, "i"),
-      ),
+        new RegExp(en.auth.signUp.namePlaceholder, "i")
+      )
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.auth.signUp.emailPlaceholder, "i"),
-      ),
+        new RegExp(en.auth.signUp.emailPlaceholder, "i")
+      )
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        new RegExp(en.auth.signUp.passwordPlaceholder, "i"),
-      ),
+        new RegExp(en.auth.signUp.passwordPlaceholder, "i")
+      )
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: en.auth.signUp.submitButton }),
+      screen.getByRole("button", { name: en.auth.signUp.submitButton })
     ).toBeInTheDocument();
   });
 
@@ -75,7 +75,7 @@ describe("SignUpCard component", () => {
       expect(screen.getByText(/name is required/i)).toBeInTheDocument();
       expect(screen.getByText(/invalid email address/i)).toBeInTheDocument();
       expect(
-        screen.getByText(/minimum of 8 characters required/i),
+        screen.getByText(/minimum of 8 characters required/i)
       ).toBeInTheDocument();
     });
 
@@ -86,13 +86,13 @@ describe("SignUpCard component", () => {
     render(<SignUpCard />);
 
     const nameInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signUp.namePlaceholder, "i"),
+      new RegExp(en.auth.signUp.namePlaceholder, "i")
     );
     const emailInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signUp.emailPlaceholder, "i"),
+      new RegExp(en.auth.signUp.emailPlaceholder, "i")
     );
     const passwordInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signUp.passwordPlaceholder, "i"),
+      new RegExp(en.auth.signUp.passwordPlaceholder, "i")
     );
     const submitBtn = screen.getByRole("button", {
       name: en.auth.signUp.submitButton,
@@ -110,7 +110,7 @@ describe("SignUpCard component", () => {
           email: "jane@example.com",
           password: "securePassword123",
         },
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });
@@ -126,13 +126,13 @@ describe("SignUpCard component", () => {
     render(<SignUpCard />);
 
     const nameInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signUp.namePlaceholder, "i"),
+      new RegExp(en.auth.signUp.namePlaceholder, "i")
     );
     const emailInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signUp.emailPlaceholder, "i"),
+      new RegExp(en.auth.signUp.emailPlaceholder, "i")
     );
     const passwordInput = screen.getByPlaceholderText(
-      new RegExp(en.auth.signUp.passwordPlaceholder, "i"),
+      new RegExp(en.auth.signUp.passwordPlaceholder, "i")
     );
     const submitBtn = screen.getByRole("button", {
       name: en.auth.signUp.submitButton,

@@ -33,7 +33,9 @@ export function useUpdateMemberRole(workspaceId: string) {
       return result.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workspace-members", workspaceId] });
+      queryClient.invalidateQueries({
+        queryKey: ["workspace-members", workspaceId],
+      });
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", workspaceId] });
     },

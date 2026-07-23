@@ -58,7 +58,7 @@ export function WorkspaceForm({
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(
-    initialValues?.logo || null,
+    initialValues?.logo || null
   );
   const [isUploading, setIsUploading] = useState(false);
 
@@ -153,7 +153,7 @@ export function WorkspaceForm({
             toast.error(error.message || en.workspace.form.toastCreateError);
             setIsUploading(false);
           },
-        },
+        }
       );
     } else if (initialValues?.id) {
       updateWorkspaceMutation.mutate(
@@ -170,7 +170,7 @@ export function WorkspaceForm({
             toast.error(error.message || en.workspace.form.toastUpdateError);
             setIsUploading(false);
           },
-        },
+        }
       );
     } else {
       if (onSuccess) {
@@ -193,7 +193,7 @@ export function WorkspaceForm({
           onError: (error) => {
             toast.error(error.message || en.workspace.form.toastDeleteError);
           },
-        },
+        }
       );
     }
   };
@@ -306,7 +306,7 @@ export function WorkspaceForm({
                   className="cursor-pointer h-9 px-4 rounded-xl text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSubmitting || (mode === "edit" && !hasChanges)}
                 >
-                    {isSubmitting ? (
+                  {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       {isUploading
