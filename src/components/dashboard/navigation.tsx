@@ -12,6 +12,8 @@ import {
   GoPeople,
 } from "react-icons/go";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import { ProjectSwitcher } from "@/features/project/components/project-switcher";
 
 interface NavigationProps {
   onNavigate?: () => void;
@@ -21,6 +23,7 @@ export const Navigation = ({ onNavigate }: NavigationProps) => {
   const pathname = usePathname();
   const params = useParams();
   const workspaceSlug = params?.workspaceSlug as string | undefined;
+  const projectSlug = params?.projectSlug as string | undefined;
 
   const routes = [
     {
@@ -55,41 +58,112 @@ export const Navigation = ({ onNavigate }: NavigationProps) => {
     },
   ];
 
-  return (
-    <ul className="flex flex-col gap-y-1">
-      {routes.map((item) => {
-        const isActive =
-          pathname === item.href ||
-          (item.href !== "/dashboard" &&
-            item.href !== `/dashboard/${workspaceSlug}` &&
-            pathname.startsWith(item.href));
-        const Icon = isActive ? item.activeIcon : item.icon;
+  const projectRoutes =
+    projectSlug && workspaceSlug
+      ? [
+          {
+            label: "Project Tasks",
+            href: `/dashboard/${workspaceSlug}/projects/${projectSlug}/tasks`,
+            icon: GoCheckCircle,
+            activeIcon: GoCheckCircleFill,
+          },
+          {
+            label: "Project Settings",
+            href: `/dashboard/${workspaceSlug}/projects/${projectSlug}/settings`,
+            icon: GoGear,
+            activeIcon: GoGear,
+          },
+        ]
+      : [];
 
-        return (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              onClick={(e) => {
-                if (isActive) {
-                  e.preventDefault();
-                }
-                onNavigate?.();
-              }}
-            >
-              <div
-                className={cn(
-                  "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",
-                  isActive &&
-                    "bg-white shadow-sm hover:opacity-100 text-primary dark:bg-zinc-800 dark:text-zinc-50"
-                )}
+  return (
+    <div className="flex flex-col gap-y-4">
+      <ul className="flex flex-col gap-y-1">
+        {routes.map((item) => {
+          const isActive =
+            pathname === item.href ||
+            (item.href !== "/dashboard" &&
+              item.href !== `/dashboard/${workspaceSlug}` &&
+              pathname.startsWith(item.href) &&
+              !pathname.includes("/projects/")); // Avoid matching project sub-routes to workspace home
+
+          const Icon = isActive ? item.activeIcon : item.icon;
+
+          return (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                onClick={(e) => {
+                  if (isActive) {
+                    e.preventDefault();
+                  }
+                  onNavigate?.();
+                }}
               >
-                <Icon className="size-5 text-neutral-500" />
-                {item.label}
-              </div>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+                <div
+                  className={cn(
+                    "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",
+                    isActive &&
+                      "bg-white shadow-sm hover:opacity-100 text-primary dark:bg-zinc-800 dark:text-zinc-50"
+                  )}
+                >
+                  <Icon className="size-5 text-neutral-500" />
+                  {item.label}
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
+      {workspaceSlug && (
+        <div className="flex flex-col gap-y-4">
+          <Separator className="my-1" />
+          <div className="px-2.5">
+            <ProjectSwitcher />
+          </div>
+
+          {projectRoutes.length > 0 && (
+            <div className="border-l border-border ml-5 pl-3 flex flex-col gap-y-1">
+              <ul className="flex flex-col gap-y-1">
+                {projectRoutes.map((item) => {
+                  const isActive =
+                    pathname === item.href ||
+                    (item.href !==
+                      `/dashboard/${workspaceSlug}/projects/${projectSlug}` &&
+                      pathname.startsWith(item.href));
+                  const Icon = isActive ? item.activeIcon : item.icon;
+
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={(e) => {
+                          if (isActive) {
+                            e.preventDefault();
+                          }
+                          onNavigate?.();
+                        }}
+                      >
+                        <div
+                          className={cn(
+                            "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",
+                            isActive &&
+                              "bg-white shadow-sm hover:opacity-100 text-primary dark:bg-zinc-800 dark:text-zinc-50"
+                          )}
+                        >
+                          <Icon className="size-5 text-neutral-500" />
+                          {item.label}
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 };

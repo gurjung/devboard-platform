@@ -182,7 +182,7 @@ export function CreateProjectDialog({
           toast.success(en.project.createDialog.toastSuccess);
           handleClose();
           router.push(
-            `/dashboard/${workspaceSlug}/projects/${newProject.slug}`
+            `/dashboard/${workspaceSlug}/projects/${newProject.slug}/tasks`
           );
         },
         onError: (error) => {
