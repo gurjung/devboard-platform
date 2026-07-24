@@ -102,13 +102,13 @@ export function ConfirmDialog({
           </div>
           <DialogTitle
             className={cn(
-              "font-bold text-base text-center",
+              "font-bold text-base text-center px-8",
               currentVariant.title
             )}
           >
             {title}
           </DialogTitle>
-          <DialogDescription className="text-xs text-muted-foreground text-center">
+          <DialogDescription className="text-xs font-medium text-foreground/75 text-center mt-1.5 leading-relaxed">
             {description}
           </DialogDescription>
         </DialogHeader>

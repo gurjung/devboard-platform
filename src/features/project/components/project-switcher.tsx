@@ -45,7 +45,7 @@ export function ProjectSwitcher() {
 
   const handleValueChange = (slug: string) => {
     if (slug && slug !== activeProjectSlug && workspaceSlug) {
-      router.push(`/dashboard/${workspaceSlug}/projects/${slug}`);
+      router.push(`/dashboard/${workspaceSlug}/projects/${slug}/tasks`);
     }
   };
 
