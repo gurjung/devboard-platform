@@ -20,7 +20,7 @@ export function ViewSelector({ currentView, onViewChange }: ViewSelectorProps) {
       id: "kanban",
       label: "Kanban",
       icon: Kanban,
-      disabled: true,
+      disabled: false,
     },
     {
       id: "calendar",
