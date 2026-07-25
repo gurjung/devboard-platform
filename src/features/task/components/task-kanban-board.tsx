@@ -25,8 +25,8 @@ import {
 } from "../hooks/use-tasks";
 import { useUpdateTask } from "../hooks/use-update-task";
 import { TaskKanbanCard } from "./task-kanban-card";
-import { useDroppable } from "@dnd-kit/core";
-import { Skeleton } from "@/components/ui/skeleton";
+import { KanbanColumn } from "./task-kanban-column";
+import { TaskKanbanSkeleton } from "./task-kanban-skeleton";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -113,83 +113,6 @@ function sortTasks(a: TaskWithAssignee, b: TaskWithAssignee) {
 
   // 3. Created At ascending (oldest first as tiebreaker)
   return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-}
-
-interface KanbanColumnProps {
-  id: TaskStatus;
-  title: string;
-  tasks: TaskWithAssignee[];
-  onEditTask: (task: TaskWithAssignee) => void;
-  bgClass: string;
-  borderClass: string;
-  textClass: string;
-  pendingTaskIds: Set<string>;
-}
-
-function KanbanColumn({
-  id,
-  title,
-  tasks,
-  onEditTask,
-  bgClass,
-  borderClass,
-  textClass,
-  pendingTaskIds,
-}: KanbanColumnProps) {
-  const { setNodeRef, isOver } = useDroppable({
-    id,
-  });
-
-  return (
-    <div
-      ref={setNodeRef}
-      className={cn(
-        "flex flex-col gap-4 p-4 rounded-2xl border min-h-[550px] transition-all duration-200 w-full shrink-0",
-        bgClass,
-        borderClass,
-        isOver ? "ring-2 ring-primary/20 bg-muted/30 border-primary/30" : ""
-      )}
-    >
-      {/* Column Header */}
-      <div className="flex items-center justify-between border-b border-border/40 pb-3">
-        <div className="flex items-center gap-2">
-          <h3
-            className={cn(
-              "text-xs font-bold uppercase tracking-wider",
-              textClass
-            )}
-          >
-            {title}
-          </h3>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-muted text-muted-foreground/90 border border-border/20">
-            {tasks.length}
-          </span>
-        </div>
-      </div>
-
-      {/* Tasks List */}
-      <div className="flex flex-col gap-3 overflow-y-auto max-h-[650px] pr-0.5 scrollbar-thin flex-1">
-        {tasks.map((task) => (
-          <TaskKanbanCard
-            key={task.id}
-            task={task}
-            onEdit={onEditTask}
-            isUpdating={pendingTaskIds.has(task.id)}
-          />
-        ))}
-        {tasks.length === 0 && (
-          <div className="flex flex-col items-center justify-center border border-dashed border-border/60 rounded-xl p-8 text-center h-32 bg-muted/5 select-none">
-            <p className="text-[11px] font-medium text-muted-foreground/60">
-              No tasks here
-            </p>
-            <p className="text-[9px] text-muted-foreground/40 mt-1">
-              Drag a task here to update status
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
 }
 
 export function TaskKanbanBoard({
@@ -375,56 +298,5 @@ export function TaskKanbanBoard({
         ) : null}
       </DragOverlay>
     </DndContext>
-  );
-}
-
-function TaskKanbanSkeleton() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-      {COLUMNS.map((col) => (
-        <div
-          key={col.id}
-          className={cn(
-            "flex flex-col gap-4 p-4 rounded-2xl border min-h-[550px]",
-            col.bgClass,
-            col.borderClass
-          )}
-        >
-          {/* Skeleton Header */}
-          <div className="flex items-center justify-between border-b border-border/40 pb-3">
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-4 w-20 rounded-md" />
-              <Skeleton className="h-4.5 w-6 rounded-full" />
-            </div>
-          </div>
-
-          {/* Skeleton Cards */}
-          <div className="flex flex-col gap-3 flex-1">
-            {Array.from({ length: 2 }).map((_, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col gap-3 p-4 rounded-xl border border-border/60 bg-card"
-              >
-                <div className="flex flex-col gap-2">
-                  <Skeleton className="h-4 w-[75%] rounded-md" />
-                  <Skeleton className="h-3 w-[45%] rounded-md" />
-                </div>
-                <div className="flex justify-between items-center mt-1">
-                  <Skeleton className="h-5 w-12 rounded-full" />
-                  <Skeleton className="h-3.5 w-14 rounded-md" />
-                </div>
-                <div className="flex justify-between items-center border-t border-border/40 pt-2.5 mt-0.5">
-                  <Skeleton className="h-3.5 w-14 rounded-md" />
-                  <div className="flex items-center gap-1.5">
-                    <Skeleton className="h-5.5 w-5.5 rounded-full" />
-                    <Skeleton className="h-3 w-12 rounded-md" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
   );
 }
