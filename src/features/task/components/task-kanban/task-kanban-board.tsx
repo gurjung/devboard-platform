@@ -22,8 +22,8 @@ import {
   useTasks,
   FetchTasksResponse,
   TaskWithAssignee,
-} from "../hooks/use-tasks";
-import { useUpdateTask } from "../hooks/use-update-task";
+} from "../../hooks/use-tasks";
+import { useUpdateTask } from "../../hooks/use-update-task";
 import { TaskKanbanCard } from "./task-kanban-card";
 import { KanbanColumn } from "./task-kanban-column";
 import { TaskKanbanSkeleton } from "./task-kanban-skeleton";

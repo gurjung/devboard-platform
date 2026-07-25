@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { TaskStatus } from "@prisma/client";
-import { TaskWithAssignee } from "../hooks/use-tasks";
+import { TaskWithAssignee } from "../../hooks/use-tasks";
 import { TaskKanbanCard } from "./task-kanban-card";
 import { cn } from "@/lib/utils";
 

@@ -11,7 +11,7 @@ import { useTasks, TaskWithAssignee } from "../hooks/use-tasks";
 import { ViewSelector } from "./view-selector";
 import { TaskFilters } from "./task-filters/task-filters";
 import { TaskTable } from "./task-table/task-table";
-import { TaskKanbanBoard } from "./task-kanban-board";
+import { TaskKanbanBoard } from "./task-kanban/task-kanban-board";
 import { CreateTaskDialog } from "./create-task-dialog";
 import { EditTaskDialog } from "./edit-task-dialog";
 import { useDeleteTask } from "../hooks/use-delete-task";

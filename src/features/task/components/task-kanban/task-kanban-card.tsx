@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { Calendar, Loader2 } from "lucide-react";
-import { TaskWithAssignee } from "../hooks/use-tasks";
+import { TaskWithAssignee } from "../../hooks/use-tasks";
 import { cn } from "@/lib/utils";
 
 interface TaskKanbanCardProps {

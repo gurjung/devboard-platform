@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { TaskKanbanCard } from "../task-kanban-card";
+import { TaskKanbanCard } from "../task-kanban/task-kanban-card";
 import { TaskWithAssignee } from "../../hooks/use-tasks";
 
 // Mock @dnd-kit/core so that it does not attempt complex drag measurements during test renders
