@@ -17,6 +17,7 @@ import {
   ArrowUp,
   AlertTriangle,
   UserX,
+  X,
 } from "lucide-react";
 import { format } from "date-fns";
 
@@ -400,16 +401,40 @@ export function CreateTaskDialog({
                         <Button
                           variant="outline"
                           disabled={isSubmitting}
-                          className="w-full h-10 px-3 bg-background border border-border/80 hover:border-border rounded-xl text-left font-normal text-xs hover:border-border focus:ring-2 focus:ring-primary/20 cursor-pointer gap-2 transition-colors"
+                          className="w-full h-10 px-3 bg-background border border-border/80 hover:border-border rounded-xl text-left font-normal text-xs hover:border-border focus:ring-2 focus:ring-primary/20 cursor-pointer transition-colors flex items-center justify-between gap-2"
                         />
                       }
                     >
-                      <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                      {field.value ? (
-                        format(new Date(field.value), "PPP")
-                      ) : (
-                        <span className="text-muted-foreground">
-                          Pick a date
+                      <div className="flex items-center gap-2 truncate">
+                        <CalendarIcon className="h-4 w-4 text-muted-foreground shrink-0" />
+                        {field.value ? (
+                          format(new Date(field.value), "PPP")
+                        ) : (
+                          <span className="text-muted-foreground">
+                            Pick a date
+                          </span>
+                        )}
+                      </div>
+                      {field.value && (
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          className="h-5 w-5 rounded-full hover:bg-muted/80 flex items-center justify-center cursor-pointer text-muted-foreground/60 hover:text-foreground/80 transition-colors shrink-0 ml-auto"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            field.onChange(null);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              field.onChange(null);
+                            }
+                          }}
+                          title="Clear date"
+                        >
+                          <X className="h-3 w-3" />
                         </span>
                       )}
                     </PopoverTrigger>

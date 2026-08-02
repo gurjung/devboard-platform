@@ -12,6 +12,7 @@ import { ViewSelector } from "./view-selector";
 import { TaskFilters } from "./task-filters/task-filters";
 import { TaskTable } from "./task-table/task-table";
 import { TaskKanbanBoard } from "./task-kanban/task-kanban-board";
+import { TaskCalendarBoard } from "./task-calendar/task-calendar-board";
 import { CreateTaskDialog } from "./create-task-dialog";
 import { EditTaskDialog } from "./edit-task-dialog";
 import { useDeleteTask } from "../hooks/use-delete-task";
@@ -184,14 +185,20 @@ export function TasksDashboardClient({
             searchParams={searchParams}
             onTaskClick={(task) => setSelectedTaskForEdit(task)}
           />
+        ) : view === "calendar" ? (
+          <TaskCalendarBoard
+            projectId={project.id}
+            searchParams={searchParams}
+            onTaskClick={(task) => setSelectedTaskForEdit(task)}
+          />
         ) : (
           <div className="flex flex-col items-center justify-center border border-dashed border-border/80 rounded-2xl p-12 text-center bg-muted/10">
             <p className="text-sm font-medium text-muted-foreground capitalize">
               {view} view coming soon
             </p>
             <p className="text-xs text-muted-foreground/80 mt-1">
-              Currently, only the Table and Kanban views are supported in this
-              phase.
+              Currently, only the Table, Kanban and Calendar views are supported
+              in this phase.
             </p>
           </div>
         )}

@@ -26,7 +26,7 @@ export function ViewSelector({ currentView, onViewChange }: ViewSelectorProps) {
       id: "calendar",
       label: "Calendar",
       icon: Calendar,
-      disabled: true,
+      disabled: false,
     },
   ];
 
