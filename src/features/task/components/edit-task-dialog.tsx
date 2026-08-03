@@ -92,7 +92,7 @@ const priorityLabels: Record<string, string> = {
 };
 
 const priorityIcons: Record<string, React.ReactNode> = {
-  LOW: <ArrowDown className="h-3.5 w-3.5 text-zinc-500 shrink-0" />,
+  LOW: <ArrowDown className="h-3.5 w-3.5 text-muted-foreground shrink-0" />,
   MEDIUM: <ArrowRight className="h-3.5 w-3.5 text-blue-500 shrink-0" />,
   HIGH: <ArrowUp className="h-3.5 w-3.5 text-orange-500 shrink-0" />,
   URGENT: <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0" />,
@@ -322,7 +322,7 @@ export function EditTaskDialog({
                         <SelectGroup>
                           <SelectItem value="LOW">
                             <div className="flex items-center gap-2">
-                              <ArrowDown className="h-3.5 w-3.5 text-zinc-500" />
+                              <ArrowDown className="h-3.5 w-3.5 text-muted-foreground" />
                               <span>Low</span>
                             </div>
                           </SelectItem>

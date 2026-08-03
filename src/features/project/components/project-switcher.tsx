@@ -81,7 +81,7 @@ export function ProjectSwitcher() {
         onValueChange={handleValueChange}
         disabled={isLoading || !projects || projects.length === 0}
       >
-        <SelectTrigger className="h-11 w-full px-2.5 py-2 bg-background hover:bg-accent/60 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80 border border-border/80 shadow-2xs transition-all duration-200 rounded-xl focus:ring-2 focus:ring-primary/20 hover:border-border">
+        <SelectTrigger className="h-11 w-full px-2.5 py-2 bg-background hover:bg-accent/60 border border-border/80 shadow-2xs transition-all duration-200 rounded-xl focus:ring-2 focus:ring-primary/20 hover:border-border">
           <SelectValue
             placeholder={
               isLoading

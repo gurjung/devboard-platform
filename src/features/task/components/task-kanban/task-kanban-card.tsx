@@ -30,7 +30,7 @@ const priorityStyles: Record<string, { label: string; className: string }> = {
   LOW: {
     label: "Low",
     className:
-      "bg-zinc-100 text-zinc-800 dark:bg-zinc-800/60 dark:text-zinc-300 hover:bg-zinc-100/80 border border-zinc-200/50 dark:border-zinc-700/50",
+      "bg-muted/50 text-muted-foreground hover:bg-muted/80 border border-border/50",
   },
   MEDIUM: {
     label: "Medium",
@@ -58,8 +58,7 @@ const statusLabels: Record<string, string> = {
 };
 
 const statusStyles: Record<string, string> = {
-  BACKLOG:
-    "bg-zinc-100 text-zinc-800 dark:bg-zinc-800/60 dark:text-zinc-300 border-zinc-200/50 dark:border-zinc-700/50",
+  BACKLOG: "bg-muted/50 text-muted-foreground border border-border/50",
   TODO: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20",
   IN_PROGRESS:
     "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20",

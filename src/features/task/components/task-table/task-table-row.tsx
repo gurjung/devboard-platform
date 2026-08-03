@@ -54,7 +54,7 @@ const priorityStyles: Record<string, { label: string; className: string }> = {
   LOW: {
     label: "Low",
     className:
-      "bg-zinc-100 text-zinc-800 dark:bg-zinc-800/60 dark:text-zinc-300 hover:bg-zinc-100",
+      "bg-muted/50 text-muted-foreground hover:bg-muted/80 border border-border/50",
   },
   MEDIUM: {
     label: "Medium",
