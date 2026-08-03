@@ -43,7 +43,7 @@ const priorityItems = [
     value: "LOW",
     label: "Low",
     icon: ArrowDown,
-    iconClass: "text-zinc-500",
+    iconClass: "text-muted-foreground",
   },
   {
     value: "MEDIUM",

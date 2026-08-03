@@ -62,10 +62,10 @@ const SignInCard = () => {
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex flex-col items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">
+        <CardTitle className="text-2xl font-bold text-foreground">
           {en.auth.signIn.title}
         </CardTitle>
-        <CardDescription className="text-neutral-500 mt-1.5">
+        <CardDescription className="text-muted-foreground mt-1.5">
           {en.auth.signIn.description}
         </CardDescription>
       </CardHeader>

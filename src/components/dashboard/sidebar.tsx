@@ -28,7 +28,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
       {/* Sidebar Panel */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex flex-col bg-neutral-100 dark:bg-zinc-900 transition-all duration-200 ease-in-out lg:static lg:z-auto border-r border-neutral-200 dark:border-zinc-800",
+          "fixed inset-y-0 left-0 z-50 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border transition-all duration-200 ease-in-out lg:static lg:z-auto",
           open
             ? "w-64 p-4 translate-x-0"
             : "-translate-x-full w-64 p-4 lg:translate-x-0 lg:w-0 lg:p-0 lg:overflow-hidden lg:border-r-0"
@@ -37,14 +37,14 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         <div className="flex items-center justify-between">
           <Link
             href="/dashboard"
-            className="flex items-center gap-2 font-bold text-xl tracking-tight text-neutral-900 dark:text-neutral-50"
+            className="flex items-center gap-2 font-bold text-xl tracking-tight text-sidebar-foreground"
           >
             <span>{en.dashboard.sidebar.brandName}</span>
           </Link>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1 text-neutral-500 hover:bg-neutral-200 dark:hover:bg-zinc-800 lg:hidden"
+            className="rounded-md p-1 text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground lg:hidden"
             aria-label={en.dashboard.sidebar.closeSidebar}
           >
             <HiXMark className="size-6" />
