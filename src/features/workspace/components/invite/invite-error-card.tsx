@@ -60,7 +60,7 @@ export function InviteErrorCard({ reason, data }: InviteErrorCardProps) {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 p-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-muted/30 p-4">
       <Card className="w-full max-w-md border-border/80 shadow-md rounded-2xl">
         <CardHeader className="flex flex-col items-center justify-center text-center p-6">
           {icon}

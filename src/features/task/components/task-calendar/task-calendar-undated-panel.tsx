@@ -15,7 +15,7 @@ export function TaskCalendarUndatedPanel({
   pendingTaskIds,
 }: TaskCalendarUndatedPanelProps) {
   return (
-    <div className="lg:col-span-1 flex flex-col gap-4 p-4 rounded-2xl border border-border/40 bg-zinc-50/30 dark:bg-zinc-950/10 min-h-[450px]">
+    <div className="lg:col-span-1 flex flex-col gap-4 p-4 rounded-2xl border border-border/40 bg-muted/10 min-h-[450px]">
       <div className="border-b border-border/40 pb-3 flex items-center justify-between">
         <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           No due date

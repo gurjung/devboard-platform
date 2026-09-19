@@ -28,7 +28,7 @@ export function InviteMismatchCard({
   currentUserEmail,
 }: InviteMismatchCardProps) {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 p-4">
+    <div className="min-h-screen w-full flex items-center justify-center bg-muted/30 p-4">
       <Card className="w-full max-w-md border-border/80 shadow-md rounded-2xl p-4">
         <CardHeader className="flex flex-col items-center justify-center text-center pb-4">
           <ShieldAlert className="h-10 w-10 text-amber-500 mb-2" />

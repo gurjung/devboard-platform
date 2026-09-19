@@ -35,7 +35,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   }, [isSignIn]);
 
   return (
-    <main className="bg-neutral-100 min-h-screen">
+    <main className="bg-muted/30 min-h-screen">
       <div className="mx-auto max-w-screen-2xl p-4">
         {/* navbar which consist of image tag and button */}
         <nav className="flex justify-between items-center">

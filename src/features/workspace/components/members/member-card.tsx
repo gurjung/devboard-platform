@@ -87,7 +87,7 @@ export function MemberCard({
               <span className="text-xs font-semibold text-foreground truncate flex items-center gap-1.5">
                 {member.user.name || en.workspace.members.anonymousUser}
                 {isCurrentUser && (
-                  <span className="bg-neutral-200 dark:bg-zinc-800 text-neutral-800 dark:text-zinc-200 px-1.5 py-0.5 rounded-md text-[9px] font-bold">
+                  <span className="bg-secondary text-secondary-foreground px-1.5 py-0.5 rounded-md text-[9px] font-bold">
                     {en.workspace.members.youBadge}
                   </span>
                 )}
@@ -143,7 +143,7 @@ export function MemberCard({
               </SelectContent>
             </Select>
           ) : (
-            <span className="flex items-center gap-1 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300">
+            <span className="flex items-center gap-1 text-[11px] font-semibold text-foreground/80">
               {isOwner ? (
                 <>
                   <Shield className="size-3.5 text-amber-500 fill-amber-500/20" />
@@ -156,7 +156,7 @@ export function MemberCard({
                 </>
               ) : (
                 <>
-                  <User className="size-3.5 text-neutral-400" />
+                  <User className="size-3.5 text-muted-foreground" />
                   {en.workspace.members.roles.member}
                 </>
               )}

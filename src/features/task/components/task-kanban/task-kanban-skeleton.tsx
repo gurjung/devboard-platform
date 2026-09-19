@@ -8,8 +8,8 @@ const SKELETON_COLUMNS = [
   {
     id: "BACKLOG",
     label: "Backlog",
-    bgClass: "bg-zinc-50 dark:bg-zinc-950/20",
-    borderClass: "border-zinc-200/50 dark:border-zinc-800/40",
+    bgClass: "bg-muted/30",
+    borderClass: "border-border/50",
   },
   {
     id: "TODO",
