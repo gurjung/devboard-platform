@@ -101,7 +101,7 @@ const mockTasks: TaskWithAssignee[] = [
     projectId: "project-1",
     assigneeId: "user-1",
     createdById: "user-2",
-    dueDate: new Date("2026-08-15T00:00:00.000Z"),
+    dueDate: new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
     assignee: {
