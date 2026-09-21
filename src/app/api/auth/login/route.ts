@@ -27,12 +27,10 @@ export async function POST(request: Request) {
         email,
       },
     });
-  } catch {
+  } catch (error) {
+    console.error("Login error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        message: "Something went wrong",
-      },
+      { success: false, message: "Something went wrong" },
       { status: 500 }
     );
   }
