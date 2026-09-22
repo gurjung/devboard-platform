@@ -1,47 +1,54 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Task, User } from "@prisma/client";
+import { useParams } from "next/navigation";
+import { TaskWithAssignee } from "./use-tasks";
 
-export interface TaskWithAssignee extends Task {
-  assignee: Pick<User, "id" | "name" | "email" | "image"> | null;
-  createdBy: Pick<User, "id" | "name" | "email" | "image">;
-  project?: {
-    id: string;
-    name: string;
-    slug: string;
-  };
-}
+export type TaskWithAssigneeAndProject = TaskWithAssignee;
 
-export interface FetchTasksResponse {
-  tasks: TaskWithAssignee[];
+export interface FetchMyTasksResponse {
+  tasks: TaskWithAssigneeAndProject[];
   nextCursor: string | null;
   totalCount: number;
 }
 
-export interface UseTasksFilters {
+export interface UseMyTasksFilters {
   status?: string;
   priority?: string;
-  assigneeId?: string;
   dueDate?: string;
   pageSize?: number;
 }
 
-export function useTasks(projectId: string, filters: UseTasksFilters = {}) {
-  return useInfiniteQuery<FetchTasksResponse>({
-    queryKey: ["tasks", projectId, filters],
+export function useMyTasks(
+  workspaceIdOrFilters?: string | UseMyTasksFilters,
+  filtersArg?: UseMyTasksFilters
+) {
+  const params = useParams();
+  const routeWorkspace =
+    (params?.workspaceSlug as string) || (params?.workspaceId as string);
+
+  const workspaceId =
+    typeof workspaceIdOrFilters === "string"
+      ? workspaceIdOrFilters
+      : routeWorkspace;
+
+  const filters =
+    (typeof workspaceIdOrFilters === "object"
+      ? workspaceIdOrFilters
+      : filtersArg) || {};
+
+  return useInfiniteQuery<FetchMyTasksResponse>({
+    queryKey: ["my-tasks", workspaceId, filters],
     queryFn: async ({ pageParam = null }) => {
       const searchParams = new URLSearchParams();
 
       if (filters.status) searchParams.append("status", filters.status);
       if (filters.priority) searchParams.append("priority", filters.priority);
-      if (filters.assigneeId)
-        searchParams.append("assigneeId", filters.assigneeId);
       if (filters.dueDate) searchParams.append("dueDate", filters.dueDate);
       if (filters.pageSize)
         searchParams.append("pageSize", filters.pageSize.toString());
       if (pageParam) searchParams.append("cursor", pageParam as string);
 
       const response = await fetch(
-        `/api/projects/${projectId}/tasks?${searchParams.toString()}`
+        `/api/workspaces/${workspaceId}/my-tasks?${searchParams.toString()}`
       );
 
       const result = await response.json();
@@ -54,6 +61,6 @@ export function useTasks(projectId: string, filters: UseTasksFilters = {}) {
     },
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor || undefined,
-    enabled: !!projectId,
+    enabled: !!workspaceId,
   });
 }

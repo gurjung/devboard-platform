@@ -26,6 +26,9 @@ export function useDeleteTask(projectId: string) {
       queryClient.invalidateQueries({
         queryKey: ["tasks", projectId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["my-tasks"],
+      });
     },
   });
 }

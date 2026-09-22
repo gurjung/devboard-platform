@@ -15,6 +15,7 @@ import { TaskWithAssignee } from "../../hooks/use-tasks";
 import { TaskTableSkeleton } from "./task-table-skeleton";
 import { TaskTableEmpty } from "./task-table-empty";
 import { TaskTableRow } from "./task-table-row";
+import { cn } from "@/lib/utils";
 
 interface TaskTableProps {
   tasks: TaskWithAssignee[];
@@ -26,11 +27,13 @@ interface TaskTableProps {
   onRowClick: (task: TaskWithAssignee) => void;
   onDeleteClick: (task: TaskWithAssignee) => void;
   isFiltered: boolean;
-  onCreateClick: () => void;
+  onCreateClick?: () => void;
   currentUserId: string;
   currentUserRole: string;
   hasMultiplePages: boolean;
   totalTasksCount: number;
+  showProjectColumn?: boolean;
+  workspaceSlug?: string;
 }
 
 export function TaskTable({
@@ -48,6 +51,8 @@ export function TaskTable({
   currentUserRole,
   hasMultiplePages,
   totalTasksCount,
+  showProjectColumn = false,
+  workspaceSlug,
 }: TaskTableProps) {
   const { ref, inView } = useInView({
     threshold: 0,
@@ -78,29 +83,65 @@ export function TaskTable({
 
   if (tasks.length === 0) {
     return (
-      <TaskTableEmpty isFiltered={isFiltered} onCreateClick={onCreateClick} />
+      <TaskTableEmpty
+        isFiltered={isFiltered}
+        onCreateClick={onCreateClick}
+        emptyMessage={
+          showProjectColumn ? "No tasks assigned to you" : undefined
+        }
+        emptyDescription={
+          showProjectColumn
+            ? "You currently have no tasks assigned to you in this workspace."
+            : undefined
+        }
+      />
     );
   }
 
   return (
     <div className="flex flex-col gap-4">
       <div className="rounded-xl border border-border/60 overflow-hidden bg-background animate-in fade-in duration-200 [&_[data-slot=table-container]]:max-h-[540px] [&_[data-slot=table-container]]:overflow-y-auto">
-        <Table>
+        <Table className="table-fixed w-full">
           <TableHeader className="bg-muted/85 backdrop-blur-sm sticky top-0 z-10 shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)]">
             <TableRow>
-              <TableHead className="w-[40%] text-xs font-semibold">
+              <TableHead
+                className={cn(
+                  "text-xs font-semibold",
+                  showProjectColumn ? "w-[28%]" : "w-[40%]"
+                )}
+              >
                 Title
               </TableHead>
-              <TableHead className="w-[15%] text-xs font-semibold">
+              {showProjectColumn && (
+                <TableHead className="w-[15%] text-xs font-semibold">
+                  Project
+                </TableHead>
+              )}
+              <TableHead
+                className={cn(
+                  "text-xs font-semibold",
+                  showProjectColumn ? "w-[14%]" : "w-[15%]"
+                )}
+              >
                 Status
               </TableHead>
-              <TableHead className="w-[15%] text-xs font-semibold">
+              <TableHead
+                className={cn(
+                  "text-xs font-semibold",
+                  showProjectColumn ? "w-[14%]" : "w-[15%]"
+                )}
+              >
                 Priority
               </TableHead>
               <TableHead className="w-[15%] text-xs font-semibold">
                 Assignee
               </TableHead>
-              <TableHead className="w-[10%] text-xs font-semibold text-right">
+              <TableHead
+                className={cn(
+                  "text-xs font-semibold text-right",
+                  showProjectColumn ? "w-[14%]" : "w-[10%]"
+                )}
+              >
                 Due Date
               </TableHead>
               <TableHead className="w-[50px]"></TableHead>
@@ -115,11 +156,16 @@ export function TaskTable({
                 onDeleteClick={onDeleteClick}
                 currentUserId={currentUserId}
                 currentUserRole={currentUserRole}
+                showProjectColumn={showProjectColumn}
+                workspaceSlug={workspaceSlug}
               />
             ))}
             {/* Sentinel element at the bottom of the table for infinite scroll */}
             <TableRow className="hover:bg-transparent border-0 h-1">
-              <TableCell colSpan={6} className="p-0 h-1">
+              <TableCell
+                colSpan={showProjectColumn ? 7 : 6}
+                className="p-0 h-1"
+              >
                 <div
                   ref={hasNextPage && !isFetchingNextPage ? ref : undefined}
                   className="h-px"

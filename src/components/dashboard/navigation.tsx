@@ -35,8 +35,8 @@ export const Navigation = ({ onNavigate }: NavigationProps) => {
     {
       label: en.dashboard.navigation.myTasks,
       href: workspaceSlug
-        ? `/dashboard/${workspaceSlug}/tasks`
-        : "/dashboard/tasks",
+        ? `/dashboard/${workspaceSlug}/my-tasks`
+        : "/dashboard/my-tasks",
       icon: GoCheckCircle,
       activeIcon: GoCheckCircleFill,
     },

@@ -50,6 +50,7 @@ export function useUpdateTask(projectId: string) {
             };
           });
         });
+      queryClient.invalidateQueries({ queryKey: ["my-tasks"] });
     },
   });
 }
