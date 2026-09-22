@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function TaskTableSkeleton() {
   return (
     <div className="rounded-xl border border-border/60 overflow-hidden bg-background">
-      <Table>
+      <Table className="table-fixed w-full">
         <TableHeader className="bg-muted/30">
           <TableRow>
             <TableHead className="w-[40%] text-xs font-semibold">

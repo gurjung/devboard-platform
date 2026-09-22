@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 
 interface TaskTableEmptyProps {
   isFiltered: boolean;
-  onCreateClick: () => void;
+  onCreateClick?: () => void;
+  emptyMessage?: string;
+  emptyDescription?: string;
 }
 
 export function TaskTableEmpty({
   isFiltered,
   onCreateClick,
+  emptyMessage,
+  emptyDescription,
 }: TaskTableEmptyProps) {
   return (
     <div className="flex flex-col items-center justify-center border border-dashed border-border/80 rounded-2xl p-16 text-center bg-muted/10">
@@ -25,18 +29,23 @@ export function TaskTableEmpty({
       ) : (
         <>
           <p className="text-sm font-medium text-muted-foreground">
-            No tasks in this project yet
+            {emptyMessage || "No tasks in this project yet"}
           </p>
           <p className="text-xs text-muted-foreground/80 mt-1 mb-4">
-            Get started by creating your very first project task.
+            {emptyDescription ||
+              (onCreateClick
+                ? "Get started by creating your very first project task."
+                : "You currently have no assigned tasks in this workspace.")}
           </p>
-          <Button
-            onClick={onCreateClick}
-            size="sm"
-            className="h-9 px-4 text-xs rounded-xl cursor-pointer"
-          >
-            Create Task
-          </Button>
+          {onCreateClick && (
+            <Button
+              onClick={onCreateClick}
+              size="sm"
+              className="h-9 px-4 text-xs rounded-xl cursor-pointer"
+            >
+              Create Task
+            </Button>
+          )}
         </>
       )}
     </div>

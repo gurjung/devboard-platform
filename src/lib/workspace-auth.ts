@@ -34,9 +34,10 @@ export async function getWorkspaceMembership(workspaceSlug: string) {
   const membership = await prisma.workspaceMember.findFirst({
     where: {
       userId: session.user.id,
-      workspace: {
-        slug: workspaceSlug,
-      },
+      OR: [
+        { workspace: { slug: workspaceSlug } },
+        { workspaceId: workspaceSlug },
+      ],
     },
     include: {
       workspace: true,

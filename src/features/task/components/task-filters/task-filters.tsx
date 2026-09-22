@@ -11,14 +11,15 @@ interface TaskFiltersProps {
   workspaceId: string;
   status: string;
   priority: string;
-  assigneeId: string;
+  assigneeId?: string;
   dueDate: string;
   onStatusChange: (status: string) => void;
   onPriorityChange: (priority: string) => void;
-  onAssigneeChange: (assigneeId: string) => void;
+  onAssigneeChange?: (assigneeId: string) => void;
   onDueDateChange: (dueDate: string) => void;
   onClearFilters: () => void;
   isFiltered: boolean;
+  hideAssignee?: boolean;
 }
 
 export function TaskFilters({
@@ -33,6 +34,7 @@ export function TaskFilters({
   onDueDateChange,
   onClearFilters,
   isFiltered,
+  hideAssignee = false,
 }: TaskFiltersProps) {
   return (
     <div className="flex flex-wrap items-center gap-2.5">
@@ -43,11 +45,13 @@ export function TaskFilters({
       <PriorityFilter priority={priority} onChange={onPriorityChange} />
 
       {/* Assignee Filter */}
-      <AssigneeFilter
-        workspaceId={workspaceId}
-        assigneeId={assigneeId}
-        onChange={onAssigneeChange}
-      />
+      {!hideAssignee && onAssigneeChange && (
+        <AssigneeFilter
+          workspaceId={workspaceId}
+          assigneeId={assigneeId || ""}
+          onChange={onAssigneeChange}
+        />
+      )}
 
       {/* Due Date Filter */}
       <DueDateFilter dueDate={dueDate} onChange={onDueDateChange} />

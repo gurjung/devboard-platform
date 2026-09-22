@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Calendar, MoreVertical, Pencil, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { TaskWithAssignee } from "../../hooks/use-tasks";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +23,8 @@ interface TaskTableRowProps {
   onDeleteClick: (task: TaskWithAssignee) => void;
   currentUserId: string;
   currentUserRole: string;
+  showProjectColumn?: boolean;
+  workspaceSlug?: string;
 }
 
 const statusStyles: Record<string, { label: string; className: string }> = {
@@ -79,7 +83,13 @@ export function TaskTableRow({
   onDeleteClick,
   currentUserId,
   currentUserRole,
+  showProjectColumn = false,
+  workspaceSlug,
 }: TaskTableRowProps) {
+  const params = useParams();
+  const activeWorkspaceSlug =
+    workspaceSlug || (params?.workspaceSlug as string) || "";
+
   const status = statusStyles[task.status] || {
     label: task.status,
     className: "",
@@ -99,63 +109,88 @@ export function TaskTableRow({
       onClick={() => onRowClick(task)}
       className="cursor-pointer transition-colors duration-150 hover:bg-muted/20"
     >
-      <TableCell className="font-medium align-middle">
-        <div className="flex flex-col gap-0.5">
-          <span className="text-sm text-foreground line-clamp-1">
+      <TableCell className="font-medium align-middle max-w-0 overflow-hidden">
+        <div className="flex flex-col gap-0.5 min-w-0 w-full">
+          <span
+            className="text-sm text-foreground truncate block"
+            title={task.title}
+          >
             {task.title}
           </span>
           {task.description && (
-            <span className="text-xs text-muted-foreground line-clamp-1">
+            <span
+              className="text-xs text-muted-foreground truncate block"
+              title={task.description}
+            >
               {task.description}
             </span>
           )}
         </div>
       </TableCell>
-      <TableCell className="align-middle">
+      {showProjectColumn && (
+        <TableCell className="align-middle max-w-0 overflow-hidden">
+          {task.project ? (
+            <Link
+              href={`/dashboard/${activeWorkspaceSlug}/projects/${task.project.slug}`}
+              onClick={(e) => e.stopPropagation()}
+              className="text-xs font-medium text-foreground hover:text-primary hover:underline transition-colors truncate block max-w-full"
+              title={task.project.name}
+            >
+              {task.project.name}
+            </Link>
+          ) : (
+            <span className="text-muted-foreground/40 text-xs">—</span>
+          )}
+        </TableCell>
+      )}
+      <TableCell className="align-middle whitespace-nowrap">
         <Badge
           variant="outline"
           className={cn(
-            "text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize",
+            "text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize whitespace-nowrap",
             status.className
           )}
         >
           {status.label}
         </Badge>
       </TableCell>
-      <TableCell className="align-middle">
+      <TableCell className="align-middle whitespace-nowrap">
         <Badge
           variant="outline"
           className={cn(
-            "text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize",
+            "text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize whitespace-nowrap",
             priority.className
           )}
         >
           {priority.label}
         </Badge>
       </TableCell>
-      <TableCell className="align-middle">
+      <TableCell className="align-middle max-w-0 overflow-hidden">
         {task.assignee ? (
-          <div className="flex items-center gap-2">
-            <Avatar className="h-5 w-5">
+          <div className="flex items-center gap-2 min-w-0">
+            <Avatar className="h-5 w-5 shrink-0">
               <AvatarImage src={task.assignee.image || ""} />
               <AvatarFallback className="text-[9px] bg-primary/10 text-primary font-semibold">
                 {task.assignee.name?.charAt(0) || "U"}
               </AvatarFallback>
             </Avatar>
-            <span className="text-xs font-medium text-foreground truncate max-w-[100px]">
+            <span
+              className="text-xs font-medium text-foreground truncate min-w-0 block"
+              title={task.assignee.name || ""}
+            >
               {task.assignee.name}
             </span>
           </div>
         ) : (
-          <span className="text-xs text-muted-foreground/60 italic">
+          <span className="text-xs text-muted-foreground/60 italic whitespace-nowrap">
             Unassigned
           </span>
         )}
       </TableCell>
-      <TableCell className="text-right align-middle text-xs text-muted-foreground font-medium">
+      <TableCell className="text-right align-middle text-xs text-muted-foreground font-medium whitespace-nowrap">
         {task.dueDate ? (
-          <div className="inline-flex items-center gap-1.5 justify-end">
-            <Calendar className="h-3 w-3 text-muted-foreground/75" />
+          <div className="inline-flex items-center gap-1.5 justify-end whitespace-nowrap">
+            <Calendar className="h-3 w-3 text-muted-foreground/75 shrink-0" />
             <span>{format(new Date(task.dueDate), "MMM d, yyyy")}</span>
           </div>
         ) : (
@@ -163,7 +198,7 @@ export function TaskTableRow({
         )}
       </TableCell>
       <TableCell
-        className="text-center align-middle w-[50px] p-0"
+        className="text-center align-middle w-[50px] p-0 shrink-0"
         onClick={(e) => e.stopPropagation()}
       >
         <DropdownMenu>
