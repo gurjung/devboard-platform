@@ -52,6 +52,7 @@ interface TaskCalendarBoardProps {
     priority?: string;
     assigneeId?: string;
     dueDate?: string;
+    overdue?: string;
   };
   onTaskClick: (task: TaskWithAssignee) => void;
 }
@@ -67,11 +68,17 @@ export function TaskCalendarBoard({
   const [activeId, setActiveId] = useState<string | null>(null);
   const [currentMonth, setCurrentMonth] = useState<Date>(() => new Date());
 
+  const isOverdue =
+    searchParams.overdue === "true" || searchParams.status === "OVERDUE";
   const filters = {
-    status: searchParams.status || undefined,
+    status:
+      searchParams.status === "OVERDUE"
+        ? undefined
+        : searchParams.status || undefined,
     priority: searchParams.priority || undefined,
     assigneeId: searchParams.assigneeId || undefined,
     dueDate: searchParams.dueDate || undefined,
+    overdue: isOverdue ? "true" : undefined,
     pageSize: 1000, // Fetch all matching tasks for the project
   };
 

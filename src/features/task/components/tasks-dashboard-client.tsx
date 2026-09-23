@@ -31,6 +31,7 @@ interface TasksDashboardClientProps {
     priority?: string;
     assigneeId?: string;
     dueDate?: string;
+    overdue?: string;
   };
 }
 
@@ -57,7 +58,10 @@ export function TasksDashboardClient({
 
   // Extract parameters
   const view = searchParams.view || "table";
-  const status = searchParams.status || "";
+  const rawStatus = searchParams.status || "";
+  const rawOverdue = searchParams.overdue || "";
+  const isOverdue = rawOverdue === "true" || rawStatus === "OVERDUE";
+  const status = isOverdue ? "OVERDUE" : rawStatus;
   const priority = searchParams.priority || "";
   const assigneeId = searchParams.assigneeId || "";
   const dueDate = searchParams.dueDate || "";
@@ -73,16 +77,32 @@ export function TasksDashboardClient({
     isLoading,
     isError,
   } = useTasks(project.id, {
-    status: status || undefined,
+    status: status === "OVERDUE" ? undefined : status || undefined,
     priority: priority || undefined,
     assigneeId: assigneeId || undefined,
     dueDate: dueDate || undefined,
+    overdue: isOverdue ? "true" : undefined,
     pageSize: 10,
   });
 
   const tasks = data?.pages.flatMap((page) => page.tasks) || [];
 
   // URL State Updates
+  const handleStatusChange = (val: string) => {
+    const params = new URLSearchParams(rawSearchParams.toString());
+    if (val === "OVERDUE") {
+      params.set("status", "OVERDUE");
+      params.set("overdue", "true");
+    } else if (val) {
+      params.set("status", val);
+      params.delete("overdue");
+    } else {
+      params.delete("status");
+      params.delete("overdue");
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   const updateQueryParam = (name: string, value: string) => {
     const params = new URLSearchParams(rawSearchParams.toString());
     if (value) {
@@ -99,6 +119,7 @@ export function TasksDashboardClient({
     params.delete("priority");
     params.delete("assigneeId");
     params.delete("dueDate");
+    params.delete("overdue");
     router.push(`${pathname}?${params.toString()}`);
   };
 
@@ -150,7 +171,7 @@ export function TasksDashboardClient({
             priority={priority}
             assigneeId={assigneeId}
             dueDate={dueDate}
-            onStatusChange={(v) => updateQueryParam("status", v)}
+            onStatusChange={handleStatusChange}
             onPriorityChange={(v) => updateQueryParam("priority", v)}
             onAssigneeChange={(v) => updateQueryParam("assigneeId", v)}
             onDueDateChange={(v) => updateQueryParam("dueDate", v)}
@@ -182,13 +203,21 @@ export function TasksDashboardClient({
         ) : view === "kanban" ? (
           <TaskKanbanBoard
             projectId={project.id}
-            searchParams={searchParams}
+            searchParams={{
+              ...searchParams,
+              status: status === "OVERDUE" ? undefined : status || undefined,
+              overdue: isOverdue ? "true" : undefined,
+            }}
             onTaskClick={(task) => setSelectedTaskForEdit(task)}
           />
         ) : view === "calendar" ? (
           <TaskCalendarBoard
             projectId={project.id}
-            searchParams={searchParams}
+            searchParams={{
+              ...searchParams,
+              status: status === "OVERDUE" ? undefined : status || undefined,
+              overdue: isOverdue ? "true" : undefined,
+            }}
             onTaskClick={(task) => setSelectedTaskForEdit(task)}
           />
         ) : (

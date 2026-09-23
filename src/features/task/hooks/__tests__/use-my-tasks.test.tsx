@@ -91,6 +91,31 @@ describe("useMyTasks hook", () => {
     expect(result.current.data?.pages[0]).toEqual(mockTasksResponse);
   });
 
+  it("fetches my-tasks with overdue filter parameter", async () => {
+    const mockTasksResponse = {
+      tasks: [],
+      totalCount: 0,
+      nextCursor: null,
+    };
+
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockTasksResponse),
+    });
+
+    const { wrapper } = createWrapper();
+    const { result } = renderHook(
+      () => useMyTasks("workspace-123", { overdue: true }),
+      { wrapper }
+    );
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "/api/workspaces/workspace-123/my-tasks?overdue=true"
+    );
+  });
+
   it("uses workspaceSlug from route params when workspaceId is omitted", async () => {
     (useParams as jest.Mock).mockReturnValue({ workspaceSlug: "acme-corp" });
 

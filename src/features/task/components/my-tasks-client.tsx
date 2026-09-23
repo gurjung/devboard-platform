@@ -22,6 +22,7 @@ interface MyTasksClientProps {
     status?: string;
     priority?: string;
     dueDate?: string;
+    overdue?: string;
   };
 }
 
@@ -46,7 +47,10 @@ export function MyTasksClient({
   );
 
   // Extract filter parameters
-  const status = searchParams.status || "";
+  const rawStatus = searchParams.status || "";
+  const rawOverdue = searchParams.overdue || "";
+  const isOverdue = rawOverdue === "true" || rawStatus === "OVERDUE";
+  const status = isOverdue ? "OVERDUE" : rawStatus;
   const priority = searchParams.priority || "";
   const dueDate = searchParams.dueDate || "";
 
@@ -61,9 +65,10 @@ export function MyTasksClient({
     isLoading,
     isError,
   } = useMyTasks(workspaceId, {
-    status: status || undefined,
+    status: status === "OVERDUE" ? undefined : status || undefined,
     priority: priority || undefined,
     dueDate: dueDate || undefined,
+    overdue: isOverdue ? "true" : undefined,
     pageSize: 10,
   });
 
@@ -97,6 +102,21 @@ export function MyTasksClient({
   });
 
   // URL State Updates
+  const handleStatusChange = (val: string) => {
+    const params = new URLSearchParams(rawSearchParams.toString());
+    if (val === "OVERDUE") {
+      params.set("status", "OVERDUE");
+      params.set("overdue", "true");
+    } else if (val) {
+      params.set("status", val);
+      params.delete("overdue");
+    } else {
+      params.delete("status");
+      params.delete("overdue");
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   const updateQueryParam = (name: string, value: string) => {
     const params = new URLSearchParams(rawSearchParams.toString());
     if (value) {
@@ -112,6 +132,7 @@ export function MyTasksClient({
     params.delete("status");
     params.delete("priority");
     params.delete("dueDate");
+    params.delete("overdue");
     router.push(`${pathname}?${params.toString()}`);
   };
 
@@ -149,7 +170,7 @@ export function MyTasksClient({
             priority={priority}
             dueDate={dueDate}
             hideAssignee={true}
-            onStatusChange={(v) => updateQueryParam("status", v)}
+            onStatusChange={handleStatusChange}
             onPriorityChange={(v) => updateQueryParam("priority", v)}
             onDueDateChange={(v) => updateQueryParam("dueDate", v)}
             onClearFilters={handleClearFilters}

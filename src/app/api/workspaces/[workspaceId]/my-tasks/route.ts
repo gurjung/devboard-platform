@@ -32,6 +32,8 @@ export async function GET(req: Request, { params }: RouteParams) {
     const status = searchParams.get("status") || undefined;
     const priority = searchParams.get("priority") || undefined;
     const dueDateParam = searchParams.get("dueDate") || undefined;
+    const overdueParam =
+      searchParams.get("overdue") === "true" || status === "OVERDUE";
     const cursor = searchParams.get("cursor") || undefined;
     const pageSizeParam = searchParams.get("pageSize");
     const pageSize = pageSizeParam ? parseInt(pageSizeParam, 10) : 20;
@@ -43,7 +45,7 @@ export async function GET(req: Request, { params }: RouteParams) {
       },
     };
 
-    if (status) {
+    if (status && status !== "OVERDUE") {
       where.status = status;
     }
     if (priority) {
@@ -59,6 +61,28 @@ export async function GET(req: Request, { params }: RouteParams) {
         where.dueDate = {
           lte: endOfDay,
         };
+      }
+    }
+
+    if (overdueParam) {
+      const now = new Date();
+      if (where.dueDate) {
+        where.dueDate = {
+          ...where.dueDate,
+          lt: now,
+        };
+      } else {
+        where.dueDate = {
+          lt: now,
+        };
+      }
+
+      if (where.status) {
+        if (where.status === "DONE") {
+          where.status = { in: [] };
+        }
+      } else {
+        where.status = { not: "DONE" };
       }
     }
 

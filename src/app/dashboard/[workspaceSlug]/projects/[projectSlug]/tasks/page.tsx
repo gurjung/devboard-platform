@@ -14,6 +14,7 @@ interface TasksPageProps {
     priority?: string;
     assigneeId?: string;
     dueDate?: string;
+    overdue?: string;
   }>;
 }
 

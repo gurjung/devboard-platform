@@ -10,6 +10,7 @@ interface MyTasksPageProps {
     status?: string;
     priority?: string;
     dueDate?: string;
+    overdue?: string;
   }>;
 }
 
