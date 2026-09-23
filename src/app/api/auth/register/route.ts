@@ -36,7 +36,8 @@ export async function POST(request: Request) {
       message: "Account created",
       data: { id: user.id, name: user.name, email: user.email },
     });
-  } catch {
+  } catch (error) {
+    console.error("Registration error:", error);
     return NextResponse.json(
       { success: false, message: "Something went wrong" },
       { status: 500 }
