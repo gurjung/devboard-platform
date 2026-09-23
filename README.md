@@ -104,15 +104,15 @@ Built solo as a deep-dive into production-grade full-stack patterns: multi-tenan
 
 ```mermaid
 flowchart TD
-    A[Incoming Request] --> B{proxy.ts<br/>Edge Middleware}
+    A[Incoming Request] --> B{"proxy.ts<br/>Edge Middleware"}
     B -->|Not authenticated| C[Redirect to Login]
     B -->|Authenticated| D[API Route Handler]
-    D --> E{hasWorkspaceRole&#40;&#41;<br/>getWorkspaceMembership&#40;&#41;}
+    D --> E{"hasWorkspaceRole()<br/>getWorkspaceMembership()"}
     E -->|Insufficient role| F[403 Forbidden]
-    E -->|Authorized| G[Execute — Prisma / DB]
+    E -->|Authorized| G["Execute — Prisma / DB"]
     G --> H[Response]
-    H --> I{UI Layer}
-    I --> J[Hide controls user<br/>can't use anyway]
+    H --> I{"UI Layer"}
+    I --> J["Hide controls user<br/>can't use anyway"]
 
     style B fill:#1a1a2e,stroke:#0f0,color:#fff
     style E fill:#1a1a2e,stroke:#0f0,color:#fff
