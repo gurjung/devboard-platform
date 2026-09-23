@@ -4,7 +4,7 @@
 
 **A multi-tenant project management platform** — Workspace → Project → Task, built with Next.js 16, TypeScript, and Prisma/PostgreSQL.
 
-[Live Demo](#) · [Report a Bug](../../issues) · [Request a Feature](../../issues)
+[Live Demo](https://devboard-platform-mu.vercel.app/) · [Report a Bug](../../issues) · [Request a Feature](../../issues)
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript) ![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma) ![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)
 
