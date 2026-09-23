@@ -149,6 +149,29 @@ describe("TaskFilters component", () => {
     expect(mockOnStatusChange).toHaveBeenCalledWith("TODO");
   });
 
+  it("fires onStatusChange callback when OVERDUE option is selected", () => {
+    render(
+      <TaskFilters
+        workspaceId="workspace-1"
+        status=""
+        priority=""
+        assigneeId=""
+        dueDate=""
+        onStatusChange={mockOnStatusChange}
+        onPriorityChange={mockOnPriorityChange}
+        onAssigneeChange={mockOnAssigneeChange}
+        onDueDateChange={mockOnDueDateChange}
+        onClearFilters={mockOnClearFilters}
+        isFiltered={false}
+      />
+    );
+
+    const select = screen.getAllByRole("combobox")[0]; // Status Select
+    fireEvent.change(select, { target: { value: "OVERDUE" } });
+
+    expect(mockOnStatusChange).toHaveBeenCalledWith("OVERDUE");
+  });
+
   it("fires onPriorityChange callback when priority dropdown option changes", () => {
     render(
       <TaskFilters

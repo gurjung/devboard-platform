@@ -22,6 +22,7 @@ export interface UseTasksFilters {
   priority?: string;
   assigneeId?: string;
   dueDate?: string;
+  overdue?: boolean | string;
   pageSize?: number;
 }
 
@@ -36,6 +37,8 @@ export function useTasks(projectId: string, filters: UseTasksFilters = {}) {
       if (filters.assigneeId)
         searchParams.append("assigneeId", filters.assigneeId);
       if (filters.dueDate) searchParams.append("dueDate", filters.dueDate);
+      if (filters.overdue)
+        searchParams.append("overdue", String(filters.overdue));
       if (filters.pageSize)
         searchParams.append("pageSize", filters.pageSize.toString());
       if (pageParam) searchParams.append("cursor", pageParam as string);

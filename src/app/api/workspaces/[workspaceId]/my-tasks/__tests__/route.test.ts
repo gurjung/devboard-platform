@@ -139,4 +139,70 @@ describe("GET /api/workspaces/[workspaceId]/my-tasks", () => {
     expect(body.tasks[0].id).toBe("task-1");
     expect(body.nextCursor).toBe("task-2");
   });
+
+  it("filters overdue tasks when overdue=true is provided", async () => {
+    (auth as jest.Mock).mockResolvedValue({ user: { id: "user-1" } });
+    (getWorkspaceMembership as jest.Mock).mockResolvedValue({
+      workspaceId: "ws-1",
+      userId: "user-1",
+      workspace: { id: "ws-1", slug: "ws-slug" },
+    });
+
+    (prisma.task.findMany as jest.Mock).mockResolvedValue([]);
+    (prisma.task.count as jest.Mock).mockResolvedValue(0);
+
+    const req = new Request(
+      "http://localhost:3000/api/workspaces/ws-1/my-tasks?overdue=true"
+    );
+    const res = await GET(req, {
+      params: Promise.resolve({ workspaceId: "ws-1" }),
+    });
+
+    expect(res.status).toBe(200);
+    expect(prisma.task.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          assigneeId: "user-1",
+          project: { workspaceId: "ws-1" },
+          dueDate: expect.objectContaining({
+            lt: expect.any(Date),
+          }),
+          status: { not: "DONE" },
+        }),
+      })
+    );
+  });
+
+  it("handles overdue=true with explicit DONE status by returning empty set condition", async () => {
+    (auth as jest.Mock).mockResolvedValue({ user: { id: "user-1" } });
+    (getWorkspaceMembership as jest.Mock).mockResolvedValue({
+      workspaceId: "ws-1",
+      userId: "user-1",
+      workspace: { id: "ws-1", slug: "ws-slug" },
+    });
+
+    (prisma.task.findMany as jest.Mock).mockResolvedValue([]);
+    (prisma.task.count as jest.Mock).mockResolvedValue(0);
+
+    const req = new Request(
+      "http://localhost:3000/api/workspaces/ws-1/my-tasks?overdue=true&status=DONE"
+    );
+    const res = await GET(req, {
+      params: Promise.resolve({ workspaceId: "ws-1" }),
+    });
+
+    expect(res.status).toBe(200);
+    expect(prisma.task.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          assigneeId: "user-1",
+          project: { workspaceId: "ws-1" },
+          dueDate: expect.objectContaining({
+            lt: expect.any(Date),
+          }),
+          status: { in: [] },
+        }),
+      })
+    );
+  });
 });

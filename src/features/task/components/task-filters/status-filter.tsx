@@ -16,6 +16,7 @@ import {
   CircleDot,
   Eye,
   CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +28,7 @@ interface StatusFilterProps {
 const statusLabels: Record<string, string> = {
   "": "All",
   all: "All",
+  OVERDUE: "Overdue",
   BACKLOG: "Backlog",
   TODO: "Todo",
   IN_PROGRESS: "In Progress",
@@ -40,6 +42,12 @@ const statusItems = [
     label: "All",
     icon: ListTodo,
     iconClass: "text-muted-foreground",
+  },
+  {
+    value: "OVERDUE",
+    label: "Overdue",
+    icon: AlertCircle,
+    iconClass: "text-rose-500",
   },
   {
     value: "BACKLOG",

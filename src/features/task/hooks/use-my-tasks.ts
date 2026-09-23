@@ -14,6 +14,7 @@ export interface UseMyTasksFilters {
   status?: string;
   priority?: string;
   dueDate?: string;
+  overdue?: boolean | string;
   pageSize?: number;
 }
 
@@ -43,6 +44,8 @@ export function useMyTasks(
       if (filters.status) searchParams.append("status", filters.status);
       if (filters.priority) searchParams.append("priority", filters.priority);
       if (filters.dueDate) searchParams.append("dueDate", filters.dueDate);
+      if (filters.overdue)
+        searchParams.append("overdue", String(filters.overdue));
       if (filters.pageSize)
         searchParams.append("pageSize", filters.pageSize.toString());
       if (pageParam) searchParams.append("cursor", pageParam as string);
