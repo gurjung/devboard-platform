@@ -26,7 +26,6 @@ import { useRegister } from "@/features/auth/hooks/use-register";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
-import { SocialAuthButtons } from "./social-auth-buttons";
 
 const SignUpCard = () => {
   const registerMutation = useRegister();
@@ -172,15 +171,7 @@ const SignUpCard = () => {
           </FieldGroup>
         </form>
       </CardContent>
-      <div className="px-7">
-        <Separator />
-      </div>
-      <CardContent className="p-7 flex flex-col gap-y-4">
-        <SocialAuthButtons
-          disabled={registerMutation.isPending}
-          action="signup"
-        />
-      </CardContent>
+
       <div className="px-7">
         <Separator />
       </div>
